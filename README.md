@@ -30,7 +30,7 @@ You can start developing by editing the files inside the **app** directory. This
 - [React Native Reusable](https://reactnativereusables.com/) - Reusable components
 - [Nativewind](https://www.nativewind.dev/) - apply tailwindcss styling
 - [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - state management
-- [Tanstack Query](https://tanstack.com/) - Date Fetching
+- [Tanstack Query](https://tanstack.com/) - Data Fetching
 
 ## Get a fresh project
 
