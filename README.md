@@ -16,6 +16,13 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npx expo start
    ```
 
+## Libraries and Frameworks
+
+[React Native Reusable](https://reactnativereusables.com/) - Reusable components
+[Nativewind](https://www.nativewind.dev/) - apply tailwindcss styling
+[Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - state management
+[Tanstack Query](https://tanstack.com/) - Date Fetching
+
 In the output, you'll find options to open the app in a
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
