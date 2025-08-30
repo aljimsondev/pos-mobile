@@ -1,4 +1,6 @@
+import SplashScreenController from '@/app/splash';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { authClient } from '@/lib/auth/client';
 import {
   DarkTheme,
   DefaultTheme,
@@ -24,12 +26,28 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <SplashScreenController />
+      <RootNavigator />
       <StatusBar style="auto" />
       <PortalHost />
     </ThemeProvider>
+  );
+}
+
+function RootNavigator() {
+  const { data } = authClient.useSession();
+  const hasSession = !!data?.session;
+
+  return (
+    <Stack>
+      <Stack.Protected guard={!hasSession}>
+        <Stack.Screen name="sign-in" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={hasSession}>
+        <Stack.Screen name="(root)" />
+      </Stack.Protected>
+      <Stack.Screen name="+not-found" />
+    </Stack>
   );
 }
