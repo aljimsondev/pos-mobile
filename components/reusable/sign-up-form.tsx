@@ -9,47 +9,31 @@ import {
 import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
-import { authClient } from '@/lib/auth/client';
 import { useRouter } from 'expo-router';
 import * as React from 'react';
-import { Alert, type TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 
-export function SignInForm() {
-  const router = useRouter();
+export function SignUpForm() {
   const passwordInputRef = React.useRef<TextInput>(null);
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const router = useRouter();
 
   function onEmailSubmitEditing() {
     passwordInputRef.current?.focus();
   }
 
-  async function onSubmit() {
-    await authClient.signIn.email(
-      {
-        email,
-        password,
-      },
-      {
-        onError: (ctx) => {
-          Alert.alert(ctx.error.message);
-        },
-        onSuccess: () => {
-          router.replace('/(root)');
-        },
-      },
-    );
+  function onSubmit() {
+    // TODO: Submit form and navigate to protected screen if successful
   }
 
   return (
-    <View className="gap-6 w-full">
+    <View className="gap-6">
       <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5">
         <CardHeader>
           <CardTitle className="text-center text-xl sm:text-left">
-            Sign in to your app
+            Create your account
           </CardTitle>
           <CardDescription className="text-center sm:text-left">
-            Welcome back! Please sign in to continue
+            Welcome! Please fill in the details to get started.
           </CardDescription>
         </CardHeader>
         <CardContent className="gap-6">
@@ -65,25 +49,11 @@ export function SignInForm() {
                 onSubmitEditing={onEmailSubmitEditing}
                 returnKeyType="next"
                 submitBehavior="submit"
-                value={email}
-                onChangeText={setEmail}
               />
             </View>
             <View className="gap-1.5">
               <View className="flex-row items-center">
                 <Label htmlFor="password">Password</Label>
-                <Button
-                  variant="link"
-                  size="sm"
-                  className="web:h-fit ml-auto h-4 px-1 py-0 sm:h-4"
-                  onPress={() => {
-                    // TODO: Navigate to forgot password screen
-                  }}
-                >
-                  <Text className="font-normal leading-4">
-                    Forgot your password?
-                  </Text>
-                </Button>
               </View>
               <Input
                 ref={passwordInputRef}
@@ -91,8 +61,6 @@ export function SignInForm() {
                 secureTextEntry
                 returnKeyType="send"
                 onSubmitEditing={onSubmit}
-                value={password}
-                onChangeText={setPassword}
               />
             </View>
             <Button className="w-full" onPress={onSubmit}>
@@ -101,16 +69,16 @@ export function SignInForm() {
           </View>
           <View>
             <Text className="text-center text-sm">
-              Don&apos;t have an account?{' '}
+              Already have an account?{' '}
             </Text>
             <Button
               variant="link"
               size="sm"
               onPress={() => {
-                router.replace('/signup');
+                router.replace('/sign-in');
               }}
             >
-              <Text className="text-sm underline">Sign up</Text>
+              <Text className="text-sm underline"> Sign in</Text>
             </Button>
           </View>
         </CardContent>
