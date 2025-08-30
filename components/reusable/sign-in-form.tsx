@@ -32,6 +32,7 @@ export function SignInForm() {
     if (!result?.data) {
       console.error(result.error);
     }
+    // todo add error messages rendering
   }
 
   return (
