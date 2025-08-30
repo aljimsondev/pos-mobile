@@ -41,11 +41,11 @@ function RootNavigator() {
   return (
     <Stack>
       <Stack.Protected guard={!hasSession}>
-        <Stack.Screen name="sign-in" />
+        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
       </Stack.Protected>
 
       <Stack.Protected guard={hasSession}>
-        <Stack.Screen name="(root)" />
+        <Stack.Screen name="(root)" options={{ headerShown: false }} />
       </Stack.Protected>
       <Stack.Screen name="+not-found" />
     </Stack>
