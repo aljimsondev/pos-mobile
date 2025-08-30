@@ -11,6 +11,7 @@ import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { authClient } from '@/lib/auth/client';
 import { fetcher } from '@/lib/utils';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import * as React from 'react';
 import { type TextInput, View } from 'react-native';
@@ -44,6 +45,13 @@ export function SignInForm() {
     <View className="gap-6 w-full">
       <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5">
         <CardHeader>
+          <View className="w-full justify-center items-center mb-8">
+            <Image
+              source={require('../../assets/images/icon.png')}
+              style={{ width: 100, height: 100 }}
+              contentFit="contain"
+            />
+          </View>
           <CardTitle className="text-center text-xl sm:text-left">
             Sign in to your app
           </CardTitle>
