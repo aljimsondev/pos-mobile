@@ -11,12 +11,10 @@ import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { authClient } from '@/lib/auth/client';
 import { Image } from 'expo-image';
-import { useRouter } from 'expo-router';
 import * as React from 'react';
 import { type TextInput, View } from 'react-native';
 
 export function SignInForm() {
-  const router = useRouter();
   const passwordInputRef = React.useRef<TextInput>(null);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
