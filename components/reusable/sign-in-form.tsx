@@ -10,9 +10,10 @@ import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { authClient } from '@/lib/auth/client';
+import { fetcher } from '@/lib/utils';
 import { useRouter } from 'expo-router';
 import * as React from 'react';
-import { Alert, type TextInput, View } from 'react-native';
+import { type TextInput, View } from 'react-native';
 
 export function SignInForm() {
   const router = useRouter();
@@ -25,20 +26,18 @@ export function SignInForm() {
   }
 
   async function onSubmit() {
-    await authClient.signIn.email(
-      {
-        email,
-        password,
-      },
-      {
-        onError: (ctx) => {
-          Alert.alert(ctx.error.message);
-        },
-        onSuccess: () => {
-          router.replace('/(root)');
-        },
-      },
-    );
+    const result = await authClient.signIn.email({
+      email,
+      password,
+    });
+
+    if (result?.data) {
+      // get user details
+      const response = await fetcher('_auth/me');
+      console.log(response);
+      const body = await response.json();
+      console.log(body);
+    }
   }
 
   return (
