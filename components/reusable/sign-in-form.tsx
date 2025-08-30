@@ -99,20 +99,6 @@ export function SignInForm() {
               <Text>Continue</Text>
             </Button>
           </View>
-          <View>
-            <Text className="text-center text-sm">
-              Don&apos;t have an account?{' '}
-            </Text>
-            <Button
-              variant="link"
-              size="sm"
-              onPress={() => {
-                router.replace('/signup');
-              }}
-            >
-              <Text className="text-sm underline">Sign up</Text>
-            </Button>
-          </View>
         </CardContent>
       </Card>
     </View>
