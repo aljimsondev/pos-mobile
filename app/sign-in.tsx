@@ -1,10 +1,14 @@
 import { SignInForm } from '@/components/reusable/sign-in-form';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 export default function SignIn() {
   return (
-    <View className="justify-center items-center h-full p-4">
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      contentContainerClassName="items-center justify-center mt-safe justify-center items-center h-full p-4"
+      keyboardDismissMode="interactive"
+    >
       <SignInForm />
-    </View>
+    </ScrollView>
   );
 }

@@ -16,7 +16,7 @@ export default function SignUp() {
   };
 
   return (
-    <View>
+    <View className="">
       <TextInput placeholder="Name" value={name} onChangeText={setName} />
       <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
       <TextInput
