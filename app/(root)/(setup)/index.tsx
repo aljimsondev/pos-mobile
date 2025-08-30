@@ -9,17 +9,26 @@ import {
 import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
+import { setupAccountSchema } from '@/lib/schema/setup-account.schema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { ScrollView, View } from 'react-native';
 
 export default function Index() {
-  const onCompleteSetup = () => {
-    try {
-      //todo update account password
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const form = useForm({
+    resolver: zodResolver(setupAccountSchema),
+    defaultValues: {
+      confirmPassword: '',
+      password: '',
+    },
+    mode: 'all',
+  });
+
+  const onSubmit = form.handleSubmit(({ password, confirmPassword }) => {
+    // handle process here
+    console.log(password, confirmPassword);
+  });
 
   return (
     <ScrollView
@@ -41,18 +50,45 @@ export default function Index() {
             <View className="gap-6">
               <View className="gap-1.5">
                 <Label htmlFor="email">Password</Label>
-                <Input id="password" secureTextEntry />
+                <Controller
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <Input
+                      id="password"
+                      secureTextEntry
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+                <Text className="text-destructive text-sm">
+                  {form.formState.errors.password &&
+                    form.formState.errors.password.message}
+                </Text>
               </View>
               <View className="gap-1.5">
                 <Label htmlFor="confirm-password">Confirm Password</Label>
-                <Input
-                  id="confirm-password"
-                  secureTextEntry
-                  returnKeyType="send"
-                  onSubmitEditing={onCompleteSetup}
+                <Controller
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <Input
+                      id="confirm-password"
+                      secureTextEntry
+                      returnKeyType="send"
+                      onSubmitEditing={onSubmit}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
                 />
+                <Text className="text-destructive text-sm">
+                  {form.formState.errors.confirmPassword?.message &&
+                    form.formState.errors.confirmPassword.message}
+                </Text>
               </View>
-              <Button className="w-full" onPress={onCompleteSetup}>
+              <Button className="w-full" onPress={onSubmit}>
                 <Text>Continue</Text>
               </Button>
             </View>
