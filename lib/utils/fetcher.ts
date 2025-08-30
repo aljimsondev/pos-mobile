@@ -48,7 +48,7 @@ export const fetcher = (
 
   const formattedEndpoint = formatEndpoint(endpoint);
   const fullUrl = `${process.env.EXPO_PUBLIC_API_URL}/${prefix}${formattedEndpoint}`;
-  console.log(fullUrl);
+  console.info(fullUrl);
   return fetch(fullUrl, options);
 };
 

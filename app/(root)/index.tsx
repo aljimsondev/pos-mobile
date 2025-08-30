@@ -1,6 +1,5 @@
-import { Text, View } from 'react-native';
-
 import { authClient } from '@/lib/auth/client';
+import { Text, View } from 'react-native';
 
 export default function Index() {
   const handleSignout = () => {

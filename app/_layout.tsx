@@ -48,7 +48,6 @@ function RootNavigator() {
         <Stack.Screen name="(root)" options={{ headerShown: false }} />
       </Stack.Protected>
       <Stack.Screen name="+not-found" />
-      <Stack.Screen name="signup" options={{ headerShown: false }} />
     </Stack>
   );
 }

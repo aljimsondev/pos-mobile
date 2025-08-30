@@ -10,7 +10,6 @@ import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { authClient } from '@/lib/auth/client';
-import { fetcher } from '@/lib/utils';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import * as React from 'react';
@@ -32,12 +31,8 @@ export function SignInForm() {
       password,
     });
 
-    if (result?.data) {
-      // get user details
-      const response = await fetcher('_auth/me');
-      console.log(response);
-      const body = await response.json();
-      console.log(body);
+    if (!result?.data) {
+      console.error(result.error);
     }
   }
 
