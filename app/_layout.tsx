@@ -12,7 +12,6 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import ToastManager from 'toastify-react-native';
 import './global.css';
 
@@ -30,9 +29,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <SplashScreenController />
-      <SafeAreaView className="flex-1">
-        <RootNavigator />
-      </SafeAreaView>
+      <RootNavigator />
       <StatusBar style="auto" />
       <PortalHost />
       <ToastManager />
