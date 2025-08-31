@@ -5,7 +5,7 @@ export default function SignIn() {
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"
-      contentContainerClassName="items-center justify-center justify-center items-center h-full bg-card"
+      contentContainerClassName="flex-1 bg-card"
       keyboardDismissMode="interactive"
     >
       <SignInForm />

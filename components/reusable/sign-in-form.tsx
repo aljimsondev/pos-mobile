@@ -12,7 +12,12 @@ import { Text } from '@/components/reusable/text';
 import { authClient } from '@/lib/auth/client';
 import { Image } from 'expo-image';
 import * as React from 'react';
-import { type TextInput, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  type TextInput,
+  View,
+} from 'react-native';
 
 export function SignInForm() {
   const passwordInputRef = React.useRef<TextInput>(null);
@@ -36,8 +41,12 @@ export function SignInForm() {
   }
 
   return (
-    <View className="gap-6 w-full">
-      <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5">
+    <KeyboardAvoidingView
+      className="w-full flex-1 items-center justify-center"
+      behavior="padding"
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+    >
+      <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5 w-full bg-transparent">
         <CardHeader>
           <View className="w-full justify-center items-center mb-8">
             <Image
@@ -102,6 +111,6 @@ export function SignInForm() {
           </View>
         </CardContent>
       </Card>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
