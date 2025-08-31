@@ -1,11 +1,11 @@
 import { Text } from '@/components/reusable/text';
+import Container from '@/components/ui/Container';
 import { Link } from 'expo-router';
 import React from 'react';
-import { View } from 'react-native';
 
 function Products() {
   return (
-    <View>
+    <Container>
       <Text>Products page</Text>
       <Link href="/(root)/(tabs)/(products)/search">
         <Text className="underline">Search Product</Text>
@@ -13,7 +13,7 @@ function Products() {
       <Link href="/(root)/(tabs)/(products)/1">
         <Text className="underline">View Product</Text>
       </Link>
-    </View>
+    </Container>
   );
 }
 
