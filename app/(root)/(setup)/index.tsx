@@ -11,9 +11,9 @@ import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { authClient } from '@/lib/auth/client';
 import { setupAccountSchema } from '@/lib/schema/setup-account.schema';
+import { useDialogStore } from '@/lib/store/dialog-store';
 import { fetcher } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView, View } from 'react-native';
@@ -21,7 +21,7 @@ import { Toast } from 'toastify-react-native';
 
 export default function Index() {
   const { data } = authClient.useSession();
-  const router = useRouter();
+  const { showDialog } = useDialogStore();
   const form = useForm({
     resolver: zodResolver(setupAccountSchema),
     defaultValues: {
@@ -42,11 +42,18 @@ export default function Index() {
       });
 
       const resBody = await res.json();
-      if (resBody?.success) {
-        return router.replace('/(root)');
-      }
-      // throw error message
-      throw new Error(resBody?.error?.message);
+      if (!resBody?.success) throw new Error(resBody?.error?.message);
+
+      showDialog({
+        title: 'Setup success!',
+        description:
+          'Account successfully set, please login to start using the app!',
+        showCancel: false,
+        showContinue: true,
+        onContinue: () => {
+          authClient.signOut(); // reauthenticate user with new credential
+        },
+      });
     } catch (e: any) {
       Toast.show({
         type: 'error',

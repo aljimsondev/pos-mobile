@@ -12,3 +12,10 @@ export const authClient = createAuthClient({
     }),
   ],
 });
+
+export type Session = {
+  user: (typeof authClient.$Infer.Session)['user'] & {
+    setupComplete: boolean | null;
+  };
+  session: (typeof authClient.$Infer.Session)['session'];
+};

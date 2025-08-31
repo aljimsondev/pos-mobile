@@ -1,4 +1,5 @@
 import SplashScreenController from '@/app/splash';
+import { GlobalDialog } from '@/components/ui/GlobalDialog';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { authClient } from '@/lib/auth/client';
 import {
@@ -32,6 +33,7 @@ export default function RootLayout() {
       <StatusBar style="auto" />
       <PortalHost />
       <ToastManager />
+      <GlobalDialog />
     </ThemeProvider>
   );
 }

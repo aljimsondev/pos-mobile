@@ -16,7 +16,8 @@ const DialogPortal = DialogPrimitive.Portal;
 
 const DialogClose = DialogPrimitive.Close;
 
-const FullWindowOverlay = Platform.OS === 'ios' ? RNFullWindowOverlay : React.Fragment;
+const FullWindowOverlay =
+  Platform.OS === 'ios' ? RNFullWindowOverlay : React.Fragment;
 
 function DialogOverlay({
   className,
@@ -34,12 +35,19 @@ function DialogOverlay({
           Platform.select({
             web: 'animate-in fade-in-0 fixed cursor-default [&>*]:cursor-auto',
           }),
-          className
+          className,
         )}
         {...props}
-        asChild={Platform.OS !== 'web'}>
-        <NativeOnlyAnimatedView entering={FadeIn.duration(200)} exiting={FadeOut.duration(150)}>
-          <NativeOnlyAnimatedView entering={FadeIn.delay(50)} exiting={FadeOut.duration(150)}>
+        asChild={Platform.OS !== 'web'}
+      >
+        <NativeOnlyAnimatedView
+          entering={FadeIn.duration(200)}
+          exiting={FadeOut.duration(150)}
+        >
+          <NativeOnlyAnimatedView
+            entering={FadeIn.delay(50)}
+            exiting={FadeOut.duration(150)}
+          >
             <>{children}</>
           </NativeOnlyAnimatedView>
         </NativeOnlyAnimatedView>
@@ -65,21 +73,25 @@ function DialogContent({
             Platform.select({
               web: 'animate-in fade-in-0 zoom-in-95 duration-200',
             }),
-            className
+            className,
           )}
-          {...props}>
+          {...props}
+        >
           <>{children}</>
           <DialogPrimitive.Close
             className={cn(
               'absolute right-4 top-4 rounded opacity-70 active:opacity-100',
               Platform.select({
                 web: 'ring-offset-background focus:ring-ring data-[state=open]:bg-accent transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2',
-              })
+              }),
             )}
-            hitSlop={12}>
+            hitSlop={12}
+          >
             <Icon
               as={X}
-              className={cn('text-accent-foreground web:pointer-events-none size-4 shrink-0')}
+              className={cn(
+                'text-accent-foreground web:pointer-events-none size-4 shrink-0',
+              )}
             />
             <Text className="sr-only">Close</Text>
           </DialogPrimitive.Close>
@@ -91,14 +103,20 @@ function DialogContent({
 
 function DialogHeader({ className, ...props }: ViewProps) {
   return (
-    <View className={cn('flex flex-col gap-2 text-center sm:text-left', className)} {...props} />
+    <View
+      className={cn('flex flex-col gap-2 text-center sm:text-left', className)}
+      {...props}
+    />
   );
 }
 
 function DialogFooter({ className, ...props }: ViewProps) {
   return (
     <View
-      className={cn('flex flex-col-reverse gap-2 sm:flex-row sm:justify-end', className)}
+      className={cn(
+        'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end',
+        className,
+      )}
       {...props}
     />
   );
@@ -110,7 +128,10 @@ function DialogTitle({
 }: DialogPrimitive.TitleProps & React.RefAttributes<DialogPrimitive.TitleRef>) {
   return (
     <DialogPrimitive.Title
-      className={cn('text-foreground text-lg font-semibold leading-none', className)}
+      className={cn(
+        'text-foreground text-lg font-semibold leading-none',
+        className,
+      )}
       {...props}
     />
   );
@@ -119,7 +140,8 @@ function DialogTitle({
 function DialogDescription({
   className,
   ...props
-}: DialogPrimitive.DescriptionProps & React.RefAttributes<DialogPrimitive.DescriptionRef>) {
+}: DialogPrimitive.DescriptionProps &
+  React.RefAttributes<DialogPrimitive.DescriptionRef>) {
   return (
     <DialogPrimitive.Description
       className={cn('text-muted-foreground text-sm', className)}
