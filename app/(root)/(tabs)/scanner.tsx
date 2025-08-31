@@ -1,12 +1,12 @@
 import { Text } from '@/components/reusable/text';
+import Container from '@/components/ui/Container';
 import React from 'react';
-import { View } from 'react-native';
 
 function BarcodeScanner() {
   return (
-    <View>
+    <Container>
       <Text>Barcode Scanner</Text>
-    </View>
+    </Container>
   );
 }
 

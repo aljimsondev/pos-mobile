@@ -1,12 +1,12 @@
 import { Text } from '@/components/reusable/text';
+import Container from '@/components/ui/Container';
 import React from 'react';
-import { View } from 'react-native';
 
 function Cart() {
   return (
-    <View>
+    <Container>
       <Text>Cart Page</Text>
-    </View>
+    </Container>
   );
 }
 
