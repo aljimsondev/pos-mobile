@@ -1,3 +1,5 @@
+import { authClient } from '@/lib/auth/client';
+
 /**
  * A wrapper around the native fetch API that automatically prepends the base API URL
  * and formats endpoints consistently.
@@ -33,11 +35,10 @@ export const fetcher = (
   endpoint: string,
   options: RequestInit & {
     prefix?: string;
-  } = {
-    prefix: 'api/v1',
-  },
+  } = {},
 ): Promise<Response> => {
-  const { prefix } = options;
+  const { prefix = 'api/v1' } = options;
+  const cookie = authClient.getCookie();
   if (!endpoint || typeof endpoint !== 'string') {
     throw new TypeError('Endpoint must be a non-empty string');
   }
@@ -48,8 +49,14 @@ export const fetcher = (
 
   const formattedEndpoint = formatEndpoint(endpoint);
   const fullUrl = `${process.env.EXPO_PUBLIC_API_URL}/${prefix}${formattedEndpoint}`;
-  console.info(fullUrl);
-  return fetch(fullUrl, options);
+  console.info('Requesting to: ' + fullUrl);
+  return fetch(fullUrl, {
+    ...options,
+    headers: {
+      ...options?.headers,
+      Cookie: cookie,
+    },
+  });
 };
 
 /**

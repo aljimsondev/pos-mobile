@@ -9,13 +9,18 @@ import {
 import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
+import { authClient } from '@/lib/auth/client';
 import { setupAccountSchema } from '@/lib/schema/setup-account.schema';
+import { fetcher } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView, View } from 'react-native';
 
 export default function Index() {
+  const { data } = authClient.useSession();
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(setupAccountSchema),
     defaultValues: {
@@ -25,10 +30,30 @@ export default function Index() {
     mode: 'all',
   });
 
-  const onSubmit = form.handleSubmit(({ password, confirmPassword }) => {
+  const onSubmit = form.handleSubmit(async ({ password, confirmPassword }) => {
     // handle process here
-    console.log(password, confirmPassword);
+    const res = await fetcher(`user/update-password/${data?.user.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ password: password }),
+    });
+
+    const resBody = await res.json();
+
+    if (resBody?.data?.success) {
+      router.replace('/(root)');
+    }
+
+    // todo add error handler, pop ups etc.
   });
+
+  const enabledSubmitting =
+    Object.keys(form.formState.errors).length === 0 &&
+    form.formState.isValid &&
+    form.watch('password') &&
+    form.watch('confirmPassword');
 
   return (
     <ScrollView
@@ -88,7 +113,11 @@ export default function Index() {
                     form.formState.errors.confirmPassword.message}
                 </Text>
               </View>
-              <Button className="w-full" onPress={onSubmit}>
+              <Button
+                className="w-full"
+                onPress={onSubmit}
+                disabled={!enabledSubmitting}
+              >
                 <Text>Continue</Text>
               </Button>
             </View>
