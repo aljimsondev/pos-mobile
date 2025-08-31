@@ -3,7 +3,7 @@ import Container from '@/components/ui/Container';
 import React from 'react';
 
 function Cart() {
-  return (
+  return (  
     <Container>
       <Text>Cart Page</Text>
     </Container>

@@ -1,16 +1,25 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { THEME } from '@/lib/theme';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from 'expo-router';
 import React from 'react';
 function TabLayout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: THEME.light.foreground,
+      }}
+    >
       <Tabs.Screen
         name="(products)"
         options={{
           tabBarLabel: 'Products',
           headerShown: false,
           tabBarIcon: ({ color, focused, size }) => (
-            <MaterialIcons color={color} name="grid-view" size={size} />
+            <Ionicons
+              color={color}
+              name={focused ? 'grid' : 'grid-outline'}
+              size={size}
+            />
           ),
         }}
       />
@@ -20,7 +29,11 @@ function TabLayout() {
           tabBarLabel: 'Scanner',
           headerShown: false,
           tabBarIcon: ({ color, focused, size }) => (
-            <MaterialIcons color={color} name="qr-code-scanner" size={32} />
+            <Ionicons
+              color={color}
+              name={focused ? 'qr-code' : 'qr-code-outline'}
+              size={size}
+            />
           ),
         }}
       />
@@ -30,9 +43,9 @@ function TabLayout() {
           tabBarLabel: 'Cart',
           headerShown: false,
           tabBarIcon: ({ color, focused, size }) => (
-            <MaterialIcons
+            <Ionicons
               color={color}
-              name="shopping-cart-checkout"
+              name={focused ? 'cart' : 'cart-outline'}
               size={size}
             />
           ),
