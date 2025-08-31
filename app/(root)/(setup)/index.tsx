@@ -11,17 +11,16 @@ import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { authClient } from '@/lib/auth/client';
 import { setupAccountSchema } from '@/lib/schema/setup-account.schema';
-import { useErrorStore } from '@/lib/store/error-store';
+import { fetcher } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView, View } from 'react-native';
+import { Toast } from 'toastify-react-native';
 
 export default function Index() {
   const { data } = authClient.useSession();
-  const { showError } = useErrorStore();
-
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(setupAccountSchema),
@@ -33,15 +32,32 @@ export default function Index() {
   });
 
   const onSubmit = form.handleSubmit(async ({ password, confirmPassword }) => {
-    // handle process here
+    try {
+      const res = await fetcher(`user/update-password/${data?.user.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({ password: password }),
+      });
 
-    showError({
-      title: 'Account Setup Failed',
-      description: 'Unable to setup your account. Please try again.',
-      cancelText: 'Okay',
-    });
+      const resBody = await res.json();
 
-    // todo add error handler, pop ups etc.
+      if (resBody?.data?.success) {
+        router.replace('/(root)');
+      }
+      // throw error message
+      throw new Error(resBody?.data?.error?.message);
+    } catch (e: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Account setup failed!',
+        text2: e?.message,
+        position: 'bottom',
+        useModal: true,
+        progressBarColor: 'transparent',
+      });
+    }
   });
 
   const enabledSubmitting =

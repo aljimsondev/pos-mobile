@@ -1,5 +1,4 @@
 import SplashScreenController from '@/app/splash';
-import { GlobalErrorDialog } from '@/components/ui/GlobalErrorDialog';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { authClient } from '@/lib/auth/client';
 import {
@@ -12,6 +11,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
+import ToastManager from 'toastify-react-native';
 import './global.css';
 
 export default function RootLayout() {
@@ -31,7 +31,7 @@ export default function RootLayout() {
       <RootNavigator />
       <StatusBar style="auto" />
       <PortalHost />
-      <GlobalErrorDialog />
+      <ToastManager />
     </ThemeProvider>
   );
 }
