@@ -41,7 +41,7 @@ export function SignInForm() {
         <CardHeader>
           <View className="w-full justify-center items-center mb-8">
             <Image
-              source={require('../../assets/images/icon.png')}
+              source={require('../../assets/images/splash-icon-dark.png')}
               style={{ width: 100, height: 100 }}
               contentFit="contain"
             />
