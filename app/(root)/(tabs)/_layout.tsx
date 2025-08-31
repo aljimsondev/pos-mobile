@@ -1,6 +1,5 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Tabs } from 'expo-router';
-import { LayoutDashboard, ShoppingCart } from 'lucide-react-native';
 import React from 'react';
 function TabLayout() {
   return (
@@ -11,7 +10,7 @@ function TabLayout() {
           tabBarLabel: 'Products',
           headerShown: false,
           tabBarIcon: ({ color, focused, size }) => (
-            <LayoutDashboard color={color} size={size} />
+            <MaterialIcons color={color} name="grid-view" size={size} />
           ),
         }}
       />
@@ -31,7 +30,11 @@ function TabLayout() {
           tabBarLabel: 'Cart',
           headerShown: false,
           tabBarIcon: ({ color, focused, size }) => (
-            <ShoppingCart color={color} size={size} />
+            <MaterialIcons
+              color={color}
+              name="shopping-cart-checkout"
+              size={size}
+            />
           ),
         }}
       />
