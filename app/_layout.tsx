@@ -1,4 +1,5 @@
 import SplashScreenController from '@/app/splash';
+import { GlobalErrorDialog } from '@/components/ui/GlobalErrorDialog';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { authClient } from '@/lib/auth/client';
 import {
@@ -30,6 +31,7 @@ export default function RootLayout() {
       <RootNavigator />
       <StatusBar style="auto" />
       <PortalHost />
+      <GlobalErrorDialog />
     </ThemeProvider>
   );
 }

@@ -11,7 +11,7 @@ import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { authClient } from '@/lib/auth/client';
 import { setupAccountSchema } from '@/lib/schema/setup-account.schema';
-import { fetcher } from '@/lib/utils';
+import { useErrorStore } from '@/lib/store/error-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -20,6 +20,8 @@ import { ScrollView, View } from 'react-native';
 
 export default function Index() {
   const { data } = authClient.useSession();
+  const { showError } = useErrorStore();
+
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(setupAccountSchema),
@@ -32,19 +34,12 @@ export default function Index() {
 
   const onSubmit = form.handleSubmit(async ({ password, confirmPassword }) => {
     // handle process here
-    const res = await fetcher(`user/update-password/${data?.user.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ password: password }),
+
+    showError({
+      title: 'Account Setup Failed',
+      description: 'Unable to setup your account. Please try again.',
+      cancelText: 'Okay',
     });
-
-    const resBody = await res.json();
-
-    if (resBody?.data?.success) {
-      router.replace('/(root)');
-    }
 
     // todo add error handler, pop ups etc.
   });
