@@ -10,6 +10,7 @@ import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { authClient } from '@/lib/auth/client';
+import { cn } from '@/lib/utils';
 import { Image } from 'expo-image';
 import * as React from 'react';
 import {
@@ -21,6 +22,7 @@ import {
 
 export function SignInForm() {
   const passwordInputRef = React.useRef<TextInput>(null);
+  const [error, setError] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -29,15 +31,15 @@ export function SignInForm() {
   }
 
   async function onSubmit() {
+    setError('');
     const result = await authClient.signIn.email({
       email,
       password,
     });
 
     if (!result?.data) {
-      console.error(result.error);
+      setError(result.error?.message || '');
     }
-    // todo add error messages rendering
   }
 
   return (
@@ -65,7 +67,12 @@ export function SignInForm() {
         <CardContent className="gap-6">
           <View className="gap-6">
             <View className="gap-1.5">
-              <Label htmlFor="email">Email</Label>
+              <Label
+                htmlFor="email"
+                className={cn(error ? 'text-destructive' : '')}
+              >
+                Email
+              </Label>
               <Input
                 id="email"
                 placeholder="m@example.com"
@@ -77,11 +84,19 @@ export function SignInForm() {
                 submitBehavior="submit"
                 value={email}
                 onChangeText={setEmail}
+                className={cn(
+                  error ? 'border-destructive text-destructive' : '',
+                )}
               />
             </View>
             <View className="gap-1.5">
               <View className="flex-row items-center">
-                <Label htmlFor="password">Password</Label>
+                <Label
+                  htmlFor="password"
+                  className={cn(error ? 'text-destructive' : '')}
+                >
+                  Password
+                </Label>
                 <Button
                   variant="link"
                   size="sm"
@@ -103,7 +118,13 @@ export function SignInForm() {
                 onSubmitEditing={onSubmit}
                 value={password}
                 onChangeText={setPassword}
+                className={cn(
+                  error ? 'border-destructive text-destructive' : '',
+                )}
               />
+              <Text className={cn(error ? 'text-destructive' : '')}>
+                {error}
+              </Text>
             </View>
             <Button className="w-full" onPress={onSubmit}>
               <Text>Continue</Text>
