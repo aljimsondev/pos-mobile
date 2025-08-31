@@ -1,16 +1,8 @@
-import { authClient, type Session } from '@/lib/auth/client';
-import { Stack, useRouter } from 'expo-router';
-import { useLayoutEffect } from 'react';
+import { useRedirectAccountSetup } from '@/hooks/useRedirectAccountSetup';
+import { Stack } from 'expo-router';
 
 export default function AppLayout() {
-  const { data } = authClient.useSession();
-  const hasSession = !!data?.session;
-  const router = useRouter();
-
-  useLayoutEffect(() => {
-    if (hasSession && !(data.user as Session['user']).setupComplete)
-      router.replace('/(root)/(setup)');
-  }, [data]);
+  useRedirectAccountSetup();
 
   return (
     <Stack>
