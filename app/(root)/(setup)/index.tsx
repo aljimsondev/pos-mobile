@@ -42,12 +42,11 @@ export default function Index() {
       });
 
       const resBody = await res.json();
-
-      if (resBody?.data?.success) {
-        router.replace('/(root)');
+      if (resBody?.success) {
+        return router.replace('/(root)');
       }
       // throw error message
-      throw new Error(resBody?.data?.error?.message);
+      throw new Error(resBody?.error?.message);
     } catch (e: any) {
       Toast.show({
         type: 'error',
