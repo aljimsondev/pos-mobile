@@ -4,14 +4,14 @@ import React from 'react';
 import { Dimensions, FlatList } from 'react-native';
 const { width: screenWidth } = Dimensions.get('window');
 
-function ProductList({ products = [] }: { products: Product[] }) {
-  // Calculate number of columns based on screen width
-  const getNumColumns = () => {
-    if (screenWidth > 768) return 4; // Tablet landscape
-    if (screenWidth > 480) return 3; // Tablet portrait
-    return 2; // Phone
-  };
+// Calculate number of columns based on screen width
+const getNumColumns = () => {
+  if (screenWidth > 768) return 4; // Tablet landscape
+  if (screenWidth > 480) return 3; // Tablet portrait
+  return 2; // Phone
+};
 
+function ProductList({ products = [] }: { products: Product[] }) {
   const numColumns = getNumColumns();
   const itemMargin = 4;
   const containerPadding = 16;
