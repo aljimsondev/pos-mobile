@@ -8,6 +8,7 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -17,6 +18,7 @@ import './global.css';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const client = new QueryClient();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
@@ -28,12 +30,14 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <SplashScreenController />
-      <RootNavigator />
-      <StatusBar style="auto" />
-      <PortalHost />
-      <ToastManager />
-      <GlobalDialog />
+      <QueryClientProvider client={client}>
+        <SplashScreenController />
+        <RootNavigator />
+        <StatusBar style="auto" />
+        <PortalHost />
+        <ToastManager />
+        <GlobalDialog />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

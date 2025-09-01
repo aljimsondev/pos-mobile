@@ -3,12 +3,24 @@ import Container from '@/components/ui/Container';
 import Header from '@/components/ui/Header';
 import IconButton from '@/components/ui/IconButton';
 import SearchBar from '@/components/ui/SearchBar';
+import { fetchProducts } from '@/core/requests/fetch-products';
+import { useQuery } from '@tanstack/react-query';
 import { Link } from 'expo-router';
 import { Settings2 } from 'lucide-react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 
 function Products() {
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('created_at');
+
+  const { data } = useQuery({
+    queryFn: () => fetchProducts(),
+    queryKey: [page, limit],
+  });
+  console.log(data?.products);
   return (
     <Container className="gap-2">
       <Header />
