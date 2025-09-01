@@ -6,7 +6,6 @@ import {
 import { Text } from '@/components/reusable/text';
 import {} from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'expo-image';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 function Header() {
@@ -14,11 +13,7 @@ function Header() {
   return (
     <View className="w-full border-b-border flex-row items-center justify-between border-b-[1px] p-2">
       <View>
-        <Image
-          source={require('../../assets/images/icon.png')}
-          style={{ width: 30, height: 30 }}
-          contentFit="contain"
-        />
+        <Text style={{ fontFamily: 'NicoMoji', fontSize: 24 }}>POS</Text>
       </View>
       <TouchableOpacity onPress={() => (navigation as any).toggleDrawer()}>
         <Avatar alt="Zach Nugent's Avatar">
