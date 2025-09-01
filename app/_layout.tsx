@@ -21,6 +21,8 @@ export default function RootLayout() {
   const client = new QueryClient();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    NicoMoji: require('../assets/fonts/NicoMoji-Regular.ttf'),
+    Nebula: require('../assets/fonts/Nebula-Regular.otf'),
   });
 
   if (!loaded) {

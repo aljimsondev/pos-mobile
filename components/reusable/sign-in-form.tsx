@@ -11,12 +11,12 @@ import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { authClient } from '@/lib/auth/client';
 import { cn } from '@/lib/utils';
-import { Image } from 'expo-image';
 import * as React from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
   type TextInput,
+  Text as TextNative,
   View,
 } from 'react-native';
 
@@ -51,11 +51,9 @@ export function SignInForm() {
       <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5 w-full bg-transparent">
         <CardHeader>
           <View className="w-full justify-center items-center mb-8">
-            <Image
-              source={require('../../assets/images/splash-icon-dark.png')}
-              style={{ width: 100, height: 100 }}
-              contentFit="contain"
-            />
+            <TextNative style={{ fontFamily: 'NicoMoji', fontSize: 32 }}>
+              POS
+            </TextNative>
           </View>
           <CardTitle className="text-center text-xl sm:text-left">
             Sign in to your app

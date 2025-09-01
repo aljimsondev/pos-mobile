@@ -1,6 +1,7 @@
 import { Button } from '@/components/reusable/button';
 import { Text } from '@/components/reusable/text';
 import Container from '@/components/ui/Container';
+import { authClient } from '@/lib/auth/client';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import React from 'react';
 import { ScrollView } from 'react-native';
@@ -20,7 +21,7 @@ function AppDrawer({
           Menu
         </Text>
       </ScrollView>
-      <Button>
+      <Button onPress={() => authClient.signOut()}>
         <Text>Logout</Text>
       </Button>
     </Container>
