@@ -5,10 +5,9 @@ import IconButton from '@/components/ui/IconButton';
 import SearchBar from '@/components/ui/SearchBar';
 import { fetchProducts } from '@/core/requests/fetch-products';
 import { useQuery } from '@tanstack/react-query';
-import { Link } from 'expo-router';
 import { Settings2 } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 function Products() {
   const [limit, setLimit] = useState(10);
@@ -28,13 +27,24 @@ function Products() {
         <SearchBar placeholder="Search product..." />
         <IconButton icon={Settings2} />
       </View>
-      <Text>Products page</Text>
-      <Link href="/(root)/(tabs)/(products)/search">
-        <Text className="underline">Search Product</Text>
-      </Link>
-      <Link href="/(root)/(tabs)/(products)/1">
-        <Text className="underline">View Product</Text>
-      </Link>
+      <FlatList
+        data={data?.products || []}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          return (
+            <View>
+              <Text>Hello</Text>
+            </View>
+          );
+        }}
+
+        // End reached detection
+        // onEndReached={fetchMoreData}
+        // onEndReachedThreshold={0.5} // Trigger when 50% from bottom
+
+        // // Loading indicator
+        // ListFooterComponent={loading ? <ActivityIndicator /> : null}
+      />
     </Container>
   );
 }
