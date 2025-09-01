@@ -6,7 +6,13 @@ import {
 } from 'react-native-safe-area-context';
 
 function Container({ className, ...rest }: SafeAreaViewProps) {
-  return <SafeAreaView className={cn('flex-1', className)} {...rest} />;
+  return (
+    <SafeAreaView
+      edges={['top', 'left', 'right']} // exclude bottom spacing
+      className={cn('flex-1', className)}
+      {...rest}
+    />
+  );
 }
 
 export default Container;
