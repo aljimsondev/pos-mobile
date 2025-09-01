@@ -7,7 +7,7 @@ export default function AppLayout() {
   return (
     <Stack>
       <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-      <Stack.Screen name="(setup)" options={{ headerShown: false }} />
+      <Stack.Screen name="account-setup" options={{ headerShown: false }} />
     </Stack>
   );
 }
