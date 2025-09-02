@@ -18,21 +18,13 @@ export const fetchProducts = async (): Promise<ProductListResponse> => {
     const response = await fetcher('/product/list');
 
     const body = (await response.json()) as ApiResponse<ProductListResponse>;
-    console.log(body);
-    if (!body?.success) return defaultReturnData;
+
+    if (!body?.success) throw body?.error;
+
     return body.data;
   } catch (e) {
-    console.warn('Error fetchProducts: Reason:' + e);
-    return {
-      pagination: {
-        count: 0,
-        has_next_page: false,
-        has_prev_page: false,
-        limit: 10,
-        page: 1,
-        total_pages: 1,
-      },
-      products: [],
-    };
+    console.warn('Error fetchProducts: Reason:' + JSON.stringify(e));
+
+    return defaultReturnData;
   }
 };
