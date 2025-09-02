@@ -4,10 +4,11 @@ import {
   AvatarImage,
 } from '@/components/reusable/avatar';
 import { Text } from '@/components/reusable/text';
+import IconButton from '@/components/ui/IconButton';
 import Ionicons from '@expo/vector-icons/Ionicons';
 // import IconButton from '@/components/ui/IconButton';
 import {} from '@react-navigation/drawer';
-import { useNavigation } from '@react-navigation/native';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import React, { ReactNode } from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -23,14 +24,11 @@ export function HeaderTitle({
 
   return (
     <View className="flex-row gap-2 items-center">
-      {/* <IconButton
-        icon={Menu}
+      <IconButton
+        icon={<Ionicons name="menu" size={24} />}
         onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
         className="rounded-full border-transparent"
-      /> */}
-      <TouchableOpacity>
-        <Ionicons name="menu" size={24} />
-      </TouchableOpacity>
+      />
       {typeof title === 'string' ? (
         <Text className="text-lg font-semibold">{title}</Text>
       ) : (
