@@ -13,7 +13,7 @@ import React, { ReactNode } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
 export type HeaderTitleProps = {
-  title: string | ReactNode;
+  title?: string | ReactNode;
 };
 
 export function HeaderTitle({
