@@ -20,7 +20,7 @@ function Products() {
     queryFn: () => fetchProducts(),
     queryKey: [page, limit],
   });
-  console.log(data?.products);
+
   return (
     <Container className="gap-2 pt-2" edges={['left', 'right']}>
       <View className="flex-row gap-1 px-2">
@@ -35,13 +35,7 @@ function Products() {
           }}
         />
       </View>
-      <ProductList
-        products={new Array(10).fill(0).map((_, index) => {
-          return {
-            id: `${index}`,
-          };
-        })}
-      />
+      <ProductList products={data?.products || []} />
     </Container>
   );
 }

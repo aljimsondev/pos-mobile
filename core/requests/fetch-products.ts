@@ -18,9 +18,8 @@ export const fetchProducts = async (): Promise<ProductListResponse> => {
     const response = await fetcher('/product/list');
 
     const body = (await response.json()) as ApiResponse<ProductListResponse>;
-
+    console.log(body);
     if (!body?.success) return defaultReturnData;
-
     return body.data;
   } catch (e) {
     console.warn('Error fetchProducts: Reason:' + e);
