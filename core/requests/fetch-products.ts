@@ -1,7 +1,6 @@
 import { ApiResponse, ProductListResponse } from '@/lib/types/response';
 import { fetcher } from '@/lib/utils';
 
-
 const defaultReturnData = {
   pagination: {
     count: 0,
@@ -13,10 +12,23 @@ const defaultReturnData = {
   },
   products: [],
 };
+export type ProductListQuery = {
+  limit?: number;
+  page?: number;
+  search?: string;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+  brandId?: string;
+  categoryId?: string;
+};
 
-export const fetchProducts = async (): Promise<ProductListResponse> => {
+export const fetchProducts = async (
+  params?: ProductListQuery,
+): Promise<ProductListResponse> => {
   try {
-    const response = await fetcher('/product/list');
+    const response = await fetcher(`/product/list`, {
+      query: params as Record<any, string>,
+    });
 
     const body = (await response.json()) as ApiResponse<ProductListResponse>;
 

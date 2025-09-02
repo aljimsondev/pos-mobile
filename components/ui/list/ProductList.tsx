@@ -35,7 +35,7 @@ function ProductList({ products = [] }: { products: Product[] }) {
       }}
       numColumns={numColumns}
       className="px-2"
-      contentContainerClassName="justify-center items-center"
+      contentContainerClassName="justify-center items-start"
       // End reached detection
       // onEndReached={fetchMoreData}
       // onEndReachedThreshold={0.5} // Trigger when 50% from bottom

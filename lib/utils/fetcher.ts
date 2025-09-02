@@ -1,4 +1,5 @@
 import { authClient } from '@/lib/auth/client';
+import { buildQueryString } from '@/lib/utils/query-builder';
 
 /**
  * A wrapper around the native fetch API that automatically prepends the base API URL
@@ -35,9 +36,10 @@ export const fetcher = (
   endpoint: string,
   options: RequestInit & {
     prefix?: string;
+    query?: Record<any, string>;
   } = {},
 ): Promise<Response> => {
-  const { prefix = 'api/v1' } = options;
+  const { prefix = 'api/v1', query = {} } = options;
   const cookie = authClient.getCookie();
   if (!endpoint || typeof endpoint !== 'string') {
     throw new TypeError('Endpoint must be a non-empty string');
@@ -49,8 +51,11 @@ export const fetcher = (
 
   const formattedEndpoint = formatEndpoint(endpoint);
   const fullUrl = `${process.env.EXPO_PUBLIC_API_URL}/${prefix}${formattedEndpoint}`;
+
+  const queryString = buildQueryString(query);
   console.info('Requesting to: ' + fullUrl);
-  return fetch(fullUrl, {
+
+  return fetch(fullUrl + queryString, {
     ...options,
     headers: {
       ...options?.headers,

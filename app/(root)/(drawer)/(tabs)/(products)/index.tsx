@@ -10,14 +10,18 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 
 function Products() {
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(6);
   const [page, setPage] = useState(1);
   const [sortOrder, setSortOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('created_at');
   const { showDialog } = useDialogStore();
 
   const { data } = useQuery({
-    queryFn: () => fetchProducts(),
+    queryFn: () =>
+      fetchProducts({
+        limit: limit,
+        page: page,
+      }),
     queryKey: [page, limit],
   });
 
