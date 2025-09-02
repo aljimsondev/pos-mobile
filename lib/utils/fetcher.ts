@@ -54,7 +54,7 @@ export const fetcher = (
     ...options,
     headers: {
       ...options?.headers,
-      // Cookie: cookie,
+      Cookie: cookie,
     },
   });
 };
