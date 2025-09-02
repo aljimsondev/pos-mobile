@@ -65,8 +65,8 @@ function ProductList({
         ) : undefined
       }
       numColumns={numColumns}
-      className="px-2"
-      contentContainerClassName="justify-center items-start"
+      className="mx-2"
+      contentContainerClassName="justify-center items-center"
       // Pagination
       onEndReached={loadMore}
       onEndReachedThreshold={0.2} // Trigger when 80% from bottom
