@@ -7,6 +7,7 @@ import { Text } from '@/components/reusable/text';
 import IconButton from '@/components/ui/IconButton';
 import {} from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { Menu } from 'lucide-react-native';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -26,9 +27,13 @@ export function HeaderTitle() {
 }
 
 export function MainHeaderRight() {
+  const router = useRouter();
   return (
     <View className="flex-row gap-2 items-center">
-      <TouchableOpacity activeOpacity={0.7}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => router.push('/profile')}
+      >
         <Avatar alt="Zach Nugent's Avatar" className="h-10 w-10">
           <AvatarImage
             source={{ uri: 'https://github.com/mrzachnugent.png' }}
