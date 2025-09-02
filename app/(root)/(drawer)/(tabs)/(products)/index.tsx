@@ -1,5 +1,4 @@
 import Container from '@/components/ui/Container';
-import Header from '@/components/ui/Header';
 import IconButton from '@/components/ui/IconButton';
 import ProductList from '@/components/ui/list/ProductList';
 import SearchBar from '@/components/ui/SearchBar';
@@ -21,8 +20,7 @@ function Products() {
   });
   console.log(data?.products);
   return (
-    <Container className="gap-2">
-      <Header />
+    <Container className="gap-2 pt-2" edges={['left', 'right']}>
       <View className="flex-row gap-1 px-2">
         <SearchBar placeholder="Search product..." />
         <IconButton icon={Settings2} />

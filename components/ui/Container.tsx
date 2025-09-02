@@ -5,13 +5,13 @@ import {
   SafeAreaViewProps,
 } from 'react-native-safe-area-context';
 
-function Container({ className, ...rest }: SafeAreaViewProps) {
+function Container({
+  className,
+  edges = ['left', 'right', 'top'], // exclude bottom spacing by default
+  ...rest
+}: SafeAreaViewProps) {
   return (
-    <SafeAreaView
-      edges={['top', 'left', 'right']} // exclude bottom spacing
-      className={cn('flex-1', className)}
-      {...rest}
-    />
+    <SafeAreaView edges={edges} className={cn('flex-1', className)} {...rest} />
   );
 }
 

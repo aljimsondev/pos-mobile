@@ -1,8 +1,13 @@
+import { HeaderTitle, MainHeaderRight } from '@/components/ui/Header';
 import { THEME } from '@/lib/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 import { Tabs } from 'expo-router';
 import React from 'react';
 function TabLayout() {
+  const navigation = useNavigation();
+  const toggleDrawer = () => (navigation as any).toggleDrawer();
+
   return (
     <Tabs
       screenOptions={{
@@ -13,7 +18,12 @@ function TabLayout() {
         name="(products)"
         options={{
           tabBarLabel: 'Products',
-          headerShown: false,
+          // headerShown: false,
+          headerTitle: () => <HeaderTitle />,
+          headerRight: () => <MainHeaderRight />,
+          headerRightContainerStyle: {
+            padding: 8,
+          },
           tabBarIcon: ({ color, focused, size }) => (
             <Ionicons
               color={color}
@@ -40,8 +50,9 @@ function TabLayout() {
       <Tabs.Screen
         name="cart"
         options={{
+          title: 'My Cart',
           tabBarLabel: 'Cart',
-          headerShown: false,
+          // headerShown: false,
           tabBarIcon: ({ color, focused, size }) => (
             <Ionicons
               color={color}

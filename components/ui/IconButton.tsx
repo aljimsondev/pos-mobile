@@ -1,15 +1,28 @@
+import { cn } from '@/lib/utils';
 import { LucideIcon, LucideProps } from 'lucide-react-native';
 import React, { createElement } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
-type IconButtonProps = {
+interface IconButtonProps extends TouchableOpacityProps {
   icon: LucideIcon;
   iconProps?: LucideProps;
-};
+}
 
-function IconButton({ icon, iconProps = {} }: IconButtonProps) {
+function IconButton({
+  icon,
+  iconProps = {},
+  className,
+  ...rest
+}: IconButtonProps) {
   return (
-    <TouchableOpacity className="h-[40x] aspect-square border-border border-[1px] items-center justify-center bg-card rounded-md">
+    <TouchableOpacity
+      {...rest}
+      activeOpacity={1}
+      className={cn(
+        'h-10 w-10 border-border border-[1px] items-center justify-center bg-card rounded-md active:bg-muted',
+        className,
+      )}
+    >
       {createElement(icon, iconProps)}
     </TouchableOpacity>
   );
