@@ -69,16 +69,21 @@ export function GlobalDialog() {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={hideDialog}>
-      <DialogContent className={`min-w-full ${getVariantClasses()}`}>
+    <Dialog open={isOpen}>
+      <DialogContent
+        className={`min-w-full ${getVariantClasses()}`}
+        hideCloseButton
+      >
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="flex-row justify-between">
           {showCancel && (
-            <DialogClose onPress={handleCancel}>
-              <Text>{cancelText}</Text>
+            <DialogClose onPress={handleCancel} asChild>
+              <Button onPress={handleContinue} variant="outline">
+                <Text>{cancelText}</Text>
+              </Button>
             </DialogClose>
           )}
           {showContinue && (
