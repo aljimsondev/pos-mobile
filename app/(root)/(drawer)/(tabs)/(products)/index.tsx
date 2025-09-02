@@ -31,6 +31,11 @@ function Products() {
     updateDebouncedSearch(text); // Delayed update for API trigger
   };
 
+  const handleClearSearchText = () => {
+    setSearch(''); // Immediate update for input
+    updateDebouncedSearch(''); // Delayed update for API trigger
+  };
+
   const { data, fetchNextPage, refetch, isFetchingNextPage, isFetching } =
     useInfiniteQuery({
       queryFn: ({ pageParam: nextPage }) =>
@@ -59,6 +64,8 @@ function Products() {
           value={search}
           onChangeText={handleSearchChange}
           placeholder="Search product..."
+          showClearButton={search !== ''}
+          onTextClear={handleClearSearchText}
         />
         <IconButton
           icon={<Ionicons name="filter" size={24} />}
