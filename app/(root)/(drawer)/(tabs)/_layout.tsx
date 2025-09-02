@@ -52,7 +52,7 @@ function TabLayout() {
         options={{
           title: 'My Cart',
           tabBarLabel: 'Cart',
-          // headerShown: false,
+          headerTitle: () => <HeaderTitle title="My Cart" />,
           tabBarIcon: ({ color, focused, size }) => (
             <Ionicons
               color={color}
