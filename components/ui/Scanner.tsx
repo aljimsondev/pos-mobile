@@ -49,7 +49,16 @@ function AppScanner() {
 
   return (
     <View className="flex-1 bg-red-500 justify-center">
-      <CameraView style={{ flex: 1 }} facing="back" />
+      <CameraView
+        style={{ flex: 1 }}
+        facing="back"
+        barcodeScannerSettings={{
+          barcodeTypes: ['itf14'],
+        }}
+        onBarcodeScanned={(data) => {
+          console.log(data);
+        }}
+      />
     </View>
   );
 }
