@@ -11,7 +11,7 @@ import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 
 function Products() {
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(5);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [orderBy, setOrderBy] = useState('created_at');
   const { showDialog } = useDialogStore();
