@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/components/reusable/card';
 import { Text } from '@/components/reusable/text';
-import { KeyRound } from 'lucide-react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import React from 'react';
 import { View } from 'react-native';
 import {
@@ -30,7 +30,7 @@ function AppScanner() {
             <View className="flex-1 gap-1.5 ">
               <View className="py-4 items-center justify-center">
                 <View className="border-muted border-[1px] p-4 rounded-md ">
-                  <KeyRound />
+                  <Ionicons name="key" size={24} />
                 </View>
               </View>
               <CardTitle>Camera Permission</CardTitle>

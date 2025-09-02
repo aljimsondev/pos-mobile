@@ -1,8 +1,8 @@
-import { Icon } from '@/components/reusable/icon';
 import { NativeOnlyAnimatedView } from '@/components/reusable/native-only-animated-view';
+import IconButton from '@/components/ui/IconButton';
 import { cn } from '@/lib/utils/index';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import * as DialogPrimitive from '@rn-primitives/dialog';
-import { X } from 'lucide-react-native';
 import * as React from 'react';
 import { Platform, Text, View, type ViewProps } from 'react-native';
 import { FadeIn, FadeOut } from 'react-native-reanimated';
@@ -87,8 +87,8 @@ function DialogContent({
             )}
             hitSlop={12}
           >
-            <Icon
-              as={X}
+            <IconButton
+              icon={<Ionicons name="close" />}
               className={cn(
                 'text-accent-foreground web:pointer-events-none size-4 shrink-0',
               )}

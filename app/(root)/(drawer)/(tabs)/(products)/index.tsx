@@ -3,8 +3,8 @@ import IconButton from '@/components/ui/IconButton';
 import ProductList from '@/components/ui/list/ProductList';
 import SearchBar from '@/components/ui/SearchBar';
 import { fetchProducts } from '@/core/requests/fetch-products';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQuery } from '@tanstack/react-query';
-import { Settings2 } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 
@@ -23,7 +23,7 @@ function Products() {
     <Container className="gap-2 pt-2" edges={['left', 'right']}>
       <View className="flex-row gap-1 px-2">
         <SearchBar placeholder="Search product..." />
-        <IconButton icon={Settings2} />
+        <IconButton icon={<Ionicons name="filter" size={24} />} />
       </View>
       <ProductList
         products={new Array(10).fill(0).map((_, index) => {

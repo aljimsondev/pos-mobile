@@ -1,19 +1,13 @@
 import { cn } from '@/lib/utils';
-import { LucideIcon, LucideProps } from 'lucide-react-native';
-import React, { createElement } from 'react';
+import {} from '@expo/vector-icons';
+import React, { ReactNode } from 'react';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
 interface IconButtonProps extends TouchableOpacityProps {
-  icon: LucideIcon;
-  iconProps?: LucideProps;
+  icon: ReactNode;
 }
 
-function IconButton({
-  icon,
-  iconProps = {},
-  className,
-  ...rest
-}: IconButtonProps) {
+function IconButton({ icon, className, ...rest }: IconButtonProps) {
   return (
     <TouchableOpacity
       {...rest}
@@ -23,7 +17,7 @@ function IconButton({
         className,
       )}
     >
-      {createElement(icon, iconProps)}
+      {icon}
     </TouchableOpacity>
   );
 }
