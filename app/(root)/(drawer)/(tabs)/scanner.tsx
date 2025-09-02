@@ -1,13 +1,8 @@
-import { Text } from '@/components/reusable/text';
-import Container from '@/components/ui/Container';
+import AppScanner from '@/components/ui/Scanner';
 import React from 'react';
 
 function BarcodeScanner() {
-  return (
-    <Container>
-      <Text>Barcode Scanner</Text>
-    </Container>
-  );
+  return <AppScanner />;
 }
 
 export default BarcodeScanner;
