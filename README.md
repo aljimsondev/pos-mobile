@@ -33,6 +33,7 @@ You can start developing by editing the files inside the **app** directory. This
 - [Nativewind](https://www.nativewind.dev/) - apply tailwindcss styling
 - [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - state management
 - [Tanstack Query](https://tanstack.com/) - Data Fetching
+- [react-native-vision-camera](https://react-native-vision-camera.com/) - A powerful camera library
 
 ## Get a fresh project
 
