@@ -34,7 +34,7 @@ function ProductList({ products = [] }: { products: Product[] }) {
         );
       }}
       numColumns={numColumns}
-      className="px-2 bg-gray-400"
+      className="px-2"
       contentContainerClassName="justify-center items-center"
       // End reached detection
       // onEndReached={fetchMoreData}
