@@ -1,4 +1,4 @@
-import { type Product } from '@aljimsondev/database-schema';
+import { Product } from '@/lib/types/product';
 
 export type ApiResponse<T = any> = {
   success: boolean;
