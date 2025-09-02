@@ -40,7 +40,7 @@ function ProductList({
   return (
     <FlatList
       {...rest}
-      data={data}
+      data={data as Product[]}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => {
         return (

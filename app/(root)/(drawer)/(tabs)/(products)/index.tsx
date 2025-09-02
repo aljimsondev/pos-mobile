@@ -6,7 +6,8 @@ import { fetchProducts } from '@/core/requests/fetch-products';
 import { useDialogStore } from '@/lib/store/dialog-store';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import debounce from 'debounce';
+import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 
 function Products() {
@@ -14,6 +15,21 @@ function Products() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [orderBy, setOrderBy] = useState('created_at');
   const { showDialog } = useDialogStore();
+  const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
+  // Debounced function to update the delayed state
+  const updateDebouncedSearch = useCallback(
+    debounce((searchTerm) => {
+      setDebouncedSearch(searchTerm);
+    }, 500), // 300ms delay
+    [],
+  );
+
+  const handleSearchChange = (text: string) => {
+    setSearch(text); // Immediate update for input
+    updateDebouncedSearch(text); // Delayed update for API trigger
+  };
 
   const { data, fetchNextPage, refetch, isFetchingNextPage, isFetching } =
     useInfiniteQuery({
@@ -23,8 +39,9 @@ function Products() {
           page: nextPage,
           sort_order: sortOrder,
           sort_by: orderBy,
+          search: debouncedSearch,
         }),
-      queryKey: [limit],
+      queryKey: [limit, debouncedSearch],
       initialPageParam: 1,
       getNextPageParam: (lastPage) => {
         if (!lastPage.pagination.has_next_page) return undefined;
@@ -38,7 +55,11 @@ function Products() {
   return (
     <Container className="gap-2 pt-2" edges={['left', 'right']}>
       <View className="flex-row gap-1 px-2">
-        <SearchBar placeholder="Search product..." />
+        <SearchBar
+          value={search}
+          onChangeText={handleSearchChange}
+          placeholder="Search product..."
+        />
         <IconButton
           icon={<Ionicons name="filter" size={24} />}
           onPress={() => {
@@ -60,7 +81,7 @@ function Products() {
         initialNumToRender={limit}
         maxToRenderPerBatch={Math.floor(limit / 2)}
         updateCellsBatchingPeriod={100}
-        windowSize={10}
+        windowSize={limit}
       />
     </Container>
   );
