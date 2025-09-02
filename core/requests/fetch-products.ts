@@ -26,7 +26,6 @@ export const fetchProducts = async (
   params?: ProductListQuery,
 ): Promise<ProductListResponse> => {
   try {
-    console.log(params);
     const response = await fetcher(`/product/list`, {
       query: params as Record<any, string>,
     });

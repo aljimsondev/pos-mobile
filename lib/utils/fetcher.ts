@@ -53,7 +53,7 @@ export const fetcher = (
   const fullUrl = `${process.env.EXPO_PUBLIC_API_URL}/${prefix}${formattedEndpoint}`;
 
   const queryString = buildQueryString(query);
-  console.info('Requesting to: ' + fullUrl);
+  console.info('Requesting to: ' + fullUrl + queryString);
 
   return fetch(fullUrl + queryString, {
     ...options,
