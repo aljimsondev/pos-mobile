@@ -26,7 +26,7 @@ function SearchBar({
       />
       {showClearButton && (
         <TouchableOpacity
-          className="absolute px-2 right-0"
+          className="absolute p-2 right-0"
           activeOpacity={0.8}
           onPress={onTextClear}
         >
