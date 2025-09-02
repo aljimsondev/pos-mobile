@@ -7,20 +7,22 @@ import {
   CardTitle,
 } from '@/components/reusable/card';
 import { Text } from '@/components/reusable/text';
-import { CameraView, useCameraPermissions } from 'expo-camera';
 import { KeyRound } from 'lucide-react-native';
 import React from 'react';
 import { View } from 'react-native';
+import {
+  Camera,
+  useCameraDevice,
+  useCameraPermission,
+} from 'react-native-vision-camera';
 
 function AppScanner() {
-  const [permission, requestPermission] = useCameraPermissions();
+  const device = useCameraDevice('back');
+  const { hasPermission, requestPermission } = useCameraPermission();
 
-  if (!permission) {
-    // Camera permissions are still loading.
-    return <View />;
-  }
+  if (!device) return null;
 
-  if (!permission.granted) {
+  if (!hasPermission) {
     return (
       <View className="flex-1 items-center justify-center">
         <Card className="w-full max-w-sm">
@@ -49,16 +51,7 @@ function AppScanner() {
 
   return (
     <View className="flex-1 bg-red-500 justify-center">
-      <CameraView
-        style={{ flex: 1 }}
-        facing="back"
-        barcodeScannerSettings={{
-          barcodeTypes: ['itf14'],
-        }}
-        onBarcodeScanned={(data) => {
-          console.log(data);
-        }}
-      />
+      <Camera style={{ flex: 1 }} device={device} isActive={true} />
     </View>
   );
 }
