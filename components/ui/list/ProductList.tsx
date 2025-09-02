@@ -12,7 +12,7 @@ import {
 const { width: screenWidth } = Dimensions.get('window');
 
 // Calculate number of columns based on screen width
-const getNumColumns = () => {
+export const getNumColumns = () => {
   if (screenWidth > 768) return 4; // Tablet landscape
   if (screenWidth > 480) return 3; // Tablet portrait
   return 2; // Phone
