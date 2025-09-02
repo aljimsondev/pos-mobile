@@ -1,7 +1,14 @@
 import ProductCard from '@/components/ui/ProductCard';
 import { Product } from '@/lib/types/product';
 import React from 'react';
-import { Dimensions, FlatList } from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  FlatListProps,
+  RefreshControl,
+  View,
+} from 'react-native';
 const { width: screenWidth } = Dimensions.get('window');
 
 // Calculate number of columns based on screen width
@@ -11,7 +18,19 @@ const getNumColumns = () => {
   return 2; // Phone
 };
 
-function ProductList({ products = [] }: { products: Product[] }) {
+function ProductList({
+  data,
+  loadMore,
+  isFetchingData,
+  onRefresh,
+  isLoading = false,
+  ...rest
+}: Partial<FlatListProps<Product>> & {
+  loadMore: () => void;
+  isFetchingData: boolean;
+  onRefresh?: () => void;
+  isLoading?: boolean;
+}) {
   const numColumns = getNumColumns();
   const itemMargin = 4;
   const containerPadding = 16;
@@ -20,7 +39,8 @@ function ProductList({ products = [] }: { products: Product[] }) {
 
   return (
     <FlatList
-      data={products}
+      {...rest}
+      data={data}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => {
         return (
@@ -33,15 +53,41 @@ function ProductList({ products = [] }: { products: Product[] }) {
           />
         );
       }}
+      // Pull-to-refresh functionality
+      refreshControl={
+        onRefresh ? (
+          <RefreshControl
+            refreshing={isLoading}
+            onRefresh={onRefresh}
+            colors={['#007AFF']} // Android
+            tintColor="#007AFF" // iOS
+          />
+        ) : undefined
+      }
       numColumns={numColumns}
       className="px-2"
       contentContainerClassName="justify-center items-start"
-      // End reached detection
-      // onEndReached={fetchMoreData}
-      // onEndReachedThreshold={0.5} // Trigger when 50% from bottom
-
-      // // Loading indicator
-      // ListFooterComponent={loading ? <ActivityIndicator /> : null}
+      // Pagination
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.2} // Trigger when 80% from bottom
+      // Maintain scroll position on data changes
+      maintainVisibleContentPosition={{
+        minIndexForVisible: 0,
+        autoscrollToTopThreshold: 1,
+      }}
+      // Loading indicator
+      ListFooterComponent={
+        isFetchingData ? (
+          <View className="p-2 bg-card rounded-full absolute border-muted border-[1px] bottom-0 shadow-md">
+            <ActivityIndicator size={34} />
+          </View>
+        ) : null
+      }
+      ListFooterComponentStyle={{
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
     />
   );
 }

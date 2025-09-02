@@ -16,16 +16,17 @@ export type ProductListQuery = {
   limit?: number;
   page?: number;
   search?: string;
-  sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
-  brandId?: string;
-  categoryId?: string;
+  sort_by?: string;
+  sort_order?: 'asc' | 'desc';
+  brand_id?: string;
+  category_id?: string;
 };
 
 export const fetchProducts = async (
   params?: ProductListQuery,
 ): Promise<ProductListResponse> => {
   try {
+    console.log(params);
     const response = await fetcher(`/product/list`, {
       query: params as Record<any, string>,
     });
