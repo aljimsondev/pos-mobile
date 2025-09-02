@@ -30,7 +30,7 @@ function AppScanner() {
             <View className="flex-1 gap-1.5 ">
               <View className="py-4 items-center justify-center">
                 <View className="border-muted border-[1px] p-4 rounded-md ">
-                  <Ionicons name="key" size={24} />
+                  <Ionicons name="key-outline" size={36} />
                 </View>
               </View>
               <CardTitle>Camera Permission</CardTitle>
