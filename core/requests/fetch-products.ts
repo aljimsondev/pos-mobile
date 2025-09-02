@@ -1,6 +1,7 @@
 import { ApiResponse, ProductListResponse } from '@/lib/types/response';
 import { fetcher } from '@/lib/utils';
 
+
 const defaultReturnData = {
   pagination: {
     count: 0,
