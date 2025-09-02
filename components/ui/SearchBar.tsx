@@ -16,20 +16,23 @@ function SearchBar({
 }) {
   return (
     <View className="flex-1 items-center justify-center">
+      <View className="absolute p-2 z-10 left-0">
+        <Ionicons name="search" size={18} color={THEME.light.mutedForeground} />
+      </View>
       <Input
         className={cn('', className)}
-        style={{ paddingRight: 36 }}
+        style={{ paddingRight: 30, paddingLeft: 30 }}
         {...rest}
       />
       {showClearButton && (
         <TouchableOpacity
-          className="absolute p-2 right-0"
+          className="absolute px-2 right-0"
           activeOpacity={0.8}
           onPress={onTextClear}
         >
           <Ionicons
             name="close"
-            size={24}
+            size={18}
             color={THEME.light.mutedForeground}
           />
         </TouchableOpacity>
