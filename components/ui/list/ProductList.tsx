@@ -27,7 +27,6 @@ function ProductList({ products = [] }: { products: Product[] }) {
           <ProductCard
             product={item}
             style={{
-              height: 200,
               width: itemWidth,
               margin: itemMargin,
             }}

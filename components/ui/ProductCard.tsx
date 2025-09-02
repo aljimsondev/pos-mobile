@@ -1,4 +1,8 @@
+import { Card, CardContent } from '@/components/reusable/card';
+import { Text } from '@/components/reusable/text';
 import { Product } from '@/lib/types/product';
+import { getImageUrl } from '@/lib/utils';
+import { Image } from 'expo-image';
 import React from 'react';
 import { StyleProp, TouchableOpacity, View, ViewStyle } from 'react-native';
 
@@ -16,10 +20,23 @@ type ProductCarProps = {
 };
 
 function ProductCard({ product, style }: ProductCarProps) {
-  console.log(product);
+  const photoUrl = getImageUrl(product.photo.url);
+
   return (
-    <TouchableOpacity>
-      <View className="bg-red-600 p-2" style={style}></View>
+    <TouchableOpacity activeOpacity={0.8}>
+      <Card className="p-0 overflow-hidden" style={style}>
+        <CardContent className="p-0">
+          <Image
+            source={photoUrl}
+            style={{ width: '100%', aspectRatio: 3 / 4 }}
+            contentFit="cover"
+            contentPosition="center"
+          />
+          <View className="px-2 line-clamp-2 py-4">
+            <Text>{product.name}</Text>
+          </View>
+        </CardContent>
+      </Card>
     </TouchableOpacity>
   );
 }
