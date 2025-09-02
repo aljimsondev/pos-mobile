@@ -11,7 +11,7 @@ export function useRedirectAccountSetup() {
     if (isPending) return; // Wait for auth to load
 
     if (hasSession && !(data.user as Session['user'])?.setupComplete) {
-      router.replace('/(root)/(setup)');
+      router.replace('/account-setup');
     }
   }, [hasSession, data?.user, isPending, router]);
 }

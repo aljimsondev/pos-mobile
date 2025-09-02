@@ -3,6 +3,7 @@ import { Text } from '@/components/reusable/text';
 import { Product } from '@/lib/types/product';
 import { getImageUrl } from '@/lib/utils';
 import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { StyleProp, TouchableOpacity, View, ViewStyle } from 'react-native';
 
@@ -21,9 +22,21 @@ type ProductCarProps = {
 
 function ProductCard({ product, style }: ProductCarProps) {
   const photoUrl = getImageUrl(product.photo.url);
+  const router = useRouter();
 
   return (
-    <TouchableOpacity activeOpacity={0.8}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() =>
+        router.navigate({
+          pathname: '/(root)/(stack)/[productId]',
+          params: {
+            productId: product.id,
+            productName: product.name,
+          },
+        })
+      }
+    >
       <Card className="p-0 overflow-hidden" style={style}>
         <CardContent className="p-0">
           <Image
