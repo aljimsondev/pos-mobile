@@ -1,4 +1,5 @@
 // stores/dialog-store.js
+import { ReactNode } from 'react';
 import { create } from 'zustand';
 
 interface DialogState {
@@ -12,6 +13,7 @@ interface DialogState {
   variant?: 'default' | 'destructive' | 'warning' | 'success';
   showCancel?: boolean;
   showContinue?: boolean;
+  content?: ReactNode;
 }
 
 interface DialogStore extends DialogState {
@@ -31,6 +33,7 @@ const initialState: DialogState = {
   variant: 'default',
   showCancel: true,
   showContinue: true,
+  content: null,
 };
 
 export const useDialogStore = create<DialogStore>((set, get) => ({

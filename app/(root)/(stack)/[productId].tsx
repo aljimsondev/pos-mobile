@@ -1,3 +1,4 @@
+import SelectedVariantDialog from '@/components/ui/dialogs/SelectedVariantDialog';
 import ProductVariationList from '@/components/ui/list/ProductVariationList';
 import { fetchProductVariations } from '@/core/requests/fetch-product-variation';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -63,11 +64,7 @@ function ProductVariations() {
           loadMore={fetchNextPage}
         />
       </View>
-      {/* <View className="p-4">
-        <Button>
-          <Text>Add to Cart</Text>
-        </Button>
-      </View> */}
+      <SelectedVariantDialog />
     </View>
   );
 }

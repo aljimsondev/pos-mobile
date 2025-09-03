@@ -11,7 +11,8 @@ interface CurrencyFormatterOptions {
 export const currencyFormatter = (
   amount: string | number,
   options: CurrencyFormatterOptions = {},
-): string => {
+): string | undefined => {
+  if (!amount) return;
   // Default options
   const defaults: Required<CurrencyFormatterOptions> = {
     currency: 'USD',
@@ -68,29 +69,29 @@ export const currencyFormatter = (
 type AmountInput = string | number;
 
 // Utility functions with proper typing
-export const formatUSD = (amount: AmountInput): string =>
+export const formatUSD = (amount: AmountInput) =>
   currencyFormatter(amount, { currency: 'USD', locale: 'en-US' });
 
-export const formatPHP = (amount: AmountInput): string =>
+export const formatPHP = (amount: AmountInput) =>
   currencyFormatter(amount, { currency: 'PHP', locale: 'en-US' });
 
-export const formatEUR = (amount: AmountInput): string =>
+export const formatEUR = (amount: AmountInput) =>
   currencyFormatter(amount, { currency: 'EUR', locale: 'de-DE' });
 
-export const formatGBP = (amount: AmountInput): string =>
+export const formatGBP = (amount: AmountInput) =>
   currencyFormatter(amount, { currency: 'GBP', locale: 'en-GB' });
 
-export const formatJPY = (amount: AmountInput): string =>
+export const formatJPY = (amount: AmountInput) =>
   currencyFormatter(amount, { currency: 'JPY', locale: 'ja-JP' });
 
-export const formatCAD = (amount: AmountInput): string =>
+export const formatCAD = (amount: AmountInput) =>
   currencyFormatter(amount, { currency: 'CAD', locale: 'en-CA' });
 
 // Function to format without currency symbol (just number formatting)
 export const numberFormatter = (
   amount: AmountInput,
   options: Omit<CurrencyFormatterOptions, 'currency'> = {},
-): string => {
+) => {
   return currencyFormatter(amount, { ...options, style: 'decimal' });
 };
 

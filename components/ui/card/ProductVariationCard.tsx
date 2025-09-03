@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@/components/reusable/card';
 import { Text } from '@/components/reusable/text';
+import { useVariantDialogStore } from '@/lib/store/variation-store';
 import { ProductVariation } from '@/lib/types/product';
 import { getImageUrl } from '@/lib/utils';
 import { formatPHP } from '@/lib/utils/currency-formatter';
@@ -14,11 +15,27 @@ type ProductVariatiobCardProps = {
 };
 
 function ProductVariationCard({ variation, style }: ProductVariatiobCardProps) {
+  const { show } = useVariantDialogStore();
   const photoUrl = getImageUrl(variation.photo.url);
   const { productName } = useLocalSearchParams<{ productName: string }>();
 
+  const onPress = () => {
+    show({
+      variant: {
+        ...variation,
+        photo: {
+          ...variation.photo,
+          url: photoUrl,
+        },
+      },
+      onSubmit: () => {
+        console.log('Handle submission');
+      },
+    });
+  };
+
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => {}}>
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
       <Card className="p-0 overflow-hidden" style={style}>
         <CardContent className="p-0">
           <Image
