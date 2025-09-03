@@ -1,4 +1,3 @@
-import Container from '@/components/ui/Container';
 import ProductVariationList from '@/components/ui/list/ProductVariationList';
 import { fetchProductVariations } from '@/core/requests/fetch-product-variation';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -32,7 +31,7 @@ function ProductVariations() {
 
         return lastPage.pagination.page + 1;
       },
-      queryKey: [],
+      queryKey: [productId, limit, debouncedSearch],
     });
 
   // Debounced function to update the delayed state
@@ -56,15 +55,20 @@ function ProductVariations() {
   const variations = data?.pages.map((data) => data.results).flat();
 
   return (
-    <Container edges={[]}>
-      <View className="flex-1 px-2">
+    <View className="flex-1">
+      <View className="flex-1 px-2 mt-4">
         <ProductVariationList
           data={variations || []}
           isFetchingData={isFetching}
           loadMore={fetchNextPage}
         />
       </View>
-    </Container>
+      {/* <View className="p-4">
+        <Button>
+          <Text>Add to Cart</Text>
+        </Button>
+      </View> */}
+    </View>
   );
 }
 

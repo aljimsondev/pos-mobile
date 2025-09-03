@@ -2,6 +2,7 @@ import { Card, CardContent } from '@/components/reusable/card';
 import { Text } from '@/components/reusable/text';
 import { ProductVariation } from '@/lib/types/product';
 import { getImageUrl } from '@/lib/utils';
+import { formatPHP } from '@/lib/utils/currency-formatter';
 import { Image } from 'expo-image';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
@@ -27,7 +28,9 @@ function ProductVariationCard({ variation, style }: ProductVariatiobCardProps) {
             contentPosition="center"
           />
           <View className="px-2 line-clamp-2 py-4">
-            <Text>{productName}</Text>
+            <Text className="text-sm text-muted-foreground">{productName}</Text>
+            <Text>{variation.variation_name}</Text>
+            <Text className="font-bold">{formatPHP(variation.unit_price)}</Text>
           </View>
         </CardContent>
       </Card>
