@@ -1,4 +1,4 @@
-import { Product } from '@/lib/types/product';
+import { Product, ProductVariation } from '@/lib/types/product';
 
 export type ApiResponse<T = any> = {
   success: boolean;
@@ -18,3 +18,17 @@ export type ProductListResponse = {
   };
   products: Product[];
 };
+
+export type ListResponse<T> = {
+  pagination: {
+    count: number;
+    has_next_page: boolean;
+    has_prev_page: boolean;
+    limit: number;
+    page: number;
+    total_pages: number;
+  };
+  results: T[];
+};
+
+export type ProductVariationResponse = ListResponse<ProductVariation>;
