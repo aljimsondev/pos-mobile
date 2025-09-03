@@ -8,15 +8,31 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/reusable/dialog';
+import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
+import IconButton from '@/components/ui/IconButton';
 import { useVariantDialogStore } from '@/lib/store/variation-store';
 import { formatPHP } from '@/lib/utils/currency-formatter';
+import { Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 
 function SelectedVariantDialog() {
-  const { isOpen, onSubmit, hide, variant } = useVariantDialogStore();
+  const { isOpen, hide, variant } = useVariantDialogStore();
+  const [quantity, setQuantity] = useState(1);
+
+  const handleIncrement = () => setQuantity((prev) => prev + 1);
+  const handleDecrement = () =>
+    setQuantity((prev) => {
+      if (prev <= 1) return 1;
+
+      return prev - 1;
+    });
+
+  const handleSubmit = () => {
+    // add to cart
+  };
   return (
     <Dialog open={isOpen}>
       <DialogContent className={`min-w-full max-w-sm}`} hideCloseButton>
@@ -39,8 +55,24 @@ function SelectedVariantDialog() {
               <Text className="font-bold text-xl">
                 {formatPHP(variant?.unit_price || '')}
               </Text>
+
+              <View className="mt-4">
+                <Text className="text-sm">Quantity</Text>
+                <View className="flex-row gap-2 items-center mt-2">
+                  <IconButton
+                    icon={<Feather name="minus" size={24} />}
+                    onPress={handleDecrement}
+                  />
+                  <Text className="px-2">{quantity}</Text>
+                  <IconButton
+                    icon={<Feather name="plus" size={24} />}
+                    onPress={handleIncrement}
+                  />
+                </View>
+              </View>
             </View>
           </View>
+          <Separator className="w-full" />
         </View>
         <DialogFooter className="flex-row justify-between">
           <DialogClose asChild onPress={hide}>
@@ -48,7 +80,7 @@ function SelectedVariantDialog() {
               <Text>Cancel</Text>
             </Button>
           </DialogClose>
-          <Button onPress={onSubmit}>
+          <Button onPress={handleSubmit}>
             <Text>Proceed</Text>
           </Button>
         </DialogFooter>

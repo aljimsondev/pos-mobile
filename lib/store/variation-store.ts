@@ -3,7 +3,6 @@ import { create } from 'zustand';
 
 export interface VariationState {
   isOpen?: boolean;
-  onSubmit?: () => void;
   variant?: ProductVariation;
 }
 
@@ -14,7 +13,6 @@ export interface VariantDialogStore extends VariationState {
 }
 
 const initialState: VariationState = {
-  onSubmit: undefined,
   isOpen: false,
   variant: undefined,
 };

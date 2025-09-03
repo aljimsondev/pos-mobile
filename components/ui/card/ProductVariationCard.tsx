@@ -28,9 +28,6 @@ function ProductVariationCard({ variation, style }: ProductVariatiobCardProps) {
           url: photoUrl,
         },
       },
-      onSubmit: () => {
-        console.log('Handle submission');
-      },
     });
   };
 
