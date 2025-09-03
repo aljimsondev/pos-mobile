@@ -1,4 +1,5 @@
 import Container from '@/components/ui/Container';
+import ProductVariationList from '@/components/ui/list/ProductVariationList';
 import { fetchProductVariations } from '@/core/requests/fetch-product-variation';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import debounce from 'debounce';
@@ -56,7 +57,13 @@ function ProductVariations() {
 
   return (
     <Container edges={[]}>
-      <View className="flex-1 px-2"></View>
+      <View className="flex-1 px-2">
+        <ProductVariationList
+          data={variations || []}
+          isFetchingData={isFetching}
+          loadMore={fetchNextPage}
+        />
+      </View>
     </Container>
   );
 }
