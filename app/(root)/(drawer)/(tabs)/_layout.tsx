@@ -1,4 +1,5 @@
-import { HeaderTitle, MainHeaderRight } from '@/components/ui/Header';
+import { HeaderTitle, MainHeaderRight } from '@/components/ui/header';
+import { CartHeaderRight } from '@/components/ui/header/cart-header';
 import { useCartSelectors } from '@/lib/store/cart-store';
 import { THEME } from '@/lib/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -55,6 +56,10 @@ function TabLayout() {
           tabBarBadge: totalItems,
           tabBarLabel: 'Cart',
           headerTitle: () => <HeaderTitle title="My Cart" />,
+          headerRight: () => <CartHeaderRight />,
+          headerRightContainerStyle: {
+            padding: 8,
+          },
           tabBarIcon: ({ color, focused, size }) => (
             <Ionicons
               color={color}

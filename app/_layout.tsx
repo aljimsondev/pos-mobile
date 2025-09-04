@@ -2,11 +2,8 @@ import SplashScreenController from '@/app/splash';
 import { GlobalDialog } from '@/components/ui/dialogs/GlobalDialog';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { authClient } from '@/lib/auth/client';
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native';
+import { NAV_THEME } from '@/lib/theme';
+import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
@@ -31,7 +28,9 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider
+      value={colorScheme === 'dark' ? NAV_THEME.dark : NAV_THEME.light}
+    >
       <QueryClientProvider client={client}>
         <SplashScreenController />
         <RootNavigator />
