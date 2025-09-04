@@ -1,6 +1,7 @@
 import { Button } from '@/components/reusable/button';
 import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
+import NoContent from '@/components/ui/card/no-content';
 import Container from '@/components/ui/Container';
 import CartList from '@/components/ui/list/cart.list';
 import { useCartSelectors, useCartStore } from '@/lib/store/cart-store';
@@ -11,9 +12,18 @@ import { View } from 'react-native';
 
 function Cart() {
   const { items } = useCartStore();
-  const { totalPrice, vat, subTotal } = useCartSelectors({
+  const { totalPrice, vat, subTotal, isEmpty } = useCartSelectors({
     VAT_RATE: 0.02,
   });
+
+  if (isEmpty)
+    return (
+      <NoContent
+        title="Cart is empty!"
+        description="There are no items in the cart at the moment!"
+      />
+    );
+
   return (
     <Container edges={[]}>
       <View className="flex-1">
