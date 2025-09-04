@@ -185,19 +185,46 @@ export const useCartStore = create<CartStore>((set, get) => ({
   },
 }));
 
+export type CartSelectorOptions = {
+  VAT_RATE?: number;
+};
+
 // Helper selectors (computed values)
-export const useCartSelectors = () => {
+export const useCartSelectors = (options?: CartSelectorOptions) => {
+  const vatRate = options?.VAT_RATE || 0;
+
   const items = useCartStore((state) => state.items);
+
+  const calculateSubtotal = () => {
+    return items.reduce(
+      (sum, item) => sum + Number(item.unit_price || 0) * item.quantity,
+      0,
+    );
+  };
+
+  const calculateVAT = () => {
+    return subTotal * vatRate;
+  };
+
+  const subTotal = calculateSubtotal();
+  const vat = calculateVAT();
+
+  const calculateTotal = () => {
+    return subTotal + vat;
+  };
 
   return {
     // Total items count
     totalItems: items.length,
 
+    // Subtotal price
+    subTotal,
+
+    // Calculated value add tax price
+    vat,
+
     // Total price
-    totalPrice: items.reduce(
-      (sum, item) => sum + Number(item.unit_price || 0) * item.quantity,
-      0,
-    ),
+    totalPrice: calculateTotal(),
 
     // Selected items
     selectedItems: items.filter((item) => item.selected),
