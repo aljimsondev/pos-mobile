@@ -2,12 +2,13 @@ import { Card, CardContent } from '@/components/reusable/card';
 import { Text } from '@/components/reusable/text';
 import IconButton from '@/components/ui/IconButton';
 import { CartProduct, useCartStore } from '@/lib/store/cart-store';
+import { THEME } from '@/lib/theme';
 import { formatPHP } from '@/lib/utils/currency-formatter';
 import { Feather } from '@expo/vector-icons';
 import { Checkbox } from 'expo-checkbox';
 import { Image } from 'expo-image';
 import React from 'react';
-import { View } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 
 function CartItem({ item }: { item: CartProduct }) {
   const {
@@ -15,6 +16,8 @@ function CartItem({ item }: { item: CartProduct }) {
     decrementItemSelectionQuantity,
     incrementItemSelectionQuantity,
   } = useCartStore();
+  const scheme = useColorScheme() as 'light' | 'dark';
+  const isDark = scheme === 'dark';
 
   return (
     <Card className="p-2">
@@ -23,6 +26,13 @@ function CartItem({ item }: { item: CartProduct }) {
           <Checkbox
             value={item.selected}
             onValueChange={() => toggleItemSelection(item.product_id, item.id)}
+            color={
+              item.selected
+                ? isDark
+                  ? THEME[scheme].muted
+                  : THEME[scheme].primary
+                : undefined
+            }
           />
         </View>
         <View className="w-[90px]">
