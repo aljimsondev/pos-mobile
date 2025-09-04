@@ -234,5 +234,8 @@ export const useCartSelectors = () => {
 
     // Check if cart is empty
     isEmpty: items.length === 0,
+
+    // Check if items has selected state
+    hasSelected: items.some((item) => item.selected),
   };
 };
