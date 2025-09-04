@@ -2,7 +2,6 @@
 import { Button } from '@/components/reusable/button';
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -80,11 +79,9 @@ export function GlobalDialog() {
         </DialogHeader>
         <DialogFooter className="flex-row justify-between">
           {showCancel && (
-            <DialogClose onPress={handleCancel} asChild>
-              <Button onPress={handleContinue} variant="outline">
-                <Text>{cancelText}</Text>
-              </Button>
-            </DialogClose>
+            <Button onPress={handleCancel} variant="outline">
+              <Text>{cancelText}</Text>
+            </Button>
           )}
           {showContinue && (
             <Button onPress={handleContinue} variant={getContinueVariant()}>
