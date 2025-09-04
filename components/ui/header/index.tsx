@@ -25,7 +25,7 @@ export function HeaderTitle({
   return (
     <View className="flex-row gap-2 items-center">
       <IconButton
-        icon={<Ionicons name="menu" size={24} />}
+        icon={(color) => <Ionicons name="menu" size={24} color={color} />}
         onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
         className="rounded-full border-transparent"
       />

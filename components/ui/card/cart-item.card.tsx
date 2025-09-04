@@ -42,7 +42,9 @@ function CartItem({ item }: { item: CartProduct }) {
             <Text className="text-xs">Quantity</Text>
             <View className="flex-row gap-1 items-center mt-2">
               <IconButton
-                icon={<Feather name="minus" size={14} />}
+                icon={(color) => (
+                  <Feather name="minus" size={14} color={color} />
+                )}
                 className="w-7 h-7"
                 onPress={() =>
                   decrementItemSelectionQuantity({
@@ -54,7 +56,9 @@ function CartItem({ item }: { item: CartProduct }) {
               <Text className="px-2">{item?.quantity}</Text>
               <IconButton
                 className="w-7 h-7"
-                icon={<Feather name="plus" size={14} />}
+                icon={(color) => (
+                  <Feather name="plus" size={14} color={color} />
+                )}
                 onPress={() =>
                   incrementItemSelectionQuantity({
                     productId: item.product_id,

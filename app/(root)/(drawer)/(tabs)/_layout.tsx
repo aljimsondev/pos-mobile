@@ -1,13 +1,61 @@
+import { Text } from '@/components/reusable/text';
 import { HeaderTitle, MainHeaderRight } from '@/components/ui/header';
 import { CartHeaderRight } from '@/components/ui/header/cart-header';
 import { useCartSelectors } from '@/lib/store/cart-store';
-import { THEME } from '@/lib/theme';
+import { NAV_THEME, THEME } from '@/lib/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { useColorScheme } from 'react-native';
+
+function TabBarLabel({
+  color,
+  focused,
+  label,
+}: {
+  focused: boolean;
+  color: string;
+  label: string;
+}) {
+  const scheme = useColorScheme() as 'light' | 'dark';
+
+  return (
+    <Text
+      style={{
+        color: focused ? NAV_THEME[scheme].colors.primary : color,
+      }}
+      className="text-xs"
+    >
+      {label}
+    </Text>
+  );
+}
+
+function TabBarIcon({
+  color,
+  focused,
+  size,
+  focusedIconName,
+  defaultIconName,
+}: {
+  focused: boolean;
+  color: string;
+  size: number;
+  focusedIconName: any;
+  defaultIconName: any;
+}) {
+  const scheme = useColorScheme() as 'light' | 'dark';
+
+  return (
+    <Ionicons
+      color={focused ? NAV_THEME[scheme].colors.primary : color}
+      name={focused ? focusedIconName : defaultIconName}
+      size={size}
+    />
+  );
+}
+
 function TabLayout() {
-  const navigation = useNavigation();
   const { totalItems } = useCartSelectors();
 
   return (
@@ -19,7 +67,9 @@ function TabLayout() {
       <Tabs.Screen
         name="(products)"
         options={{
-          tabBarLabel: 'Products',
+          tabBarLabel: ({ color, focused }) => (
+            <TabBarLabel color={color} focused={focused} label="Products" />
+          ),
           // headerShown: false,
           headerTitle: () => <HeaderTitle />,
           headerRight: () => <MainHeaderRight />,
@@ -27,10 +77,12 @@ function TabLayout() {
             padding: 8,
           },
           tabBarIcon: ({ color, focused, size }) => (
-            <Ionicons
+            <TabBarIcon
               color={color}
-              name={focused ? 'grid' : 'grid-outline'}
+              focused={focused}
               size={size}
+              defaultIconName="grid-outline"
+              focusedIconName="grid"
             />
           ),
         }}
@@ -38,13 +90,17 @@ function TabLayout() {
       <Tabs.Screen
         name="scanner"
         options={{
-          tabBarLabel: 'Scanner',
+          tabBarLabel: ({ color, focused }) => (
+            <TabBarLabel color={color} focused={focused} label="Scanner" />
+          ),
           headerShown: false,
           tabBarIcon: ({ color, focused, size }) => (
-            <Ionicons
+            <TabBarIcon
               color={color}
-              name={focused ? 'qr-code' : 'qr-code-outline'}
+              focused={focused}
               size={size}
+              defaultIconName="qr-code-outline"
+              focusedIconName="qr-code"
             />
           ),
         }}
@@ -54,17 +110,21 @@ function TabLayout() {
         options={{
           title: 'My Cart',
           tabBarBadge: totalItems,
-          tabBarLabel: 'Cart',
+          tabBarLabel: ({ color, focused }) => (
+            <TabBarLabel color={color} focused={focused} label="Cart" />
+          ),
           headerTitle: () => <HeaderTitle title="My Cart" />,
           headerRight: () => <CartHeaderRight />,
           headerRightContainerStyle: {
             padding: 8,
           },
           tabBarIcon: ({ color, focused, size }) => (
-            <Ionicons
+            <TabBarIcon
               color={color}
-              name={focused ? 'cart' : 'cart-outline'}
+              focused={focused}
               size={size}
+              defaultIconName="cart-outline"
+              focusedIconName="cart"
             />
           ),
         }}

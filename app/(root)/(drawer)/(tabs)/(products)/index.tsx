@@ -8,7 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import debounce from 'debounce';
 import React, { useCallback, useState } from 'react';
-import { View } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 
 function Products() {
   const [limit, setLimit] = useState(5);
@@ -17,6 +17,7 @@ function Products() {
   const { showDialog } = useDialogStore();
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
+  const scheme = useColorScheme() as 'dark' | 'light';
 
   // Debounced function to update the delayed state
   const updateDebouncedSearch = useCallback(
@@ -68,7 +69,7 @@ function Products() {
           onTextClear={handleClearSearchText}
         />
         <IconButton
-          icon={<Ionicons name="filter" size={24} />}
+          icon={(color) => <Ionicons name="filter" size={24} color={color} />}
           onPress={() => {
             showDialog({
               title: 'Hello',

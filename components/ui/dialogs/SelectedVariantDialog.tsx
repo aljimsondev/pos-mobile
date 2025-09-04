@@ -79,12 +79,16 @@ function SelectedVariantDialog() {
                 <Text className="text-xs">Quantity</Text>
                 <View className="flex-row gap-2 items-center mt-2">
                   <IconButton
-                    icon={<Feather name="minus" size={24} />}
+                    icon={(color) => (
+                      <Feather name="minus" size={24} color={color} />
+                    )}
                     onPress={handleDecrement}
                   />
                   <Text className="px-2">{quantity}</Text>
                   <IconButton
-                    icon={<Feather name="plus" size={24} />}
+                    icon={(color) => (
+                      <Feather name="plus" size={24} color={color} />
+                    )}
                     onPress={handleIncrement}
                   />
                 </View>
