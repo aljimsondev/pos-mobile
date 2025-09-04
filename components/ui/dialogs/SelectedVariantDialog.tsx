@@ -51,14 +51,14 @@ function SelectedVariantDialog() {
 
   return (
     <Dialog open={isOpen}>
-      <DialogContent className={`min-w-full max-w-sm}`} hideCloseButton>
+      <DialogContent className={`min-w-full max-w-sm`} hideCloseButton>
         <DialogHeader>
           <DialogTitle>Confirmation</DialogTitle>
           <DialogDescription>Finalize selected variation!</DialogDescription>
         </DialogHeader>
         <View className="grid gap-4">
           <View className="flex-row gap-4">
-            <View className="w-[100px]">
+            <View className="w-[124px]">
               <Image
                 source={variant?.photo.url}
                 style={{ width: '100%', aspectRatio: 3 / 4 }}
@@ -66,14 +66,17 @@ function SelectedVariantDialog() {
                 contentPosition="center"
               />
             </View>
-            <View>
-              <Text>Variant: {variant?.variation_name}</Text>
+            <View className="overflow-hidden flex-1">
+              <Text className="line-clamp-2">{productName}</Text>
+              <Text className="text-sm">
+                Variant: {variant?.variation_name}
+              </Text>
               <Text className="font-bold text-xl">
                 {formatPHP(variant?.unit_price || '')}
               </Text>
 
               <View className="mt-4">
-                <Text className="text-sm">Quantity</Text>
+                <Text className="text-xs">Quantity</Text>
                 <View className="flex-row gap-2 items-center mt-2">
                   <IconButton
                     icon={<Feather name="minus" size={24} />}
