@@ -6,7 +6,7 @@ export type CartProduct = ProductVariation & {
   selected?: boolean;
 };
 
-type RemoveItemParams = {
+type BaseItemActionParams = {
   productId: string;
   variationId?: string;
 };
@@ -23,11 +23,13 @@ export interface CartState {
 
 export interface CartStore extends CartState {
   add: (product: CartProduct) => void;
-  remove: (params: RemoveItemParams) => void;
+  remove: (params: BaseItemActionParams) => void;
   update: (params: UpdateItemParams) => void;
   removeSelectedItems: () => void;
   toggleItemSelection: (productId: string, variationId: string) => void;
   toggleAllSelection: (selected: boolean) => void;
+  incrementItemSelectionQuantity: (params: BaseItemActionParams) => void;
+  decrementItemSelectionQuantity: (params: BaseItemActionParams) => void;
   clear: () => void;
 }
 
@@ -65,7 +67,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
     });
   },
   // Remove item from cart
-  remove: ({ productId, variationId }: RemoveItemParams) => {
+  remove: ({ productId, variationId }: BaseItemActionParams) => {
     set((state) => ({
       ...state,
       items: state.items.filter(
@@ -112,6 +114,42 @@ export const useCartStore = create<CartStore>((set, get) => ({
     set((state) => ({
       ...state,
       items: [],
+    }));
+  },
+
+  // Increment quantity
+  incrementItemSelectionQuantity: ({
+    productId,
+    variationId,
+  }: BaseItemActionParams) => {
+    set((state) => ({
+      ...state,
+      items: state.items.map((item) =>
+        item.id === variationId && item.product_id === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item,
+      ),
+    }));
+  },
+
+  // Increment quantity
+  decrementItemSelectionQuantity: ({
+    productId,
+    variationId,
+  }: BaseItemActionParams) => {
+    set((state) => ({
+      ...state,
+      items: state.items.map((item) =>
+        item.id === variationId && item.product_id === productId
+          ? {
+              ...item,
+              quantity:
+                item.quantity <= 1
+                  ? 1 //default to 1
+                  : item.quantity - 1, // decrement quantity
+            }
+          : item,
+      ),
     }));
   },
 

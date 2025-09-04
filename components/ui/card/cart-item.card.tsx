@@ -10,7 +10,11 @@ import React from 'react';
 import { View } from 'react-native';
 
 function CartItem({ item }: { item: CartProduct }) {
-  const { toggleItemSelection } = useCartStore();
+  const {
+    toggleItemSelection,
+    decrementItemSelectionQuantity,
+    incrementItemSelectionQuantity,
+  } = useCartStore();
 
   return (
     <Card className="p-2">
@@ -34,19 +38,29 @@ function CartItem({ item }: { item: CartProduct }) {
           <Text className="text-sm">Variant: {item?.variation_name}</Text>
           <Text className="font-bold">{formatPHP(item?.unit_price || '')}</Text>
 
-          <View>
+          <View className="mt-2">
             <Text className="text-xs">Quantity</Text>
             <View className="flex-row gap-1 items-center mt-2">
               <IconButton
                 icon={<Feather name="minus" size={14} />}
                 className="w-7 h-7"
-                // onPress={handleDecrement}
+                onPress={() =>
+                  decrementItemSelectionQuantity({
+                    productId: item.product_id,
+                    variationId: item.id,
+                  })
+                }
               />
               <Text className="px-2">{item?.quantity}</Text>
               <IconButton
                 className="w-7 h-7"
                 icon={<Feather name="plus" size={14} />}
-                // onPress={handleIncrement}
+                onPress={() =>
+                  incrementItemSelectionQuantity({
+                    productId: item.product_id,
+                    variationId: item.id,
+                  })
+                }
               />
             </View>
           </View>
