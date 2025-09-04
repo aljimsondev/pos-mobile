@@ -1,7 +1,7 @@
 import { ProductVariation } from '@/lib/types/product';
 import { create } from 'zustand';
 
-type CartProduct = ProductVariation & {
+export type CartProduct = ProductVariation & {
   productName: string;
   selected?: boolean;
 };
@@ -25,6 +25,9 @@ export interface CartStore extends CartState {
   add: (product: CartProduct) => void;
   remove: (params: RemoveItemParams) => void;
   update: (params: UpdateItemParams) => void;
+  removeSelectedItems: () => void;
+  toggleItemSelection: (productId: string, variationId: string) => void;
+  toggleAllSelection: (selected: boolean) => void;
   clear: () => void;
 }
 
@@ -57,7 +60,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
       // Product doesn't exist, add new item with quantity 1
       return {
         ...state,
-        items: [...state.items, { ...product, selected: false }],
+        items: [...state.items, { ...product, selected: true }],
       };
     });
   },
@@ -125,7 +128,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
     set((state) => ({
       ...state,
       items: state.items.map((item) =>
-        item.id === productId && item.variation_name === variationId
+        item.id === variationId && item.product_id === productId
           ? { ...item, selected: !item.selected }
           : item,
       ),
