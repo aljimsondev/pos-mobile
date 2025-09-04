@@ -1,4 +1,5 @@
 import { HeaderTitle, MainHeaderRight } from '@/components/ui/Header';
+import { useCartSelectors } from '@/lib/store/cart-store';
 import { THEME } from '@/lib/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -6,7 +7,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 function TabLayout() {
   const navigation = useNavigation();
-  const toggleDrawer = () => (navigation as any).toggleDrawer();
+  const { totalItems } = useCartSelectors();
 
   return (
     <Tabs
@@ -51,6 +52,7 @@ function TabLayout() {
         name="cart"
         options={{
           title: 'My Cart',
+          tabBarBadge: totalItems,
           tabBarLabel: 'Cart',
           headerTitle: () => <HeaderTitle title="My Cart" />,
           tabBarIcon: ({ color, focused, size }) => (

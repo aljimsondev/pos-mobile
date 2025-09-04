@@ -11,16 +11,23 @@ import {
 import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
 import IconButton from '@/components/ui/IconButton';
+import { useCartStore } from '@/lib/store/cart-store';
 import { useVariantDialogStore } from '@/lib/store/variation-store';
 import { formatPHP } from '@/lib/utils/currency-formatter';
 import { Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import { useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 
 function SelectedVariantDialog() {
   const { isOpen, hide, variant } = useVariantDialogStore();
   const [quantity, setQuantity] = useState(1);
+  const { productName } = useLocalSearchParams<{
+    productName: string;
+    productId: string;
+  }>();
+  const { add } = useCartStore();
 
   const handleIncrement = () => setQuantity((prev) => prev + 1);
   const handleDecrement = () =>
@@ -31,8 +38,17 @@ function SelectedVariantDialog() {
     });
 
   const handleSubmit = () => {
+    if (!variant) return;
     // add to cart
+    add({
+      ...variant,
+      quantity: quantity,
+      productName,
+    });
+
+    hide(); // close modal
   };
+
   return (
     <Dialog open={isOpen}>
       <DialogContent className={`min-w-full max-w-sm}`} hideCloseButton>
