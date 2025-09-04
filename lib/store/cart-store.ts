@@ -1,3 +1,4 @@
+import { APP_CONFIG } from '@/constants/config';
 import { ProductVariation } from '@/lib/types/product';
 import { create } from 'zustand';
 
@@ -185,13 +186,9 @@ export const useCartStore = create<CartStore>((set, get) => ({
   },
 }));
 
-export type CartSelectorOptions = {
-  VAT_RATE?: number;
-};
-
 // Helper selectors (computed values)
-export const useCartSelectors = (options?: CartSelectorOptions) => {
-  const vatRate = options?.VAT_RATE || 0;
+export const useCartSelectors = () => {
+  const vatRate = APP_CONFIG.fees.VAT_RATE;
 
   const items = useCartStore((state) => state.items);
 
