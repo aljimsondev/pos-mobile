@@ -1,22 +1,16 @@
 import SplashScreenController from '@/app/splash';
 import RootProvider from '@/components/provider';
 import { GlobalDialog } from '@/components/ui/dialogs/GlobalDialog';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { authClient } from '@/lib/auth/client';
-import { NAV_THEME } from '@/lib/theme';
-import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
-import { QueryClient } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import ToastManager from 'toastify-react-native';
 import './global.css';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     NicoMoji: require('../assets/fonts/NicoMoji-Regular.ttf'),
@@ -29,20 +23,14 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider
-      value={colorScheme === 'dark' ? NAV_THEME.dark : NAV_THEME.light}
-    >
-      <GestureHandlerRootView>
-        <RootProvider>
-          <SplashScreenController />
-          <RootNavigator />
-          <StatusBar style="auto" />
-          <PortalHost />
-          <ToastManager />
-          <GlobalDialog />
-        </RootProvider>
-      </GestureHandlerRootView>
-    </ThemeProvider>
+    <RootProvider>
+      <SplashScreenController />
+      <RootNavigator />
+      <StatusBar style="auto" />
+      <PortalHost />
+      <ToastManager />
+      <GlobalDialog />
+    </RootProvider>
   );
 }
 

@@ -1,9 +1,9 @@
 import { Text } from '@/components/reusable/text';
-import { renderBackdrop } from '@/components/ui/bottom-sheet';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { useEffect, useRef } from 'react';
+import { renderBackdrop } from './renderBackdrop';
 
 function BrandSheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
