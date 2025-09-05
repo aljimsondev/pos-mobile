@@ -1,3 +1,4 @@
+import NoContent from '@/components/ui/card/no-content';
 import Container from '@/components/ui/Container';
 import IconButton from '@/components/ui/IconButton';
 import ProductList from '@/components/ui/list/ProductList';
@@ -56,7 +57,8 @@ function Products() {
       },
     });
 
-  const products = data?.pages?.map((page) => page.products).flat();
+  const products = data?.pages?.map((page) => page.products).flat() || [];
+  const emptyProducts = products.length <= 0;
 
   return (
     <Container className="gap-2 pt-2" edges={['left', 'right']}>
@@ -78,19 +80,30 @@ function Products() {
           }}
         />
       </View>
-      <ProductList
-        data={products || []}
-        loadMore={fetchNextPage}
-        isFetchingData={isFetchingNextPage}
-        isLoading={isFetching}
-        onRefresh={refetch}
-        // Performance optimizations
-        removeClippedSubviews={true}
-        initialNumToRender={limit}
-        maxToRenderPerBatch={Math.floor(limit / 2)}
-        updateCellsBatchingPeriod={100}
-        windowSize={limit}
-      />
+      {emptyProducts ? (
+        <NoContent
+          title="No products found!"
+          description={
+            debouncedSearch
+              ? "There's no product matching this keyword!"
+              : 'There are no products yet!'
+          }
+        />
+      ) : (
+        <ProductList
+          data={products}
+          loadMore={fetchNextPage}
+          isFetchingData={isFetchingNextPage}
+          isLoading={isFetching}
+          onRefresh={refetch}
+          // Performance optimizations
+          removeClippedSubviews={true}
+          initialNumToRender={limit}
+          maxToRenderPerBatch={Math.floor(limit / 2)}
+          updateCellsBatchingPeriod={100}
+          windowSize={limit}
+        />
+      )}
     </Container>
   );
 }
