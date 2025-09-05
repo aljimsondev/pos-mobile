@@ -16,12 +16,13 @@ import { useVariantDialogStore } from '@/lib/store/variation-store';
 import { formatPHP } from '@/lib/utils/currency-formatter';
 import { Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 
 function SelectedVariantDialog() {
   const { isOpen, hide, variant } = useVariantDialogStore();
+  const { goBack } = useNavigation();
   const [quantity, setQuantity] = useState(1);
   const { productName } = useLocalSearchParams<{
     productName: string;
@@ -45,8 +46,11 @@ function SelectedVariantDialog() {
       quantity: quantity,
       productName,
     });
+    // close modal
+    hide();
 
-    hide(); // close modal
+    // navigate back exiting the variant screen
+    goBack();
   };
 
   return (
