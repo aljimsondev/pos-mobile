@@ -16,7 +16,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   type TextInput,
-  Text as TextNative,
   View,
 } from 'react-native';
 
@@ -51,9 +50,7 @@ export function SignInForm() {
       <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5 w-full bg-transparent">
         <CardHeader>
           <View className="w-full justify-center items-center mb-8">
-            <TextNative style={{ fontFamily: 'NicoMoji', fontSize: 36 }}>
-              POS
-            </TextNative>
+            <Text style={{ fontFamily: 'NicoMoji', fontSize: 36 }}>POS</Text>
           </View>
           <CardTitle className="text-center text-xl sm:text-left">
             Sign in to your app
