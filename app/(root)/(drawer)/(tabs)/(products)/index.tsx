@@ -1,7 +1,7 @@
 import NoContent from '@/components/ui/card/no-content';
+import ProductFilter from '@/components/ui/card/product-filter.card';
 import Container from '@/components/ui/Container';
 import ProductList from '@/components/ui/list/ProductList';
-import CategoryScrollView from '@/components/ui/scrollview/category.scrollview';
 import SearchBar from '@/components/ui/SearchBar';
 import { fetchProducts } from '@/core/requests/fetch-products';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -67,7 +67,7 @@ function Products() {
           onTextClear={handleClearSearchText}
         />
       </View>
-      <CategoryScrollView />
+      <ProductFilter />
       {emptyProducts ? (
         <NoContent
           title="No products found!"
