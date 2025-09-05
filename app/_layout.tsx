@@ -1,4 +1,5 @@
 import SplashScreenController from '@/app/splash';
+import CategorySheet from '@/components/ui/bottom-sheet/category.sheet';
 import { GlobalDialog } from '@/components/ui/dialogs/GlobalDialog';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { authClient } from '@/lib/auth/client';
@@ -40,6 +41,7 @@ export default function RootLayout() {
           <PortalHost />
           <ToastManager />
           <GlobalDialog />
+          <CategorySheet />
         </GestureHandlerRootView>
       </QueryClientProvider>
     </ThemeProvider>
