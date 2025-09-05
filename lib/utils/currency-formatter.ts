@@ -12,7 +12,7 @@ export const currencyFormatter = (
   amount: string | number,
   options: CurrencyFormatterOptions = {},
 ): string | undefined => {
-  if (!amount) return;
+  if (amount === undefined) return;
   // Default options
   const defaults: Required<CurrencyFormatterOptions> = {
     currency: 'USD',

@@ -9,7 +9,7 @@ import { View } from 'react-native';
 
 function CartSummary() {
   const { totalPrice, vat, subTotal } = useCartSelectors();
-
+  console.log(formatPHP(vat));
   return (
     <View className="gap-2 px-2 pb-2 bg-card">
       <Separator />
