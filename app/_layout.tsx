@@ -1,12 +1,12 @@
 import SplashScreenController from '@/app/splash';
-import CategorySheet from '@/components/ui/bottom-sheet/category.sheet';
+import RootProvider from '@/components/provider';
 import { GlobalDialog } from '@/components/ui/dialogs/GlobalDialog';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { authClient } from '@/lib/auth/client';
 import { NAV_THEME } from '@/lib/theme';
 import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -17,7 +17,6 @@ import './global.css';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const client = new QueryClient();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     NicoMoji: require('../assets/fonts/NicoMoji-Regular.ttf'),
@@ -33,17 +32,16 @@ export default function RootLayout() {
     <ThemeProvider
       value={colorScheme === 'dark' ? NAV_THEME.dark : NAV_THEME.light}
     >
-      <QueryClientProvider client={client}>
-        <GestureHandlerRootView>
+      <GestureHandlerRootView>
+        <RootProvider>
           <SplashScreenController />
           <RootNavigator />
           <StatusBar style="auto" />
           <PortalHost />
           <ToastManager />
           <GlobalDialog />
-          <CategorySheet />
-        </GestureHandlerRootView>
-      </QueryClientProvider>
+        </RootProvider>
+      </GestureHandlerRootView>
     </ThemeProvider>
   );
 }

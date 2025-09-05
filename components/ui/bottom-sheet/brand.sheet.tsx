@@ -5,22 +5,22 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { useEffect, useRef } from 'react';
 
-function CategorySheet() {
+function BrandSheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
-  const { category: categoryIsOpen, close } = useBottomSheetStore();
+  const { brand, close } = useBottomSheetStore();
 
   // control sheet according to state changes
   useEffect(() => {
-    if (categoryIsOpen) {
+    if (brand) {
       ref.current?.expand();
     } else {
       ref.current?.close();
     }
-  }, [categoryIsOpen]);
+  }, [brand]);
 
   const onChange = (props: any) => {
     if (props === -1) {
-      close('category');
+      close('brand');
     }
   };
 
@@ -41,4 +41,4 @@ function CategorySheet() {
   );
 }
 
-export default CategorySheet;
+export default BrandSheet;

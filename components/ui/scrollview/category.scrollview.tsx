@@ -11,11 +11,8 @@ export default function CategoryScrollView() {
         horizontal
         contentContainerClassName="flex items-center justify-start gap-2 px-2 min-w-full"
       >
-        <SelectionButton
-          label="Category"
-          onPress={() => open('category')}
-        />
-        <SelectionButton label="Brand" />
+        <SelectionButton label="Category" onPress={() => open('category')} />
+        <SelectionButton label="Brand" onPress={() => open('brand')} />
       </ScrollView>
       <SelectionButton label="Advance Filter" />
     </View>
