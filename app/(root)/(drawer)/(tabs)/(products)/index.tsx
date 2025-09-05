@@ -1,11 +1,10 @@
 import NoContent from '@/components/ui/card/no-content';
 import Container from '@/components/ui/Container';
-import IconButton from '@/components/ui/IconButton';
 import ProductList from '@/components/ui/list/ProductList';
+import CategoryScrollView from '@/components/ui/scrollview/category.scrollview';
 import SearchBar from '@/components/ui/SearchBar';
 import { fetchProducts } from '@/core/requests/fetch-products';
 import { useDialogStore } from '@/lib/store/dialog-store';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import debounce from 'debounce';
 import React, { useCallback, useState } from 'react';
@@ -70,16 +69,8 @@ function Products() {
           showClearButton={search !== ''}
           onTextClear={handleClearSearchText}
         />
-        <IconButton
-          icon={(color) => <Ionicons name="filter" size={24} color={color} />}
-          onPress={() => {
-            showDialog({
-              title: 'Hello',
-              description: 'Dialog test',
-            });
-          }}
-        />
       </View>
+      <CategoryScrollView />
       {emptyProducts ? (
         <NoContent
           title="No products found!"

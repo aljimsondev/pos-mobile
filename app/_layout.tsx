@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import ToastManager from 'toastify-react-native';
 import './global.css';
@@ -32,12 +33,14 @@ export default function RootLayout() {
       value={colorScheme === 'dark' ? NAV_THEME.dark : NAV_THEME.light}
     >
       <QueryClientProvider client={client}>
-        <SplashScreenController />
-        <RootNavigator />
-        <StatusBar style="auto" />
-        <PortalHost />
-        <ToastManager />
-        <GlobalDialog />
+        <GestureHandlerRootView>
+          <SplashScreenController />
+          <RootNavigator />
+          <StatusBar style="auto" />
+          <PortalHost />
+          <ToastManager />
+          <GlobalDialog />
+        </GestureHandlerRootView>
       </QueryClientProvider>
     </ThemeProvider>
   );
