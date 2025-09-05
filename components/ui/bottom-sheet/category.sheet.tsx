@@ -33,6 +33,8 @@ function CategorySheet() {
       snapPoints={['50%']}
       backdropComponent={renderBackdrop}
       onChange={onChange}
+      enablePanDownToClose
+      enableDynamicSizing={false}
     >
       <BottomSheetView className="flex-1">
         <Text>Awesome 🎉</Text>
