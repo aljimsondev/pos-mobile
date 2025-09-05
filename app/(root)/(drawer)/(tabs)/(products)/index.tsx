@@ -4,20 +4,17 @@ import ProductList from '@/components/ui/list/ProductList';
 import CategoryScrollView from '@/components/ui/scrollview/category.scrollview';
 import SearchBar from '@/components/ui/SearchBar';
 import { fetchProducts } from '@/core/requests/fetch-products';
-import { useDialogStore } from '@/lib/store/dialog-store';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import debounce from 'debounce';
 import React, { useCallback, useState } from 'react';
-import { useColorScheme, View } from 'react-native';
+import { View } from 'react-native';
 
 function Products() {
   const [limit, setLimit] = useState(5);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [orderBy, setOrderBy] = useState('created_at');
-  const { showDialog } = useDialogStore();
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
-  const scheme = useColorScheme() as 'dark' | 'light';
 
   // Debounced function to update the delayed state
   const updateDebouncedSearch = useCallback(
