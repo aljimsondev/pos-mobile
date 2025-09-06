@@ -1,3 +1,4 @@
+import NoContent from '@/components/ui/card/no-content';
 import SelectedVariantDialog from '@/components/ui/dialogs/SelectedVariantDialog';
 import ProductVariationList from '@/components/ui/list/ProductVariationList';
 import { fetchProductVariations } from '@/core/requests/fetch-product-variation';
@@ -53,17 +54,29 @@ function ProductVariations() {
     updateDebouncedSearch(''); // Delayed update for API trigger
   };
 
-  const variations = data?.pages.map((data) => data.results).flat();
+  const variations = data?.pages.map((data) => data.results).flat() || [];
+
+  const isEmpty = variations.length <= 0;
 
   return (
     <View className="flex-1">
-      <View className="flex-1 px-2 mt-4">
-        <ProductVariationList
-          data={variations || []}
-          isFetchingData={isFetching}
-          loadMore={fetchNextPage}
-        />
-      </View>
+      {isEmpty ? (
+        <View className="flex-1 items-center justify-center">
+          <NoContent
+            title="Product is empty!"
+            description="There are no product variations!"
+          />
+        </View>
+      ) : (
+        <View className="flex-1 px-2 mt-4">
+          <ProductVariationList
+            data={variations || []}
+            isFetchingData={isFetching}
+            loadMore={fetchNextPage}
+          />
+        </View>
+      )}
+
       <SelectedVariantDialog />
     </View>
   );

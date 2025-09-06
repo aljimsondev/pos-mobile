@@ -28,7 +28,9 @@ function NoContent({
           />
           <CardHeader>
             <CardTitle className="text-center text-xl">{title}</CardTitle>
-            <CardDescription>{description}</CardDescription>
+            <CardDescription className="text-center">
+              {description}
+            </CardDescription>
           </CardHeader>
         </CardContent>
       </Card>
