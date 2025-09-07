@@ -7,7 +7,7 @@ interface CategoryState {
 }
 
 interface CategoryStore extends CategoryState {
-  getCategories: () => void;
+  getCategories: (controller: AbortController) => void;
 }
 
 const initialState: CategoryState = {
@@ -16,7 +16,8 @@ const initialState: CategoryState = {
 
 export const useCategoryStore = create<CategoryStore>((set, get) => ({
   ...initialState,
-  getCategories: async () => {
+  getCategories: async (controller: AbortController) => {
+    console.log(controller.signal);
     const results = await fetchCategories({
       limit: 0,
     });

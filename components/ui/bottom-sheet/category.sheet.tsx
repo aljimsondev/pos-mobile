@@ -1,6 +1,7 @@
 import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
+import { useCategoryStore } from '@/lib/store/category-store';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { useEffect, useRef } from 'react';
@@ -10,6 +11,16 @@ import { renderBackdrop } from './renderBackdrop';
 function CategorySheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
   const { category: categoryIsOpen, close, open } = useBottomSheetStore();
+  const { getCategories, categories } = useCategoryStore();
+
+  useEffect(() => {
+    const controller = new AbortController();
+    getCategories(controller);
+
+    return () => {
+      controller.abort();
+    };
+  }, [getCategories]);
 
   // control sheet according to state changes
   useEffect(() => {
@@ -25,7 +36,7 @@ function CategorySheet() {
       close('category');
     }
   };
-
+  console.log(categories);
   return (
     <BottomSheet
       index={-1}
