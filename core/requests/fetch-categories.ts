@@ -12,10 +12,13 @@ interface CategoryListQuery {
 
 export const fetchCategories = async (
   params?: CategoryListQuery,
+  options: RequestInit = {},
 ): Promise<Category[]> => {
   try {
+    const { signal } = options;
     const response = await fetcher(`category/all`, {
       query: params as Record<any, string>,
+      signal,
     });
 
     const body = (await response.json()) as ApiResponse<ListResponse<Category>>;

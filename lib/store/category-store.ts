@@ -17,10 +17,14 @@ const initialState: CategoryState = {
 export const useCategoryStore = create<CategoryStore>((set, get) => ({
   ...initialState,
   getCategories: async (controller: AbortController) => {
-    console.log(controller.signal);
-    const results = await fetchCategories({
-      limit: 0,
-    });
+    const results = await fetchCategories(
+      {
+        limit: 0,
+      },
+      {
+        signal: controller.signal,
+      },
+    );
 
     set({
       categories: results,
