@@ -12,7 +12,7 @@ interface DrawerBlockProps {
 
 export function DrawerBlock({ children, blockTitle }: DrawerBlockProps) {
   return (
-    <View className="gap-2">
+    <View className="gap-2 my-2">
       <Text className="text-muted-foreground">{blockTitle}</Text>
       <Card className="p-2">
         <CardContent className="gap-1 p-0">{children}</CardContent>

@@ -14,37 +14,155 @@ function AppDrawer({
   state,
 }: DrawerContentComponentProps) {
   return (
-    <Container className="py-safe px-2">
-      <ScrollView className="flex-1">
-        <View className="py-3 border-b-border border-b-[1px]">
-          <Text style={{ fontFamily: 'NicoMoji', fontSize: 24 }}>MENU</Text>
-        </View>
-        <View className="flex-1 mt-4">
-          <DrawerBlock blockTitle="Product">
-            <DrawerBlockAction
-              label="Create new product"
-              icon={(color, size) => (
-                <FontAwesome5 size={size} name="cart-plus" color={color} />
-              )}
-            />
-            <DrawerBlockAction
-              label="Create new brand"
-              icon={(color, size) => (
-                <MaterialIcons
-                  size={size}
-                  color={color}
-                  name="branding-watermark"
-                />
-              )}
-            />
-            <DrawerBlockAction
-              label="Add category"
-              icon={(color, size) => (
-                <MaterialIcons size={size} color={color} name="category" />
-              )}
-            />
-          </DrawerBlock>
-        </View>
+    <Container className="py-safe px-4">
+      <View className="py-3 border-b-border border-b-[1px]">
+        <Text style={{ fontFamily: 'NicoMoji', fontSize: 24 }}>MENU</Text>
+      </View>
+      <ScrollView className="flex-1 my-4">
+        <DrawerBlock blockTitle="Product">
+          <DrawerBlockAction
+            label="Manage products"
+            icon={(color, size) => (
+              <FontAwesome5 size={size} name="cart-plus" color={color} />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage product brand"
+            icon={(color, size) => (
+              <MaterialIcons
+                size={size}
+                color={color}
+                name="branding-watermark"
+              />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage categories"
+            icon={(color, size) => (
+              <MaterialIcons size={size} color={color} name="category" />
+            )}
+          />
+        </DrawerBlock>
+        <DrawerBlock blockTitle="Product">
+          <DrawerBlockAction
+            label="Manage products"
+            icon={(color, size) => (
+              <FontAwesome5 size={size} name="cart-plus" color={color} />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage product brand"
+            icon={(color, size) => (
+              <MaterialIcons
+                size={size}
+                color={color}
+                name="branding-watermark"
+              />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage categories"
+            icon={(color, size) => (
+              <MaterialIcons size={size} color={color} name="category" />
+            )}
+          />
+        </DrawerBlock>
+        <DrawerBlock blockTitle="Product">
+          <DrawerBlockAction
+            label="Manage products"
+            icon={(color, size) => (
+              <FontAwesome5 size={size} name="cart-plus" color={color} />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage product brand"
+            icon={(color, size) => (
+              <MaterialIcons
+                size={size}
+                color={color}
+                name="branding-watermark"
+              />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage categories"
+            icon={(color, size) => (
+              <MaterialIcons size={size} color={color} name="category" />
+            )}
+          />
+        </DrawerBlock>
+        <DrawerBlock blockTitle="Product">
+          <DrawerBlockAction
+            label="Manage products"
+            icon={(color, size) => (
+              <FontAwesome5 size={size} name="cart-plus" color={color} />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage product brand"
+            icon={(color, size) => (
+              <MaterialIcons
+                size={size}
+                color={color}
+                name="branding-watermark"
+              />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage categories"
+            icon={(color, size) => (
+              <MaterialIcons size={size} color={color} name="category" />
+            )}
+          />
+        </DrawerBlock>
+        <DrawerBlock blockTitle="Product">
+          <DrawerBlockAction
+            label="Manage products"
+            icon={(color, size) => (
+              <FontAwesome5 size={size} name="cart-plus" color={color} />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage product brand"
+            icon={(color, size) => (
+              <MaterialIcons
+                size={size}
+                color={color}
+                name="branding-watermark"
+              />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage categories"
+            icon={(color, size) => (
+              <MaterialIcons size={size} color={color} name="category" />
+            )}
+          />
+        </DrawerBlock>
+        <DrawerBlock blockTitle="Product">
+          <DrawerBlockAction
+            label="Manage products"
+            icon={(color, size) => (
+              <FontAwesome5 size={size} name="cart-plus" color={color} />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage product brand"
+            icon={(color, size) => (
+              <MaterialIcons
+                size={size}
+                color={color}
+                name="branding-watermark"
+              />
+            )}
+          />
+          <DrawerBlockAction
+            label="Manage categories"
+            icon={(color, size) => (
+              <MaterialIcons size={size} color={color} name="category" />
+            )}
+          />
+        </DrawerBlock>
       </ScrollView>
       <Button onPress={() => authClient.signOut()}>
         <Text>Logout</Text>
