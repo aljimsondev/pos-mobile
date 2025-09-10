@@ -3,7 +3,7 @@ import { Text } from '@/components/reusable/text';
 import { THEME } from '@/lib/theme';
 import { Ionicons } from '@expo/vector-icons';
 import React, { ReactNode } from 'react';
-import { Pressable, useColorScheme, View } from 'react-native';
+import { Pressable, PressableProps, useColorScheme, View } from 'react-native';
 
 interface DrawerBlockProps {
   children: ReactNode;
@@ -21,17 +21,20 @@ export function DrawerBlock({ children, blockTitle }: DrawerBlockProps) {
   );
 }
 
-interface DrawerActionProps {
+interface DrawerActionProps extends PressableProps {
   label: string;
   icon?: (color: string, size: number) => ReactNode | null;
 }
 
-export function DrawerBlockAction({ label, icon }: DrawerActionProps) {
+export function DrawerBlockAction({ label, icon, ...rest }: DrawerActionProps) {
   const theme = useColorScheme() as 'dark' | 'light';
   const iconColor = THEME[theme].mutedForeground;
   const iconSize = 18;
   return (
-    <Pressable className="flex-row p-2 active:bg-muted rounded-md items-center">
+    <Pressable
+      className="flex-row p-2 active:bg-muted rounded-md items-center"
+      {...rest}
+    >
       <View className="flex-row gap-2 items-center flex-1">
         {icon && icon(iconColor, iconSize)}
         <Text>{label}</Text>

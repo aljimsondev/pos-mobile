@@ -16,6 +16,7 @@ function RootStackLayout() {
           title: params.productName || 'Product Variations',
         }}
       />
+      <Stack.Screen name="manage" options={{ headerShown: false }} />
     </Stack>
   );
 }
