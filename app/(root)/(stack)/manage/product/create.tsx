@@ -1,11 +1,11 @@
-import { Text } from '@/components/reusable/text';
+import CreateProductForm from '@/components/form/create-product.form';
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 export default function CreateProduct() {
   return (
-    <View>
-      <Text>CreateProduct</Text>
-    </View>
+    <ScrollView className="flex-1 p-4">
+      <CreateProductForm />
+    </ScrollView>
   );
 }
