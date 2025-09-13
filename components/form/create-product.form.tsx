@@ -2,13 +2,16 @@ import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { Textarea } from '@/components/reusable/textarea';
+import SelectionButton from '@/components/ui/button/selection.button';
+import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import React from 'react';
 import { KeyboardAvoidingView, View } from 'react-native';
 import BrandSelect from './_component/brand-select';
 import CategorySelect from './_component/category-select';
-import MeasurementSelect from './_component/measurement-select';
 
 export default function CreateProductForm() {
+  const { open } = useBottomSheetStore();
+
   return (
     <KeyboardAvoidingView behavior="padding" className="gap-2">
       <Text className="text-lg font-semibold">Product Information</Text>
@@ -31,14 +34,17 @@ export default function CreateProductForm() {
         <Textarea placeholder="Add product description..." />
       </View>
       <Text className="text-lg font-semibold">Product Variation</Text>
-      <View className="gap-1">
+      {/* <View className="gap-1">
         <Label>Variant Name</Label>
         <Input placeholder="adidas og samba" />
-      </View>
+      </View> */}
       <View className="flex-row gap-2">
         <View className="gap-1">
           <Label>Unit of measurement</Label>
-          <MeasurementSelect />
+          <SelectionButton
+            label="Unit of measurement"
+            onPress={() => open('measurement')}
+          />
         </View>
         <View className="gap-1 flex-1">
           <Label>Unit price</Label>

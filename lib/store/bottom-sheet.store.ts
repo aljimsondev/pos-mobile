@@ -3,9 +3,10 @@ import { create } from 'zustand';
 interface BottomSheetState {
   category: boolean;
   brand: boolean;
+  measurement: boolean;
 }
 
-type SheetName = keyof BottomSheetState;
+export type SheetName = keyof BottomSheetState;
 
 interface BottomSheetStore extends BottomSheetState {
   open: (sheetName: SheetName) => void;
@@ -15,6 +16,7 @@ interface BottomSheetStore extends BottomSheetState {
 const initialState: BottomSheetState = {
   brand: false,
   category: false,
+  measurement: false,
 };
 
 export const useBottomSheetStore = create<BottomSheetStore>((set, get) => ({

@@ -1,5 +1,6 @@
 import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
+import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import { useCategoryStore } from '@/lib/store/category-store';
 import { THEME } from '@/lib/theme';
@@ -16,6 +17,7 @@ function CategorySheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
   const { category: categoryIsOpen, close, open } = useBottomSheetStore();
   const { getCategories, categories } = useCategoryStore();
+  useSheetBackHandler('category');
 
   useEffect(() => {
     const controller = new AbortController();
@@ -40,7 +42,7 @@ function CategorySheet() {
       close('category');
     }
   };
-  console.log(categories);
+
   return (
     <BottomSheet
       index={-1}

@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/reusable/select';
+import { unit_of_measurement } from '@/constants/unit-of-measurement';
 import React from 'react';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -42,13 +43,9 @@ function MeasurementSelect() {
       >
         <SelectGroup>
           <SelectLabel>Categories</SelectLabel>
-          {fruits.map((fruit) => (
-            <SelectItem
-              key={fruit.value}
-              label={fruit.label}
-              value={fruit.value}
-            >
-              {fruit.label}
+          {Object.keys(unit_of_measurement).map((key) => (
+            <SelectItem key={key} label={key} value={key}>
+              {key}
             </SelectItem>
           ))}
         </SelectGroup>

@@ -1,4 +1,5 @@
 import { Text } from '@/components/reusable/text';
+import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
@@ -8,6 +9,7 @@ import { renderBackdrop } from './renderBackdrop';
 function BrandSheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
   const { brand, close } = useBottomSheetStore();
+  useSheetBackHandler('brand');
 
   // control sheet according to state changes
   useEffect(() => {
