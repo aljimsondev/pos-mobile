@@ -9,6 +9,9 @@ interface CategoryState {
 
 interface CategoryStore extends CategoryState {
   getCategories: (controller: AbortController) => void;
+  setSelectedCategory: (category: string) => void;
+  unsetSelectedCategory: () => void;
+  unsetCategories: () => void;
 }
 
 const initialState: CategoryState = {
