@@ -4,6 +4,7 @@ import { create } from 'zustand';
 
 interface CategoryState {
   categories: Category[];
+  selectedCategory: string;
 }
 
 interface CategoryStore extends CategoryState {
@@ -12,6 +13,7 @@ interface CategoryStore extends CategoryState {
 
 const initialState: CategoryState = {
   categories: [],
+  selectedCategory: '',
 };
 
 export const useCategoryStore = create<CategoryStore>((set, get) => ({
@@ -28,6 +30,24 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
 
     set({
       categories: results,
+    });
+  },
+  setSelectedCategory: (category: string) => {
+    if (!category) return;
+    set({
+      selectedCategory: category,
+    });
+  },
+
+  unsetSelectedCategory: () => {
+    set({
+      selectedCategory: '',
+    });
+  },
+
+  unsetCategories: () => {
+    set({
+      categories: [],
     });
   },
 }));
