@@ -1,22 +1,23 @@
+import { Unit } from '@/constants/unit-of-measurement';
 import { fetchCategories } from '@/core/requests/fetch-categories';
 import { Category } from '@aljimsondev/database-schema';
 import { create } from 'zustand';
 
 interface CategoryState {
   categories: Category[];
-  selectedCategory: string;
+  selectedCategory: Unit | null;
 }
 
 interface CategoryStore extends CategoryState {
   getCategories: (controller: AbortController) => void;
-  setSelectedCategory: (category: string) => void;
+  setSelectedCategory: (category: Unit) => void;
   unsetSelectedCategory: () => void;
   unsetCategories: () => void;
 }
 
 const initialState: CategoryState = {
   categories: [],
-  selectedCategory: '',
+  selectedCategory: null,
 };
 
 export const useCategoryStore = create<CategoryStore>((set, get) => ({
@@ -35,7 +36,7 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
       categories: results,
     });
   },
-  setSelectedCategory: (category: string) => {
+  setSelectedCategory: (category: Unit) => {
     if (!category) return;
     set({
       selectedCategory: category,
@@ -44,7 +45,7 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
 
   unsetSelectedCategory: () => {
     set({
-      selectedCategory: '',
+      selectedCategory: null,
     });
   },
 

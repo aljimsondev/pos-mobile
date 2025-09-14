@@ -4,25 +4,27 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/reusable/accordion';
-import { Label } from '@/components/reusable/label';
 import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
 import { renderBackdrop } from '@/components/ui/bottom-sheet/renderBackdrop';
+import AppCheckbox from '@/components/ui/checkbox';
 import { unit_of_measurement } from '@/constants/unit-of-measurement';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
+import { useCategoryStore } from '@/lib/store/category-store';
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetScrollView,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import Checkbox from 'expo-checkbox';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { View } from 'react-native';
 
 function MeasurementSheet() {
   const { measurement, close } = useBottomSheetStore();
+  const { selectedCategory, setSelectedCategory, unsetSelectedCategory } =
+    useCategoryStore();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   useSheetBackHandler('measurement');
 
@@ -70,15 +72,14 @@ function MeasurementSheet() {
                       <View className="gap-2">
                         {val.map((unit) => {
                           return (
-                            <View
-                              className="flex flex-row items-center gap-3"
+                            <AppCheckbox
+                              label={unit.name}
                               key={unit.code}
-                            >
-                              <Checkbox id={unit.code} />
-                              <Label onPress={() => {}} htmlFor={unit.code}>
-                                {unit.name}
-                              </Label>
-                            </View>
+                              checked={selectedCategory?.code === unit.code}
+                              onCheckChange={() => {
+                                setSelectedCategory(unit);
+                              }}
+                            />
                           );
                         })}
                       </View>
