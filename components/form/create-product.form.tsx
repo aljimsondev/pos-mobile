@@ -8,7 +8,7 @@ import { createProductFormSchema } from '@/lib/schema/product/create.product';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, View } from 'react-native';
 import BrandSelect from './_component/brand-select';
 import CategorySelect from './_component/category-select';
@@ -19,6 +19,10 @@ export default function CreateProductForm() {
     resolver: zodResolver(createProductFormSchema),
     defaultValues: {},
     mode: 'all',
+  });
+
+  const onSubmit = form.handleSubmit(async (data) => {
+    console.log(data);
   });
 
   return (
@@ -38,11 +42,29 @@ export default function CreateProductForm() {
           </View>
           <View className="gap-1">
             <Label>Title</Label>
-            <Input placeholder="adidas og samba" />
+            <Controller
+              name="name"
+              control={form.control}
+              render={({ field, fieldState, formState }) => {
+                return <Input {...field} placeholder="adidas og samba" />;
+              }}
+            />
           </View>
           <View className="gap-1">
             <Label>Description</Label>
-            <Textarea placeholder="Add product description..." />
+
+            <Controller
+              name="description"
+              control={form.control}
+              render={({ field, fieldState, formState }) => {
+                return (
+                  <Textarea
+                    {...field}
+                    placeholder="Add product description..."
+                  />
+                );
+              }}
+            />
           </View>
           <Text className="text-lg font-semibold">Product Variation</Text>
           <View className="flex-row gap-2">
@@ -55,12 +77,18 @@ export default function CreateProductForm() {
             </View>
             <View className="gap-1 flex-1">
               <Label>Unit price</Label>
-              <Input placeholder="100" />
+              <Controller
+                name="name"
+                control={form.control}
+                render={({ field, fieldState, formState }) => {
+                  return <Input {...field} placeholder="1000" />;
+                }}
+              />
             </View>
           </View>
         </View>
       </KeyboardAvoidingView>
-      <Button>
+      <Button onPress={onSubmit}>
         <Text>Submit</Text>
       </Button>
     </View>
