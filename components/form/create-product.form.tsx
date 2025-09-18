@@ -1,56 +1,68 @@
+import { Button } from '@/components/reusable/button';
 import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { Textarea } from '@/components/reusable/textarea';
 import SelectionButton from '@/components/ui/button/selection.button';
+import { createProductFormSchema } from '@/lib/schema/product/create.product';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
+import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, View } from 'react-native';
 import BrandSelect from './_component/brand-select';
 import CategorySelect from './_component/category-select';
 
 export default function CreateProductForm() {
   const { open } = useBottomSheetStore();
+  const form = useForm({
+    resolver: zodResolver(createProductFormSchema),
+    defaultValues: {},
+    mode: 'all',
+  });
 
   return (
-    <KeyboardAvoidingView behavior="padding" className="gap-2">
-      <Text className="text-lg font-semibold">Product Information</Text>
-      <View className="flex-row gap-2 w-full">
-        <View className="gap-1 flex-1">
-          <Label>Category</Label>
-          <CategorySelect />
+    <View className="flex-1">
+      <KeyboardAvoidingView behavior="padding" className="gap-2 flex-1">
+        <View className="flex-1 gap-1">
+          <Text className="text-lg font-semibold">Product Information</Text>
+          <View className="flex-row gap-2 w-full">
+            <View className="gap-1 flex-1">
+              <Label>Category</Label>
+              <CategorySelect />
+            </View>
+            <View className="gap-1 flex-1">
+              <Label>Title</Label>
+              <BrandSelect />
+            </View>
+          </View>
+          <View className="gap-1">
+            <Label>Title</Label>
+            <Input placeholder="adidas og samba" />
+          </View>
+          <View className="gap-1">
+            <Label>Description</Label>
+            <Textarea placeholder="Add product description..." />
+          </View>
+          <Text className="text-lg font-semibold">Product Variation</Text>
+          <View className="flex-row gap-2">
+            <View className="gap-1">
+              <Label>Unit of measurement</Label>
+              <SelectionButton
+                label="Unit of measurement"
+                onPress={() => open('measurement')}
+              />
+            </View>
+            <View className="gap-1 flex-1">
+              <Label>Unit price</Label>
+              <Input placeholder="100" />
+            </View>
+          </View>
         </View>
-        <View className="gap-1 flex-1">
-          <Label>Title</Label>
-          <BrandSelect />
-        </View>
-      </View>
-      <View className="gap-1">
-        <Label>Title</Label>
-        <Input placeholder="adidas og samba" />
-      </View>
-      <View className="gap-1">
-        <Label>Description</Label>
-        <Textarea placeholder="Add product description..." />
-      </View>
-      <Text className="text-lg font-semibold">Product Variation</Text>
-      {/* <View className="gap-1">
-        <Label>Variant Name</Label>
-        <Input placeholder="adidas og samba" />
-      </View> */}
-      <View className="flex-row gap-2">
-        <View className="gap-1">
-          <Label>Unit of measurement</Label>
-          <SelectionButton
-            label="Unit of measurement"
-            onPress={() => open('measurement')}
-          />
-        </View>
-        <View className="gap-1 flex-1">
-          <Label>Unit price</Label>
-          <Input placeholder="100" />
-        </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+      <Button>
+        <Text>Submit</Text>
+      </Button>
+    </View>
   );
 }
