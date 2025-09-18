@@ -5,6 +5,7 @@ import { DrawerBlock, DrawerBlockAction } from '@/components/ui/drawer';
 import { authClient } from '@/lib/auth/client';
 import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
+import { DrawerActions } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
@@ -15,6 +16,12 @@ function AppDrawer({
   state,
 }: DrawerContentComponentProps) {
   const router = useRouter();
+
+  const onPressNavigationLink = (link: string) => {
+    navigation.dispatch(DrawerActions.closeDrawer()); // close the drawer on navigate
+    router.push(link as any);
+  };
+
   return (
     <Container className="py-safe px-4">
       <View className="py-3 border-b-border border-b-[1px]">
@@ -27,7 +34,7 @@ function AppDrawer({
             icon={(color, size) => (
               <FontAwesome5 size={size} name="cart-plus" color={color} />
             )}
-            onPress={() => router.push('/manage/product')}
+            onPress={() => onPressNavigationLink('/manage/product')}
           />
           <DrawerBlockAction
             label="Manage product brand"
@@ -38,6 +45,7 @@ function AppDrawer({
                 name="branding-watermark"
               />
             )}
+            onPress={() => onPressNavigationLink('/manage/brand')}
           />
           <DrawerBlockAction
             label="Manage categories"
