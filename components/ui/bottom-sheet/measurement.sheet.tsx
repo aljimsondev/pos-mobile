@@ -57,10 +57,10 @@ function MeasurementSheet() {
         enableDynamicSizing={false}
         ref={bottomSheetModalRef}
       >
-        <BottomSheetView className="flex-1 px-4">
+        <BottomSheetView className="px-4">
           <Text className="font-bold text-lg">Unit of measurement</Text>
           <Separator />
-          <BottomSheetScrollView className="flex-1">
+          <BottomSheetScrollView>
             <Accordion type="single" collapsible>
               {Object.entries(unit_of_measurement).map(([key, val]) => {
                 return (
