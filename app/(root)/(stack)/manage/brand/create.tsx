@@ -3,10 +3,12 @@ import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
 import { brandFormSchema } from '@/lib/schema/product/create.brand';
+import { fetcher } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, View } from 'react-native';
+import { Toast } from 'toastify-react-native';
 
 export default function CreateNewBrand() {
   const form = useForm({
@@ -18,10 +20,37 @@ export default function CreateNewBrand() {
       name: '',
       website_url: '',
     },
+    mode: 'all',
   });
 
   const onSubmit = form.handleSubmit(async (data) => {
-    console.log(data);
+    try {
+      const res = await fetcher('brand/create', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+      const body = await res.json();
+
+      if (res.status !== 201) {
+        // something went wrong
+        return Toast.error(
+          body?.error?.message ||
+            'Something went wrong! View logs for more info!',
+          'bottom',
+        );
+      }
+
+      Toast.success('Brand added successfully!');
+    } catch (e: any) {
+      console.warn(e);
+
+      Toast.error(
+        e?.message || 'Something went wrong! View logs for more info!',
+      );
+    }
   });
 
   return (
@@ -32,7 +61,13 @@ export default function CreateNewBrand() {
           <Controller
             name="name"
             control={form.control}
-            render={({ field }) => <Input {...field} placeholder="adidas" />}
+            render={({ field }) => (
+              <Input
+                onChangeText={field.onChange}
+                value={field.value}
+                placeholder="adidas"
+              />
+            )}
           />
         </View>
         <View className="gap-1">
@@ -41,7 +76,11 @@ export default function CreateNewBrand() {
             name="description"
             control={form.control}
             render={({ field }) => (
-              <Input {...field} placeholder="adidas is ..." />
+              <Input
+                onChangeText={field.onChange}
+                value={field.value}
+                placeholder="adidas is ..."
+              />
             )}
           />
         </View>
@@ -51,7 +90,11 @@ export default function CreateNewBrand() {
             name="website_url"
             control={form.control}
             render={({ field }) => (
-              <Input {...field} placeholder="https://www.site.com" />
+              <Input
+                onChangeText={field.onChange}
+                value={field.value}
+                placeholder="https://www.site.com"
+              />
             )}
           />
         </View>
@@ -62,7 +105,8 @@ export default function CreateNewBrand() {
             control={form.control}
             render={({ field }) => (
               <Input
-                {...field}
+                onChangeText={field.onChange}
+                value={field.value}
                 placeholder="https://www.site.com/asset/logo.png"
               />
             )}
