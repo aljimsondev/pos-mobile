@@ -25,9 +25,12 @@ export default function CreateNewBrand() {
 
   const onSubmit = form.handleSubmit(async (data) => {
     try {
+      // added extra layer validation in case the zod validation skip the resolve
+      const parsedData = brandFormSchema.parse(data);
+
       const res = await fetcher('brand/create', {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(parsedData),
         headers: {
           'Content-type': 'application/json',
         },
@@ -56,6 +59,12 @@ export default function CreateNewBrand() {
     }
   });
 
+  const enabledSubmit =
+    Object.keys(form.formState.errors).length === 0 &&
+    form.formState.isValid &&
+    form.watch('name') &&
+    form.watch('description');
+
   return (
     <KeyboardAvoidingView behavior="padding" className="p-4 flex-1 my-4">
       <View className="flex-1  gap-4">
@@ -64,11 +73,13 @@ export default function CreateNewBrand() {
           <Controller
             name="name"
             control={form.control}
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <Input
                 onChangeText={field.onChange}
                 value={field.value}
                 placeholder="adidas"
+                error={Boolean(fieldState.error)}
+                errorMessage={fieldState.error?.message}
               />
             )}
           />
@@ -78,11 +89,13 @@ export default function CreateNewBrand() {
           <Controller
             name="description"
             control={form.control}
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <Input
                 onChangeText={field.onChange}
                 value={field.value}
                 placeholder="adidas is ..."
+                error={Boolean(fieldState.error)}
+                errorMessage={fieldState.error?.message}
               />
             )}
           />
@@ -92,7 +105,7 @@ export default function CreateNewBrand() {
           <Controller
             name="website_url"
             control={form.control}
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <Input
                 onChangeText={field.onChange}
                 value={field.value}
@@ -116,7 +129,7 @@ export default function CreateNewBrand() {
           />
         </View>
       </View>
-      <Button onPress={onSubmit}>
+      <Button onPress={onSubmit} disabled={!enabledSubmit}>
         <Text>Submit</Text>
       </Button>
     </KeyboardAvoidingView>
