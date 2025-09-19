@@ -1,4 +1,5 @@
 import { Product, ProductVariation } from '@/lib/types/product';
+import { Brand } from '@aljimsondev/database-schema';
 
 export type ApiResponse<T = any> = {
   success: boolean;
@@ -32,3 +33,15 @@ export type ListResponse<T> = {
 };
 
 export type ProductVariationResponse = ListResponse<ProductVariation>;
+
+export type BrandListResponse = {
+  pagination: {
+    count: number;
+    has_next_page: boolean;
+    has_prev_page: boolean;
+    limit: number;
+    page: number;
+    total_pages: number;
+  };
+  results: Brand[];
+};
