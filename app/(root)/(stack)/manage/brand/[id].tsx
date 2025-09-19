@@ -2,9 +2,11 @@ import { Button } from '@/components/reusable/button';
 import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Text } from '@/components/reusable/text';
+import { fetchBrand } from '@/core/requests/fetch-brand';
 import { brandFormSchema } from '@/lib/schema/product/create.brand';
 import { fetcher } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -12,7 +14,12 @@ import { KeyboardAvoidingView, View } from 'react-native';
 import { Toast } from 'toastify-react-native';
 
 export default function UpdateBrand() {
-  const { id } = useLocalSearchParams();
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { data, isFetching } = useQuery({
+    queryKey: [id],
+    queryFn: () => fetchBrand(id),
+  });
+
   const form = useForm({
     resolver: zodResolver(brandFormSchema),
     defaultValues: {
@@ -66,6 +73,8 @@ export default function UpdateBrand() {
     form.formState.isValid &&
     form.watch('name') &&
     form.watch('description');
+
+  console.log(data);
 
   return (
     <KeyboardAvoidingView behavior="padding" className="p-4 flex-1 my-4">

@@ -33,7 +33,7 @@ export const fetchBrands = async (params: BrandListQuery) => {
 
     return body.data;
   } catch (e) {
-    console.warn('Error fetchProducts: Reason:' + JSON.stringify(e));
+    console.warn('Error fetchBrands: Reason:' + JSON.stringify(e));
 
     return defaultReturnData;
   }
