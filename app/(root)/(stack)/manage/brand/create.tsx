@@ -43,6 +43,9 @@ export default function CreateNewBrand() {
         );
       }
 
+      // reset form
+      form.reset();
+      // send toast notification
       Toast.success('Brand added successfully!');
     } catch (e: any) {
       console.warn(e);
