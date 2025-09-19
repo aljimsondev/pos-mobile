@@ -10,7 +10,7 @@ const defaultReturnData = {
     page: 1,
     total_pages: 1,
   },
-  products: [],
+  results: [],
 };
 
 export type BrandListQuery = {

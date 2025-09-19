@@ -15,7 +15,7 @@ function SearchBar({
   onTextClear?: () => void;
 }) {
   return (
-    <View className="flex-1 items-center justify-center">
+    <View className="w-full items-center justify-center">
       <View className="absolute p-2 z-10 left-0">
         <Ionicons name="search" size={18} color={THEME.light.mutedForeground} />
       </View>
