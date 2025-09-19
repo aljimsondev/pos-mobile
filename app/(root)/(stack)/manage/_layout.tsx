@@ -52,6 +52,12 @@ export default function ManagementLayout() {
           title: 'Create Brand',
         }}
       />
+      <Stack.Screen
+        name="brand/[id]"
+        options={{
+          title: 'Edit Brand',
+        }}
+      />
     </Stack>
   );
 }

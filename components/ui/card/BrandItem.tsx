@@ -5,6 +5,7 @@ import { useDialogStore } from '@/lib/store/dialog-store';
 import { fetcher } from '@/lib/utils';
 import { Brand } from '@aljimsondev/database-schema';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { View } from 'react-native';
 import { Toast } from 'toastify-react-native';
@@ -15,6 +16,7 @@ interface BrandItemProps {
 
 export default function BrandItem({ brand }: BrandItemProps) {
   const colors = useThemeVariables();
+  const router = useRouter();
   const { showDialog } = useDialogStore();
 
   const onDeleteBrand = () => {
@@ -54,7 +56,12 @@ export default function BrandItem({ brand }: BrandItemProps) {
       <IconButton
         className="border-transparent rounded-full"
         icon={(color) => (
-          <MaterialCommunityIcons name="pencil" color={color} size={18} />
+          <MaterialCommunityIcons
+            name="pencil"
+            color={color}
+            size={18}
+            onPress={() => router.push(`/manage/brand/${brand.id}`)}
+          />
         )}
       />
       <IconButton
