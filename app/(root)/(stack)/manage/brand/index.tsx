@@ -31,6 +31,7 @@ export default function ManageBrand() {
         return lastPage.pagination.page + 1;
       },
       queryKey: [limit, debouncedSearch, sortOrder, orderBy],
+      refetchOnWindowFocus: true,
     });
 
   // Debounced function to update the delayed state

@@ -46,16 +46,16 @@ export default function UpdateBrand() {
       // added extra layer validation in case the zod validation skip the resolve
       const parsedData = brandFormSchema.parse(data);
 
-      const res = await fetcher('brand/create', {
-        method: 'POST',
+      const res = await fetcher(`brand/${id}`, {
+        method: 'PATCH',
         body: JSON.stringify(parsedData),
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
       });
       const body = await res.json();
 
-      if (res.status !== 201) {
+      if (res.status !== 200) {
         // something went wrong
         return Toast.error(
           body?.error?.message ||
@@ -64,10 +64,8 @@ export default function UpdateBrand() {
         );
       }
 
-      // reset form
-      form.reset();
       // send toast notification
-      Toast.success('Brand added successfully!');
+      Toast.success('Brand updated successfully!', 'bottom');
     } catch (e: any) {
       console.warn(e);
 
