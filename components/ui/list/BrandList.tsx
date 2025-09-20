@@ -32,7 +32,7 @@ function BrandList({
         renderItem={({ item, index }) => {
           return (
             <Fragment>
-              <BrandItem brand={item} />
+              <BrandItem brand={item} onRefresh={onRefresh} />
               {index !== data!.length - 1 && <Separator />}
             </Fragment>
           );

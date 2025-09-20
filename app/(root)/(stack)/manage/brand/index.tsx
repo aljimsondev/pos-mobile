@@ -5,7 +5,7 @@ import { fetchBrands } from '@/core/requests/fetch-brands';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import debounce from 'debounce';
 import React, { useCallback, useState } from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 export default function ManageBrand() {
   const [limit, setLimit] = useState(10);
@@ -64,7 +64,9 @@ export default function ManageBrand() {
         onTextClear={handleClearSearchText}
         onChangeText={handleSearchChange}
       />
-      {emptyBrands ? (
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : emptyBrands ? (
         <NoContent
           title="Empy brand!"
           description={

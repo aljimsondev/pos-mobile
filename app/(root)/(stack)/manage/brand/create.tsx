@@ -49,7 +49,7 @@ export default function CreateNewBrand() {
       // reset form
       form.reset();
       // send toast notification
-      Toast.success('Brand added successfully!');
+      Toast.success('Brand added successfully!', 'bottom');
     } catch (e: any) {
       console.warn(e);
 

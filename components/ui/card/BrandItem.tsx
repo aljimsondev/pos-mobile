@@ -12,9 +12,13 @@ import { Toast } from 'toastify-react-native';
 
 interface BrandItemProps {
   brand: Brand;
+  onRefresh: ((() => void) & (() => void)) | undefined;
 }
 
-export default function BrandItem({ brand }: BrandItemProps) {
+export default function BrandItem({
+  brand,
+  onRefresh = () => {},
+}: BrandItemProps) {
   const colors = useThemeVariables();
   const router = useRouter();
   const { showDialog } = useDialogStore();
@@ -31,15 +35,21 @@ export default function BrandItem({ brand }: BrandItemProps) {
         continueText: 'Yes, delete it!',
         variant: 'destructive',
         onContinue: async () => {
-          const response = await fetcher(`brand/dummy`, {
-            method: 'DELETE',
-          });
+          try {
+            if (!brand.id) throw new Error('Brand id is required!');
 
-          const body = await response.json();
+            const response = await fetcher(`brand/${brand.id}`, {
+              method: 'DELETE',
+            });
 
-          if (!body.success) throw body?.error?.message;
+            const body = await response.json();
 
-          Toast.success('Brand deleted successfully!', 'bottom');
+            if (!body.success) throw body?.error;
+            onRefresh();
+            Toast.success('Brand deleted successfully!', 'bottom');
+          } catch (e: any) {
+            Toast.error(e?.message, 'bottom');
+          }
         },
       });
     } catch (e: any) {
