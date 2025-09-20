@@ -8,7 +8,7 @@ import { fetcher } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, View } from 'react-native';
 import { Toast } from 'toastify-react-native';
@@ -31,6 +31,15 @@ export default function UpdateBrand() {
     },
     mode: 'all',
   });
+
+  useEffect(() => {
+    if (data) {
+      form.setValue('name', data.name);
+      form.setValue('description', data.description || '');
+      form.setValue('website_url', data.website_url || '');
+      form.setValue('logo_url', data.logo_url || '');
+    }
+  }, [data]);
 
   const onSubmit = form.handleSubmit(async (data) => {
     try {
