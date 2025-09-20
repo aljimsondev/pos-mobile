@@ -22,7 +22,7 @@ function IconButton({ icon, className, ...rest }: IconButtonProps) {
       {...rest}
       activeOpacity={1}
       className={cn(
-        'h-10 w-10 border-border bg-background border-[1px] items-center justify-center rounded-md active:bg-muted disabled:opacity-50',
+        'h-10 w-10 border-border bg-background border-[1px] z-10 items-center justify-center rounded-md active:bg-muted disabled:opacity-50',
         className,
       )}
     >

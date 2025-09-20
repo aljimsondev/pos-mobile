@@ -8,8 +8,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/reusable/dialog';
+import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
+import IconButton from '@/components/ui/IconButton';
 import { useDialogStore } from '@/lib/store/dialog-store';
+import { Ionicons } from '@expo/vector-icons';
+import { View } from 'react-native';
 
 export function GlobalDialog() {
   const {
@@ -74,9 +78,19 @@ export function GlobalDialog() {
         hideCloseButton
       >
         <DialogHeader>
+          <IconButton
+            className="absolute -right-3 -top-3 border-transparent rounded-full"
+            icon={(color) => <Ionicons name="close" size={24} color={color} />}
+            onPress={handleCancel}
+          />
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+          <DialogDescription className="pt-2 pb-4">
+            {description}
+          </DialogDescription>
         </DialogHeader>
+        <View>
+          <Separator />
+        </View>
         <DialogFooter className="flex-row justify-between">
           {showCancel && (
             <Button onPress={handleCancel} variant="outline">

@@ -81,8 +81,6 @@ export default function UpdateBrand() {
     form.watch('name') &&
     form.watch('description');
 
-  console.log(data);
-
   return (
     <KeyboardAvoidingView behavior="padding" className="p-4 flex-1 my-4">
       <View className="flex-1  gap-4">
