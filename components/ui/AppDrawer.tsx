@@ -52,6 +52,7 @@ function AppDrawer({
             icon={(color, size) => (
               <MaterialIcons size={size} color={color} name="category" />
             )}
+            onPress={() => onPressNavigationLink('/manage/category')}
           />
         </DrawerBlock>
       </ScrollView>

@@ -58,6 +58,35 @@ export default function ManagementLayout() {
           title: 'Edit Brand',
         }}
       />
+      <Stack.Screen
+        name="category/index"
+        options={{
+          title: 'Categories',
+          headerBackVisible: false,
+          headerRight: (props) => {
+            return (
+              <IconButton
+                icon={(color) => (
+                  <Ionicons name="add" size={24} color={color} />
+                )}
+                onPress={() => router.push('/manage/category/create')}
+              />
+            );
+          },
+        }}
+      />
+      <Stack.Screen
+        name="category/create"
+        options={{
+          title: 'Create',
+        }}
+      />
+      <Stack.Screen
+        name="category/[id]"
+        options={{
+          title: 'Edit Category',
+        }}
+      />
     </Stack>
   );
 }
