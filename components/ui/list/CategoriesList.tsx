@@ -1,5 +1,5 @@
 import { Separator } from '@/components/reusable/separator';
-import { Text } from '@/components/reusable/text';
+import { CategoryItem } from '@/components/ui/card/CategoryItem';
 import { Category } from '@aljimsondev/database-schema';
 import React, { Fragment } from 'react';
 import {
@@ -30,7 +30,7 @@ export default function CategoriesList({
         renderItem={({ item, index }) => {
           return (
             <Fragment>
-              <Text>{item.name}</Text>
+              <CategoryItem {...item} />
               {index !== data!.length - 1 && <Separator />}
             </Fragment>
           );

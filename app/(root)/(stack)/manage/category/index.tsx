@@ -36,13 +36,12 @@ export default function ManageCategory() {
     updateDebouncedSearch(''); // Delayed update for API trigger
   };
 
-  console.log(data);
   const noCategory = (data || []).length <= 0;
 
   return (
     <View className="p-2 flex-1">
       <SearchBar
-        placeholder="Search brand..."
+        placeholder="Search category..."
         value={search}
         showClearButton={search !== ''}
         onTextClear={handleClearSearchText}
@@ -52,11 +51,11 @@ export default function ManageCategory() {
         <ActivityIndicator />
       ) : noCategory ? (
         <NoContent
-          title="Empy brand!"
+          title="Empy Categories!"
           description={
             debouncedSearch
-              ? "There's no brand matching this keyword!"
-              : 'There are no brands yet!'
+              ? "There's no category matching this keyword!"
+              : 'There are no category yet!'
           }
         />
       ) : (
