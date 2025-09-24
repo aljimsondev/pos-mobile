@@ -12,7 +12,7 @@ import { renderBackdrop } from './renderBackdrop';
 
 function CategorySheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
-  const { category: categoryIsOpen, close, open } = useBottomSheetStore();
+  const { category: categoryIsOpen, close } = useBottomSheetStore();
   const { getCategories, categories } = useCategoryStore();
   useSheetBackHandler('category');
 
@@ -34,10 +34,13 @@ function CategorySheet() {
     }
   }, [categoryIsOpen]);
 
+  console.log(categoryIsOpen);
+
   const onChange = (props: any) => {
     if (props === -1) {
       close('category');
     }
+    console.log(props);
   };
 
   return (
