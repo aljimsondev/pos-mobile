@@ -1,20 +1,47 @@
 import { Text } from '@/components/reusable/text';
 import { THEME } from '@/lib/theme';
+import { cn } from '@/lib/utils';
 import { Category } from '@aljimsondev/database-schema';
 import { Feather } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
-import { Pressable, useColorScheme, View } from 'react-native';
+import { Pressable, PressableProps, useColorScheme, View } from 'react-native';
 
-interface CategoryNodeProps {
+interface CategoryNodeProps extends PressableProps {
   isChild?: boolean;
   isRoot?: boolean;
   label?: string;
+  onPress: () => void; // override type
+  selected?: boolean;
 }
 
-function CategoryNode({ label }: CategoryNodeProps) {
+function CategoryNode({
+  label,
+  isChild,
+  isRoot,
+  className,
+  onPress,
+  selected = false,
+  ...rest
+}: CategoryNodeProps) {
+  const onPressCheckbox = () => {
+    onPress();
+  };
+
   return (
-    <Pressable className="p-2 items-center active:bg-muted rounded-md flex-1 justify-start flex-row gap-2">
-      <Checkbox id="category_checkbox" />
+    <Pressable
+      className={cn(
+        'p-2 items-center active:bg-muted rounded-md flex-1 justify-start flex-row gap-2 z-10',
+        className,
+      )}
+      onPress={onPress}
+      {...rest}
+    >
+      <Checkbox
+        id="category_checkbox"
+        className="z-0"
+        onValueChange={onPressCheckbox}
+        value={selected}
+      />
       <Text>{label}</Text>
     </Pressable>
   );
@@ -22,19 +49,22 @@ function CategoryNode({ label }: CategoryNodeProps) {
 
 interface CategoryItemProps extends Category {
   haveDescendants?: boolean;
+  onPress: () => void;
+  selected?: boolean;
 }
 export function CategoryItem({
   haveDescendants,
   name,
+  selected = false,
   ...rest
-}: CategoryItemProps) {
+}: CategoryItemProps & PressableProps) {
   const theme = useColorScheme() as 'dark' | 'light';
 
   const iconColor = THEME[theme].primary;
 
   return (
     <View className="rounded-md flex items-center flex-row gap-2">
-      <CategoryNode label={name} />
+      <CategoryNode label={name} {...rest} selected={selected} />
       {haveDescendants && (
         <Pressable className="active:bg-muted rounded-full p-2">
           <Feather name="chevron-down" size={24} color={iconColor} />

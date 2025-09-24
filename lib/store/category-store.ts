@@ -1,16 +1,15 @@
-import { Unit } from '@/constants/unit-of-measurement';
 import { fetchCategories } from '@/core/requests/fetch-categories';
 import { Category } from '@aljimsondev/database-schema';
 import { create } from 'zustand';
 
 interface CategoryState {
   categories: Category[];
-  selectedCategory: Unit | null;
+  selectedCategory: Category | null;
 }
 
 interface CategoryStore extends CategoryState {
   getCategories: (controller: AbortController) => void;
-  setSelectedCategory: (category: Unit) => void;
+  setSelectedCategory: (category: Category) => void;
   unsetSelectedCategory: () => void;
   unsetCategories: () => void;
 }
@@ -36,7 +35,7 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
       categories: results,
     });
   },
-  setSelectedCategory: (category: Unit) => {
+  setSelectedCategory: (category: Category) => {
     if (!category) return;
     set({
       selectedCategory: category,

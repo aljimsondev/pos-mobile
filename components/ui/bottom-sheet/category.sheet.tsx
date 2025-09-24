@@ -4,6 +4,7 @@ import { CategoryItem } from '@/components/ui/card/CategoryItem';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import { useCategoryStore } from '@/lib/store/category-store';
+import { Category } from '@aljimsondev/database-schema';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { useEffect, useRef } from 'react';
@@ -13,7 +14,8 @@ import { renderBackdrop } from './renderBackdrop';
 function CategorySheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
   const { category: categoryIsOpen, close } = useBottomSheetStore();
-  const { getCategories, categories } = useCategoryStore();
+  const { getCategories, categories, setSelectedCategory, selectedCategory } =
+    useCategoryStore();
   useSheetBackHandler('category');
 
   useEffect(() => {
@@ -34,13 +36,15 @@ function CategorySheet() {
     }
   }, [categoryIsOpen]);
 
-  console.log(categoryIsOpen);
-
   const onChange = (props: any) => {
     if (props === -1) {
       close('category');
     }
-    console.log(props);
+  };
+
+  const onSelectCategory = (category: Category) => {
+    setSelectedCategory(category);
+    close('category'); // close the sheet
   };
 
   return (
@@ -61,7 +65,14 @@ function CategorySheet() {
             data={categories}
             keyExtractor={(item) => item.id}
             renderItem={({ item, index }) => {
-              return <CategoryItem {...item} haveDescendants={index === 1} />;
+              const selected = item.id === selectedCategory?.id;
+              return (
+                <CategoryItem
+                  onPress={() => onSelectCategory(item)}
+                  selected={selected}
+                  {...item}
+                />
+              );
             }}
           />
         </View>

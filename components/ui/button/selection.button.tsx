@@ -12,10 +12,12 @@ export default function SelectionButton({
   className,
   onPress = () => {},
   label,
+  value,
   ...rest
 }: ViewProps & {
   onPress?: TouchableOpacityProps['onPress'];
   label: string;
+  value?: string;
 }) {
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
@@ -26,7 +28,7 @@ export default function SelectionButton({
           className,
         )}
       >
-        <Text>{label}</Text>
+        <Text className="text-muted-foreground">{value ? value : label}</Text>
         <Ionicons name="chevron-down" />
       </View>
     </TouchableOpacity>

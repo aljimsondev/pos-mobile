@@ -10,11 +10,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, View } from 'react-native';
-import BrandSelect from './_component/brand-select';
-import CategorySelect from './_component/category-select';
 
 export default function CreateProductForm() {
-  const { open } = useBottomSheetStore();
+  const { open, category, close, brand } = useBottomSheetStore();
   const form = useForm({
     resolver: zodResolver(createProductFormSchema),
     defaultValues: {},
@@ -30,14 +28,32 @@ export default function CreateProductForm() {
       <KeyboardAvoidingView behavior="padding" className="gap-2 flex-1">
         <View className="flex-1 gap-1">
           <Text className="text-lg font-semibold">Product Information</Text>
-          <View className="flex-row gap-2 w-full">
-            <View className="gap-1 flex-1">
+          <View className="flex-row justify-between gap-2 w-full">
+            <View className="gap-1">
               <Label>Category</Label>
-              <CategorySelect />
+              <SelectionButton
+                label="Select category"
+                onPress={() => {
+                  if (brand) {
+                    close('category');
+                  } else {
+                    open('category');
+                  }
+                }}
+              />
             </View>
-            <View className="gap-1 flex-1">
-              <Label>Title</Label>
-              <BrandSelect />
+            <View className="gap-1">
+              <Label>Brand</Label>
+              <SelectionButton
+                label="Select brand"
+                onPress={() => {
+                  if (brand) {
+                    close('brand');
+                  } else {
+                    open('brand');
+                  }
+                }}
+              />
             </View>
           </View>
           <View className="gap-1">
