@@ -1,11 +1,13 @@
 import { Button } from '@/components/reusable/button';
 import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
+import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
 import { Textarea } from '@/components/reusable/textarea';
 import SelectionButton from '@/components/ui/button/selection.button';
 import { createProductFormSchema } from '@/lib/schema/product/create.product';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
+import { useCategoryStore } from '@/lib/store/category-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -13,6 +15,7 @@ import { KeyboardAvoidingView, View } from 'react-native';
 
 export default function CreateProductForm() {
   const { open, category, close, brand } = useBottomSheetStore();
+  const { selectedCategory } = useCategoryStore();
   const form = useForm({
     resolver: zodResolver(createProductFormSchema),
     defaultValues: {},
@@ -32,6 +35,7 @@ export default function CreateProductForm() {
             <View className="gap-1">
               <Label>Category</Label>
               <SelectionButton
+                value={selectedCategory?.name}
                 label="Select category"
                 onPress={() => {
                   if (brand) {
@@ -82,6 +86,7 @@ export default function CreateProductForm() {
               }}
             />
           </View>
+          <Separator className="my-4" />
           <Text className="text-lg font-semibold">Product Variation</Text>
           <View className="flex-row gap-2">
             <View className="gap-1">
