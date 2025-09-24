@@ -21,10 +21,15 @@ export type BrandListQuery = {
   sort_order?: 'asc' | 'desc';
 };
 
-export const fetchBrands = async (params: BrandListQuery) => {
+export const fetchBrands = async (
+  params: BrandListQuery,
+  options: RequestInit = {},
+) => {
   try {
+    const { signal } = options;
     const response = await fetcher(`/brand/all`, {
       query: params as Record<any, string>,
+      signal: signal,
     });
 
     const body = (await response.json()) as ApiResponse<BrandListResponse>;

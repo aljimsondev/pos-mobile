@@ -1,6 +1,7 @@
 import { Text } from '@/components/reusable/text';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
+import { useBrandStore } from '@/lib/store/brand-store';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { useEffect, useRef } from 'react';
@@ -10,6 +11,17 @@ function BrandSheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
   const { brand, close } = useBottomSheetStore();
   useSheetBackHandler('brand');
+  const { getBrands, brands } = useBrandStore();
+
+  // initial fetch for brands
+  useEffect(() => {
+    const controller = new AbortController();
+    getBrands(controller);
+
+    return () => {
+      controller.abort();
+    };
+  }, [getBrands]);
 
   // control sheet according to state changes
   useEffect(() => {
