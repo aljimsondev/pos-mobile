@@ -63,7 +63,7 @@ export function CategoryItem({
   const iconColor = THEME[theme].primary;
 
   return (
-    <View className="rounded-md flex items-center flex-row gap-2">
+    <View className="rounded-md flex flex-1 items-center flex-row gap-2">
       <CategoryNode label={name} {...rest} selected={selected} />
       {haveDescendants && (
         <Pressable className="active:bg-muted rounded-full p-2">

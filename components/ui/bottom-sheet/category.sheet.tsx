@@ -8,7 +8,7 @@ import { Category } from '@aljimsondev/database-schema';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { useEffect, useRef } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { renderBackdrop } from './renderBackdrop';
 
 function CategorySheet() {
@@ -60,22 +60,20 @@ function CategorySheet() {
       <BottomSheetView className="px-4 h-full flex gap-2">
         <Text className="font-bold text-lg">Categories</Text>
         <Separator />
-        <View className="flex-1">
-          <FlatList
-            data={categories}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => {
-              const selected = item.id === selectedCategory?.id;
-              return (
-                <CategoryItem
-                  onPress={() => onSelectCategory(item)}
-                  selected={selected}
-                  {...item}
-                />
-              );
-            }}
-          />
-        </View>
+        <FlatList
+          data={categories}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item, index }) => {
+            const selected = item.id === selectedCategory?.id;
+            return (
+              <CategoryItem
+                onPress={() => onSelectCategory(item)}
+                selected={selected}
+                {...item}
+              />
+            );
+          }}
+        />
       </BottomSheetView>
     </BottomSheet>
   );

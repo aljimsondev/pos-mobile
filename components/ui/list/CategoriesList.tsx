@@ -30,7 +30,7 @@ export default function CategoriesList({
         renderItem={({ item, index }) => {
           return (
             <Fragment>
-              <CategoryItem {...item} />
+              <CategoryItem {...item} onPress={() => {}} />
               {index !== data!.length - 1 && <Separator />}
             </Fragment>
           );

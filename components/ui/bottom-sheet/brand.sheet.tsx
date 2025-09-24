@@ -1,3 +1,4 @@
+import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
@@ -5,6 +6,7 @@ import { useBrandStore } from '@/lib/store/brand-store';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { useEffect, useRef } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 import { renderBackdrop } from './renderBackdrop';
 
 function BrandSheet() {
@@ -40,7 +42,6 @@ function BrandSheet() {
 
   return (
     <BottomSheet
-      index={-1}
       ref={ref}
       snapPoints={['75%']}
       backdropComponent={renderBackdrop}
@@ -48,8 +49,19 @@ function BrandSheet() {
       enablePanDownToClose
       enableDynamicSizing={false}
     >
-      <BottomSheetView className="flex-1">
-        <Text>Awesome 🎉</Text>
+      <BottomSheetView className="px-4 h-full gap-2">
+        <Text className="font-bold text-lg">Brands</Text>
+        <Separator />
+        <ScrollView style={{ flex: 1 }}>
+          {new Array(1000).fill(0).map((_, index) => {
+            return (
+              <Text key={index}>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam,
+                molestiae!
+              </Text>
+            );
+          })}
+        </ScrollView>
       </BottomSheetView>
     </BottomSheet>
   );
