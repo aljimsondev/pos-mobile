@@ -22,13 +22,12 @@ In the output, you'll find options to open the app in a
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-- [react-native-mmkv](https://github.com/mrousavy/react-native-mmkv)- efficient, small mobile key-value storage
-- [React Native VisionCamera](https://react-native-vision-camera.com/) - fast camera usage
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+  You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
 ## Libraries and Frameworks
 
+- [react-native-mmkv](https://github.com/mrousavy/react-native-mmkv)- efficient, small mobile key-value storage
+- [React Native VisionCamera](https://react-native-vision-camera.com/) - fast camera usage
 - [React Native Reusable](https://reactnativereusables.com/) - Reusable components
 - [Nativewind](https://www.nativewind.dev/) - apply tailwindcss styling
 - [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - state management
