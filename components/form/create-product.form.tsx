@@ -7,7 +7,9 @@ import { Textarea } from '@/components/reusable/textarea';
 import SelectionButton from '@/components/ui/button/selection.button';
 import { createProductFormSchema } from '@/lib/schema/product/create.product';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
+import { useBrandStore } from '@/lib/store/brand-store';
 import { useCategoryStore } from '@/lib/store/category-store';
+import { useUnitMeasurementStore } from '@/lib/store/measurement-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -16,6 +18,8 @@ import { KeyboardAvoidingView, View } from 'react-native';
 export default function CreateProductForm() {
   const { open, category, close, brand } = useBottomSheetStore();
   const { selectedCategory } = useCategoryStore();
+  const { selectedMeasurement } = useUnitMeasurementStore();
+  const { selectedBrand } = useBrandStore();
   const form = useForm({
     resolver: zodResolver(createProductFormSchema),
     defaultValues: {},
@@ -32,7 +36,7 @@ export default function CreateProductForm() {
         <View className="flex-1 gap-1">
           <Text className="text-lg font-semibold">Product Information</Text>
           <View className="flex-row justify-between gap-2 w-full">
-            <View className="gap-1">
+            <View className="gap-1 flex-1">
               <Label>Category</Label>
               <SelectionButton
                 value={selectedCategory?.name}
@@ -46,9 +50,10 @@ export default function CreateProductForm() {
                 }}
               />
             </View>
-            <View className="gap-1">
+            <View className="gap-1 flex-1">
               <Label>Brand</Label>
               <SelectionButton
+                value={selectedBrand?.name}
                 label="Select brand"
                 onPress={() => {
                   if (brand) {
@@ -94,6 +99,7 @@ export default function CreateProductForm() {
               <SelectionButton
                 label="Unit of measurement"
                 onPress={() => open('measurement')}
+                value={selectedMeasurement?.name}
               />
             </View>
             <View className="gap-1 flex-1">
