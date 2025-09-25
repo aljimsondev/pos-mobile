@@ -58,7 +58,7 @@ export default function ScannerSheet() {
       enableDynamicSizing={false}
     >
       <BottomSheetView className="h-full">
-        <AppScanner />
+        {barcodeScanner && <AppScanner />}
       </BottomSheetView>
     </BottomSheet>
   );
