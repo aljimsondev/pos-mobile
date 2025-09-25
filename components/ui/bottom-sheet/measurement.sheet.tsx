@@ -8,7 +8,7 @@ import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
 import { renderBackdrop } from '@/components/ui/bottom-sheet/renderBackdrop';
 import AppCheckbox from '@/components/ui/checkbox';
-import { unit_of_measurement } from '@/constants/unit-of-measurement';
+import { Unit, unit_of_measurement } from '@/constants/unit-of-measurement';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import { useUnitMeasurementStore } from '@/lib/store/measurement-store';
@@ -45,6 +45,11 @@ function MeasurementSheet() {
     [close],
   );
 
+  const onUnitSelect = (unit: Unit) => {
+    setSelectedMeasurement(unit);
+    close('measurement');
+  };
+
   return (
     <BottomSheetModalProvider>
       <BottomSheetModal
@@ -75,9 +80,7 @@ function MeasurementSheet() {
                               label={unit.name}
                               key={unit.code}
                               checked={selectedMeasurement?.code === unit.code}
-                              onCheckChange={() => {
-                                setSelectedMeasurement(unit);
-                              }}
+                              onCheckChange={() => onUnitSelect(unit)}
                             />
                           );
                         })}
