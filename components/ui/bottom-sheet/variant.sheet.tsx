@@ -8,9 +8,8 @@ import IconButton from '@/components/ui/IconButton';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { productVariationSchema } from '@/lib/schema/product/create.product';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
-import { useCategoryStore } from '@/lib/store/category-store';
 import { useUnitMeasurementStore } from '@/lib/store/measurement-store';
-import { Category } from '@aljimsondev/database-schema';
+import { useScannerStore } from '@/lib/store/scanner-store';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
@@ -27,26 +26,17 @@ function VariationSheet() {
     close,
     createProductVariation: openSheet,
     open,
+    barcodeScanner,
   } = useBottomSheetStore();
-  const { getCategories, categories, setSelectedCategory, selectedCategory } =
-    useCategoryStore();
   const { selectedMeasurement } = useUnitMeasurementStore();
   useSheetBackHandler('createProductVariation');
+  const { onScanSuccess } = useScannerStore();
 
   const form = useForm({
     resolver: zodResolver(productVariationSchema),
     defaultValues: {},
     mode: 'all',
   });
-
-  useEffect(() => {
-    const controller = new AbortController();
-    getCategories(controller);
-
-    return () => {
-      controller.abort();
-    };
-  }, [getCategories]);
 
   // control sheet according to state changes
   useEffect(() => {
@@ -63,9 +53,19 @@ function VariationSheet() {
     }
   };
 
-  const onSelectCategory = (category: Category) => {
-    setSelectedCategory(category);
-    close('createProductVariation'); // close the sheet
+  const onOpenScanner = () => {
+    // this will ensure that the sheet will toggle even the user spam on click
+    if (barcodeScanner) {
+      close('barcodeScanner');
+    } else {
+      open('barcodeScanner');
+    }
+
+    // passed the callback
+    onScanSuccess((result: any) => {
+      // set the value
+      form.setValue('barcode', result);
+    });
   };
 
   return (
@@ -115,8 +115,13 @@ function VariationSheet() {
                 }}
               />
               <IconButton
+                onPress={onOpenScanner}
                 icon={(color) => (
-                  <MaterialCommunityIcons name="barcode-scan" size={24} />
+                  <MaterialCommunityIcons
+                    name="barcode-scan"
+                    size={24}
+                    color={color}
+                  />
                 )}
               />
             </View>

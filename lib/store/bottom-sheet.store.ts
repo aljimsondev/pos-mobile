@@ -5,6 +5,7 @@ interface BottomSheetState {
   brand: boolean;
   measurement: boolean;
   createProductVariation: boolean;
+  barcodeScanner: boolean;
 }
 
 export type SheetName = keyof BottomSheetState;
@@ -19,6 +20,7 @@ const initialState: BottomSheetState = {
   category: false,
   measurement: false,
   createProductVariation: false,
+  barcodeScanner: false,
 };
 
 export const useBottomSheetStore = create<BottomSheetStore>((set, get) => ({
