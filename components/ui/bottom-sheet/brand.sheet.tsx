@@ -1,8 +1,10 @@
 import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
+import AppCheckbox from '@/components/ui/checkbox';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import { useBrandStore } from '@/lib/store/brand-store';
+import { Brand } from '@aljimsondev/database-schema';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { useEffect, useRef } from 'react';
@@ -13,7 +15,8 @@ function BrandSheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
   const { brand, close } = useBottomSheetStore();
   useSheetBackHandler('brand');
-  const { getBrands, brands } = useBrandStore();
+  const { getBrands, brands, setSelectedBrand, selectedBrand } =
+    useBrandStore();
 
   // initial fetch for brands
   useEffect(() => {
@@ -40,6 +43,13 @@ function BrandSheet() {
     }
   };
 
+  const onSelectBrand = (brand: Brand) => {
+    if (brand) {
+      setSelectedBrand(brand);
+      close('brand');
+    }
+  };
+
   return (
     <BottomSheet
       ref={ref}
@@ -53,12 +63,15 @@ function BrandSheet() {
         <Text className="font-bold text-lg">Brands</Text>
         <Separator />
         <ScrollView style={{ flex: 1 }}>
-          {new Array(1000).fill(0).map((_, index) => {
+          {brands.map((brand, index) => {
+            const selected = brand.id === selectedBrand?.id;
             return (
-              <Text key={index}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam,
-                molestiae!
-              </Text>
+              <AppCheckbox
+                label={brand.name}
+                key={brand.id}
+                onCheckChange={() => onSelectBrand(brand)}
+                value={selected}
+              />
             );
           })}
         </ScrollView>
