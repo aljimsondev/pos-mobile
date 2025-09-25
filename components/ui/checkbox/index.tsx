@@ -20,7 +20,7 @@ export default function AppCheckbox({
       className="flex-row gap-2 items-center py-2 px-1 rounded-md"
       onPress={onCheckChange}
     >
-      <Checkbox value={checked} {...rest} />
+      <Checkbox value={checked} {...rest} onValueChange={onCheckChange} />
       <Text>{label}</Text>
     </Pressable>
   );
