@@ -53,6 +53,7 @@ function BrandSheet() {
   return (
     <BottomSheet
       ref={ref}
+      index={-1}
       snapPoints={['75%']}
       backdropComponent={renderBackdrop}
       onChange={onChange}

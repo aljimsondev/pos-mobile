@@ -4,6 +4,7 @@ interface BottomSheetState {
   category: boolean;
   brand: boolean;
   measurement: boolean;
+  createProductVariation: boolean;
 }
 
 export type SheetName = keyof BottomSheetState;
@@ -17,6 +18,7 @@ const initialState: BottomSheetState = {
   brand: false,
   category: false,
   measurement: false,
+  createProductVariation: false,
 };
 
 export const useBottomSheetStore = create<BottomSheetStore>((set, get) => ({

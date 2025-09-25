@@ -1,4 +1,5 @@
 import { Button } from '@/components/reusable/button';
+import { Card, CardContent } from '@/components/reusable/card';
 import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Separator } from '@/components/reusable/separator';
@@ -10,13 +11,15 @@ import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import { useBrandStore } from '@/lib/store/brand-store';
 import { useCategoryStore } from '@/lib/store/category-store';
 import { useUnitMeasurementStore } from '@/lib/store/measurement-store';
+import { Ionicons } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, View } from 'react-native';
 
 export default function CreateProductForm() {
-  const { open, category, close, brand } = useBottomSheetStore();
+  const { open, category, close, brand, createProductVariation } =
+    useBottomSheetStore();
   const { selectedCategory } = useCategoryStore();
   const { selectedMeasurement } = useUnitMeasurementStore();
   const { selectedBrand } = useBrandStore();
@@ -25,6 +28,14 @@ export default function CreateProductForm() {
     defaultValues: {},
     mode: 'all',
   });
+
+  const handleAddVariation = () => {
+    if (createProductVariation) {
+      close('createProductVariation');
+    } else {
+      open('createProductVariation');
+    }
+  };
 
   const onSubmit = form.handleSubmit(async (data) => {
     console.log(data);
@@ -92,27 +103,16 @@ export default function CreateProductForm() {
             />
           </View>
           <Separator className="my-4" />
-          <Text className="text-lg font-semibold">Product Variation</Text>
-          <View className="flex-row gap-2">
-            <View className="gap-1">
-              <Label>Unit of measurement</Label>
-              <SelectionButton
-                label="Unit of measurement"
-                onPress={() => open('measurement')}
-                value={selectedMeasurement?.name}
-              />
-            </View>
-            <View className="gap-1 flex-1">
-              <Label>Unit price</Label>
-              <Controller
-                name="name"
-                control={form.control}
-                render={({ field, fieldState, formState }) => {
-                  return <Input {...field} placeholder="1000" />;
-                }}
-              />
-            </View>
+          <View className="flex-row items-center justify-between">
+            <Text className="text-lg font-semibold">Product Variation</Text>
+            <Button variant="secondary" size="sm" onPress={handleAddVariation}>
+              <Ionicons name="add" size={24} />
+              <Text>Add variation</Text>
+            </Button>
           </View>
+          <Card className="mt-4">
+            <CardContent></CardContent>
+          </Card>
         </View>
       </KeyboardAvoidingView>
       <Button onPress={onSubmit}>

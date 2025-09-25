@@ -11,6 +11,8 @@ export const productVariationSchema = z.object({
   low_stock_threshold: z.number().default(0).optional(),
 });
 
+export type ProductVariationSchema = z.infer<typeof productVariationSchema>;
+
 export const createProductFormSchema = z.object({
   name: z.string(),
   brand_id: z.string(),

@@ -20,7 +20,11 @@ export default function SelectionButton({
   value?: string;
 }) {
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={onPress}
+      className="relative w-full"
+    >
       <View
         {...rest}
         className={cn(
@@ -28,7 +32,9 @@ export default function SelectionButton({
           className,
         )}
       >
-        <Text className="text-muted-foreground">{value ? value : label}</Text>
+        <View className="flex-1">
+          <Text className="text-muted-foreground">{value ? value : label}</Text>
+        </View>
         <Ionicons name="chevron-down" />
       </View>
     </TouchableOpacity>
