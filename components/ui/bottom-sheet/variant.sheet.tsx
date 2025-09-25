@@ -8,6 +8,7 @@ import IconButton from '@/components/ui/IconButton';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { productVariationSchema } from '@/lib/schema/product/create.product';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
+import { useCreateProductStore } from '@/lib/store/create-product-store';
 import { useUnitMeasurementStore } from '@/lib/store/measurement-store';
 import { useScannerStore } from '@/lib/store/scanner-store';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -18,6 +19,7 @@ import React, { useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Toast } from 'toastify-react-native';
 import { renderBackdrop } from './renderBackdrop';
 
 function VariationSheet() {
@@ -31,6 +33,7 @@ function VariationSheet() {
   const { selectedMeasurement } = useUnitMeasurementStore();
   useSheetBackHandler('createProductVariation');
   const { onScanSuccess } = useScannerStore();
+  const { setVariant, variations } = useCreateProductStore();
 
   const form = useForm({
     resolver: zodResolver(productVariationSchema),
@@ -68,6 +71,26 @@ function VariationSheet() {
     });
   };
 
+  const handleAddVariation = form.handleSubmit(async (data) => {
+    try {
+      if (!selectedMeasurement)
+        throw new Error('Unit of measurement is required!');
+
+      setVariant({
+        ...data,
+        unit_of_measurement: selectedMeasurement.name || '',
+      });
+
+      // reset form
+      form.reset();
+      // close the bottom sheet
+      close('createProductVariation');
+    } catch (e: any) {
+      console.warn(e);
+      Toast.error(e?.message || 'Something went wrong!');
+    }
+  });
+  console.log(variations);
   return (
     <BottomSheet
       index={-1}
@@ -86,7 +109,7 @@ function VariationSheet() {
             <View className="gap-1 flex-1">
               <Label>Unit of measurement</Label>
               <SelectionButton
-                label="Unit of measurement"
+                label="Measurement"
                 onPress={() => open('measurement')}
                 value={selectedMeasurement?.name}
               />
@@ -94,26 +117,62 @@ function VariationSheet() {
             <View className="gap-1 flex-1">
               <Label>Unit price</Label>
               <Controller
-                name="variation_name"
+                name="unit_price"
                 control={form.control}
-                render={({ field, fieldState, formState }) => {
-                  return <Input {...field} placeholder="1000" />;
+                render={({ field, fieldState }) => {
+                  return (
+                    <Input
+                      {...field}
+                      placeholder="1000"
+                      keyboardType="numeric"
+                      value={field.value?.toString()}
+                      error={Boolean(fieldState.error)}
+                      errorMessage={fieldState?.error?.message}
+                      onChangeText={field.onChange}
+                    />
+                  );
                 }}
               />
             </View>
           </View>
           <View className="gap-1 flex-1 mt-4">
+            <Label>Variation name</Label>
+            <Controller
+              name="variation_name"
+              control={form.control}
+              render={({ field, fieldState }) => {
+                return (
+                  <Input
+                    {...field}
+                    placeholder="1000"
+                    error={Boolean(fieldState.error)}
+                    errorMessage={fieldState?.error?.message}
+                    onChangeText={field.onChange}
+                  />
+                );
+              }}
+            />
+          </View>
+          <View className="gap-1 flex-1 mt-4">
             <Label>Barcode</Label>
             <View className="flex-row gap-1">
-              <Controller
-                name="variation_name"
-                control={form.control}
-                render={({ field, fieldState, formState }) => {
-                  return (
-                    <Input {...field} placeholder="1000" className="flex-1" />
-                  );
-                }}
-              />
+              <View className="flex-1">
+                <Controller
+                  name="barcode"
+                  control={form.control}
+                  render={({ field, fieldState }) => {
+                    return (
+                      <Input
+                        {...field}
+                        placeholder="1000"
+                        error={Boolean(fieldState.error)}
+                        errorMessage={fieldState?.error?.message}
+                        onChangeText={field.onChange}
+                      />
+                    );
+                  }}
+                />
+              </View>
               <IconButton
                 onPress={onOpenScanner}
                 icon={(color) => (
@@ -127,7 +186,7 @@ function VariationSheet() {
             </View>
           </View>
         </ScrollView>
-        <Button className="mb-4">
+        <Button className="mb-4" onPress={handleAddVariation}>
           <Text>Add variation</Text>
         </Button>
       </BottomSheetView>
