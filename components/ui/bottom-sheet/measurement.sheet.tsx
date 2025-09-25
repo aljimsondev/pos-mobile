@@ -11,20 +11,19 @@ import AppCheckbox from '@/components/ui/checkbox';
 import { unit_of_measurement } from '@/constants/unit-of-measurement';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
-import { useCategoryStore } from '@/lib/store/category-store';
+import { useUnitMeasurementStore } from '@/lib/store/measurement-store';
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
-  BottomSheetScrollView,
-  BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 function MeasurementSheet() {
   const { measurement, close } = useBottomSheetStore();
-  const { selectedCategory, setSelectedCategory, unsetSelectedCategory } =
-    useCategoryStore();
+  const { selectedMeasurement, setSelectedMeasurement } =
+    useUnitMeasurementStore();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   useSheetBackHandler('measurement');
 
@@ -57,10 +56,10 @@ function MeasurementSheet() {
         enableDynamicSizing={false}
         ref={bottomSheetModalRef}
       >
-        <BottomSheetView className="px-4">
+        <ScrollView className="px-4">
           <Text className="font-bold text-lg">Unit of measurement</Text>
           <Separator />
-          <BottomSheetScrollView>
+          <View className="flex-1">
             <Accordion type="single" collapsible>
               {Object.entries(unit_of_measurement).map(([key, val]) => {
                 return (
@@ -75,9 +74,9 @@ function MeasurementSheet() {
                             <AppCheckbox
                               label={unit.name}
                               key={unit.code}
-                              checked={selectedCategory?.code === unit.code}
+                              checked={selectedMeasurement?.code === unit.code}
                               onCheckChange={() => {
-                                setSelectedCategory(unit);
+                                setSelectedMeasurement(unit);
                               }}
                             />
                           );
@@ -88,8 +87,8 @@ function MeasurementSheet() {
                 );
               })}
             </Accordion>
-          </BottomSheetScrollView>
-        </BottomSheetView>
+          </View>
+        </ScrollView>
       </BottomSheetModal>
     </BottomSheetModalProvider>
   );
