@@ -10,18 +10,21 @@ import { createProductFormSchema } from '@/lib/schema/product/create.product';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import { useBrandStore } from '@/lib/store/brand-store';
 import { useCategoryStore } from '@/lib/store/category-store';
+import { useCreateProductStore } from '@/lib/store/create-product-store';
 import { useUnitMeasurementStore } from '@/lib/store/measurement-store';
 import { Ionicons } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, View } from 'react-native';
+import VariantCard from './_component/card/VariantCard';
 
 export default function CreateProductForm() {
   const { open, category, close, brand, createProductVariation } =
     useBottomSheetStore();
   const { selectedCategory } = useCategoryStore();
   const { selectedMeasurement } = useUnitMeasurementStore();
+  const { variations } = useCreateProductStore();
   const { selectedBrand } = useBrandStore();
   const form = useForm({
     resolver: zodResolver(createProductFormSchema),
@@ -102,6 +105,7 @@ export default function CreateProductForm() {
               }}
             />
           </View>
+          {/*************start of VARIATION SECION***************** */}
           <Separator className="my-4" />
           <View className="flex-row items-center justify-between">
             <Text className="text-lg font-semibold">Product Variation</Text>
@@ -111,8 +115,15 @@ export default function CreateProductForm() {
             </Button>
           </View>
           <Card className="mt-4">
-            <CardContent></CardContent>
+            <CardContent>
+              {variations.map((variant) => {
+                return (
+                  <VariantCard variant={variant} key={variant.variation_name} />
+                );
+              })}
+            </CardContent>
           </Card>
+          {/*************end of VARIATION SECION***************** */}
         </View>
       </KeyboardAvoidingView>
       <Button onPress={onSubmit}>
