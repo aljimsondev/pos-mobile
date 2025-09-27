@@ -1,4 +1,5 @@
 import useThemeVariables from '@/hooks/useThemeVariables';
+import { cn } from '@/lib/utils';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { Pressable, View } from 'react-native';
@@ -6,8 +7,13 @@ import { Pressable, View } from 'react-native';
 export interface PhotoCardProps {
   uri?: string;
   onRemovePhoto?: () => void;
+  className?: string;
 }
-export default function PhotoCard({ uri, onRemovePhoto }: PhotoCardProps) {
+export default function PhotoCard({
+  uri,
+  onRemovePhoto,
+  className,
+}: PhotoCardProps) {
   const themeColor = useThemeVariables();
   return (
     <View className="relative">
@@ -19,7 +25,12 @@ export default function PhotoCard({ uri, onRemovePhoto }: PhotoCardProps) {
           <Ionicons name="close" size={17} color={themeColor.destructive} />
         </Pressable>
       )}
-      <View className="rounded-md border-[1px] border-border relative aspect-[3/4] w-[80px] overflow-hidden flex items-center justify-center">
+      <View
+        className={cn(
+          'rounded-md border-[1px] border-border relative aspect-[3/4] w-[80px] overflow-hidden flex items-center justify-center',
+          className,
+        )}
+      >
         <Image
           source={{ uri: uri }}
           style={{ width: '100%', aspectRatio: 3 / 4 }}

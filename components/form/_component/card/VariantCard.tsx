@@ -1,4 +1,5 @@
 import { Text } from '@/components/reusable/text';
+import PhotoCard from '@/components/ui/card/PhotoCard';
 import IconButton from '@/components/ui/IconButton';
 import useThemeVariables from '@/hooks/useThemeVariables';
 import { ProductVariationSchema } from '@/lib/schema/product/create.product';
@@ -20,7 +21,8 @@ function VariantCard({ variant }: VariantCardProps) {
 
   return (
     <View className="relative">
-      <View className="items-end flex-row justify-between">
+      <View className="flex-row gap-2">
+        <PhotoCard uri={variant.photo} className="border-transparent" />
         <View>
           <Text>{variant.variation_name}</Text>
           <Text className="text-muted-foreground text-sm">
@@ -36,16 +38,16 @@ function VariantCard({ variant }: VariantCardProps) {
               {variant.barcode}
             </Text>
           </View>
+          <Text className="font-bold text-lg">
+            {formatPHP(variant.unit_price)}
+          </Text>
         </View>
-        <Text className="font-bold text-lg">
-          {formatPHP(variant.unit_price)}
-        </Text>
       </View>
       <IconButton
         icon={(color) => <Ionicons name="close" size={18} color={color} />}
         activeOpacity={1}
         iconTheme="mutedForeground"
-        className="border-transparent rounded-full absolute -top-6 -right-6 m-0 active:bg-transparent"
+        className="border-transparent rounded-full absolute -top-2 -right-2 p-1 m-2 h-fit w-fit active:bg-muted"
         onPress={handleRemoveVariant}
       />
     </View>

@@ -14,7 +14,7 @@ import { useCreateProductStore } from '@/lib/store/create-product-store';
 import { useUnitMeasurementStore } from '@/lib/store/measurement-store';
 import { Ionicons } from '@expo/vector-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, View } from 'react-native';
 import VariantCard from './_component/card/VariantCard';
@@ -114,11 +114,16 @@ export default function CreateProductForm() {
               <Text>Add variation</Text>
             </Button>
           </View>
-          <Card className="mt-4">
-            <CardContent>
-              {variations.map((variant) => {
+          <Card className="mt-4 py-0">
+            <CardContent className="p-2">
+              {variations.map((variant, index) => {
                 return (
-                  <VariantCard variant={variant} key={variant.variation_name} />
+                  <Fragment key={variant.variation_name}>
+                    <VariantCard variant={variant} />
+                    {index !== variations.length - 1 && (
+                      <Separator className="my-1" />
+                    )}
+                  </Fragment>
                 );
               })}
             </CardContent>
