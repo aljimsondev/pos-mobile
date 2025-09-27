@@ -18,10 +18,7 @@ export default function PhotoButton({ onSelectImage }: PhotoButtonProps) {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
-      console.log(result.assets[0].uri);
       onSelectImage(result);
     }
   };

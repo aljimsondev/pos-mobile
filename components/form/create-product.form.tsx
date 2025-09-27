@@ -116,16 +116,22 @@ export default function CreateProductForm() {
           </View>
           <Card className="mt-4 py-0">
             <CardContent className="p-2">
-              {variations.map((variant, index) => {
-                return (
-                  <Fragment key={variant.variation_name}>
-                    <VariantCard variant={variant} />
-                    {index !== variations.length - 1 && (
-                      <Separator className="my-1" />
-                    )}
-                  </Fragment>
-                );
-              })}
+              {variations.length <= 0 ? (
+                <Text className="text-center my-6">
+                  No product variations added yet!
+                </Text>
+              ) : (
+                variations.map((variant, index) => {
+                  return (
+                    <Fragment key={variant.variation_name}>
+                      <VariantCard variant={variant} />
+                      {index !== variations.length - 1 && (
+                        <Separator className="my-1" />
+                      )}
+                    </Fragment>
+                  );
+                })
+              )}
             </CardContent>
           </Card>
           {/*************end of VARIATION SECION***************** */}
