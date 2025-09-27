@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/reusable/card';
 import { Text } from '@/components/reusable/text';
 import IconButton from '@/components/ui/IconButton';
+import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import { useDialogStore } from '@/lib/store/dialog-store';
 import { Product } from '@/lib/types/product';
 import { getImageUrl } from '@/lib/utils';
@@ -29,6 +30,7 @@ type ProductCardManagementProps = {
 function ProductCardManagement({ style, product }: ProductCardManagementProps) {
   const photoUrl = getImageUrl(product.photo.url);
   const { showDialog } = useDialogStore();
+  const { open } = useBottomSheetStore();
 
   const handleDelete = () => {
     try {
@@ -45,6 +47,10 @@ function ProductCardManagement({ style, product }: ProductCardManagementProps) {
       console.warn(e);
       Toast.error(e?.message);
     }
+  };
+
+  const onOpenAddVariation = () => {
+    open('createProductVariation');
   };
 
   return (
