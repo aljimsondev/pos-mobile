@@ -18,11 +18,10 @@ function VariantCard({ variant }: VariantCardProps) {
   const { unsetVariant } = useCreateProductStore();
 
   const handleRemoveVariant = () => unsetVariant(variant.variation_name);
-
   return (
     <View className="relative">
       <View className="flex-row gap-2">
-        <PhotoCard uri={variant.photo} className="border-transparent" />
+        <PhotoCard uri={variant.photo.uri} className="border-transparent" />
         <View>
           <Text>{variant.variation_name}</Text>
           <Text className="text-muted-foreground text-sm">

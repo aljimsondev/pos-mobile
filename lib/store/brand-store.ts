@@ -5,6 +5,10 @@ import { create } from 'zustand';
 interface BrandState {
   brands: Brand[];
   selectedBrand: Brand | null;
+  /**
+   * A Callback function to be called after selecting the brand
+   */
+  callback: ((selectedCategory: Brand) => void) | null;
 }
 
 interface CategoryStore extends BrandState {
@@ -12,11 +16,14 @@ interface CategoryStore extends BrandState {
   setSelectedBrand: (brand: Brand) => void;
   unsetSelectedBrand: () => void;
   unsetBrands: () => void;
+  setCallback: (callback: (brand: Brand) => void) => void;
+  unsetCallback: () => void;
 }
 
 const initialState: BrandState = {
   brands: [],
   selectedBrand: null,
+  callback: null,
 };
 
 export const useBrandStore = create<CategoryStore>((set, get) => ({
@@ -40,6 +47,12 @@ export const useBrandStore = create<CategoryStore>((set, get) => ({
     set({
       selectedBrand: brand,
     });
+  },
+  setCallback: (callback: (brand: Brand) => void) => {
+    set({ callback: callback });
+  },
+  unsetCallback: () => {
+    set({ callback: null });
   },
   unsetSelectedBrand: () => {
     set({

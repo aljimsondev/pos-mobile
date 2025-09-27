@@ -14,8 +14,13 @@ import { renderBackdrop } from './renderBackdrop';
 function CategorySheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
   const { category: categoryIsOpen, close } = useBottomSheetStore();
-  const { getCategories, categories, setSelectedCategory, selectedCategory } =
-    useCategoryStore();
+  const {
+    getCategories,
+    categories,
+    setSelectedCategory,
+    selectedCategory,
+    callback,
+  } = useCategoryStore();
   useSheetBackHandler('category');
 
   useEffect(() => {
@@ -44,6 +49,10 @@ function CategorySheet() {
 
   const onSelectCategory = (category: Category) => {
     setSelectedCategory(category);
+    // run the callback
+    if (callback) {
+      callback(category);
+    }
     close('category'); // close the sheet
   };
 

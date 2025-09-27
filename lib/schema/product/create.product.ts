@@ -96,6 +96,5 @@ export const createProductFormSchema = z.object({
   category_id: z.string(),
   is_active: z.boolean().default(true).optional(),
   is_featured: z.boolean().default(true).optional(),
-  metadata: z.record(z.string(), z.any()),
-  variations: z.array(productVariationSchema),
+  metadata: z.record(z.string(), z.any()).default({}).optional(),
 });

@@ -15,7 +15,7 @@ function BrandSheet() {
   const ref = useRef<BottomSheetMethods | null>(null);
   const { brand, close } = useBottomSheetStore();
   useSheetBackHandler('brand');
-  const { getBrands, brands, setSelectedBrand, selectedBrand } =
+  const { getBrands, brands, setSelectedBrand, selectedBrand, callback } =
     useBrandStore();
 
   // initial fetch for brands
@@ -46,6 +46,10 @@ function BrandSheet() {
   const onSelectBrand = (brand: Brand) => {
     if (brand) {
       setSelectedBrand(brand);
+      // run the callback of select
+      if (callback) {
+        callback(brand);
+      }
       close('brand');
     }
   };

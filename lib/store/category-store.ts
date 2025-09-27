@@ -5,6 +5,10 @@ import { create } from 'zustand';
 interface CategoryState {
   categories: Category[];
   selectedCategory: Category | null;
+  /**
+   * A Callback function to be called after selecting the category
+   */
+  callback: ((selectedCategory: Category) => void) | null;
 }
 
 interface CategoryStore extends CategoryState {
@@ -12,11 +16,14 @@ interface CategoryStore extends CategoryState {
   setSelectedCategory: (category: Category) => void;
   unsetSelectedCategory: () => void;
   unsetCategories: () => void;
+  setCallback: (callback: (category: Category) => void) => void;
+  unsetCallback: () => void;
 }
 
 const initialState: CategoryState = {
   categories: [],
   selectedCategory: null,
+  callback: null,
 };
 
 export const useCategoryStore = create<CategoryStore>((set, get) => ({
@@ -34,6 +41,13 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
     set({
       categories: results,
     });
+  },
+  setCallback: (callback: (category: Category) => void) => {
+    console.log('Callback init is called!');
+    set({ callback: callback });
+  },
+  unsetCallback: () => {
+    set({ callback: null });
   },
   setSelectedCategory: (category: Category) => {
     if (!category) return;

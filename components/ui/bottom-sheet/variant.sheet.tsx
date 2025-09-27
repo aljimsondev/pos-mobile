@@ -194,14 +194,16 @@ function VariationSheet() {
             <View className="items-center justify-start flex-row gap-2">
               {photo ? (
                 <PhotoCard
-                  uri={photo}
+                  uri={photo.uri}
                   onRemovePhoto={() => form.setValue('photo', '')}
                 />
               ) : (
                 <PhotoButton
                   onSelectImage={(result) => {
-                    if (!result.canceled)
-                      form.setValue('photo', result.assets[0].uri);
+                    if (!result.canceled) {
+                      const file = result.assets[0];
+                      form.setValue('photo', file);
+                    }
                   }}
                 />
               )}
