@@ -83,6 +83,7 @@ export const productVariationSchema = z.object({
   barcode: z.string().min(1, 'Barcode is required!'),
   attributes: z.record(z.string(), z.any()).default({}).optional(),
   low_stock_threshold: thresholdSchema,
+  photo: z.any(),
 });
 
 export type ProductVariationSchema = z.infer<typeof productVariationSchema>;

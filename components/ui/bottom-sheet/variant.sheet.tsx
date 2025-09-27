@@ -3,7 +3,9 @@ import { Input } from '@/components/reusable/input';
 import { Label } from '@/components/reusable/label';
 import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
+import PhotoButton from '@/components/ui/button/PhotoButton';
 import SelectionButton from '@/components/ui/button/selection.button';
+import PhotoCard from '@/components/ui/card/PhotoCard';
 import IconButton from '@/components/ui/IconButton';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { productVariationSchema } from '@/lib/schema/product/create.product';
@@ -90,7 +92,9 @@ function VariationSheet() {
       Toast.error(e?.message || 'Something went wrong!');
     }
   });
-  console.log(variations);
+
+  const photo = form.watch('photo');
+
   return (
     <BottomSheet
       index={-1}
@@ -183,6 +187,24 @@ function VariationSheet() {
                   />
                 )}
               />
+            </View>
+          </View>
+          <View className="gap-1 flex-1 mt-4">
+            <Label>Photo ({photo ? '1' : '0'}/1)</Label>
+            <View className="items-center justify-start flex-row gap-2">
+              {photo ? (
+                <PhotoCard
+                  uri={photo}
+                  onRemovePhoto={() => form.setValue('photo', '')}
+                />
+              ) : (
+                <PhotoButton
+                  onSelectImage={(result) => {
+                    if (!result.canceled)
+                      form.setValue('photo', result.assets[0].uri);
+                  }}
+                />
+              )}
             </View>
           </View>
         </ScrollView>
