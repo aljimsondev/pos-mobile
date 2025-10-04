@@ -26,13 +26,13 @@ import { renderBackdrop } from './renderBackdrop';
 
 interface ProductVariantSheetProps {}
 
-function ProductVariantSheet({}: ProductVariantSheetProps) {
+export default function ProductVariantSheet({}: ProductVariantSheetProps) {
   const ref = useRef<BottomSheetMethods | null>(null);
   const {
     close,
     open,
     barcodeScanner,
-    createProductVariation: openSheet,
+    createNewProductVariation: openSheet,
   } = useBottomSheetStore();
   const { selectedMeasurement } = useUnitMeasurementStore();
   useSheetBackHandler('createProductVariation');
@@ -56,7 +56,7 @@ function ProductVariantSheet({}: ProductVariantSheetProps) {
 
   const onChange = (props: any) => {
     if (props === -1) {
-      close('createProductVariation');
+      close('createNewProductVariation');
     }
   };
 
@@ -220,5 +220,3 @@ function ProductVariantSheet({}: ProductVariantSheetProps) {
     </BottomSheet>
   );
 }
-
-export default ProductVariantSheet;

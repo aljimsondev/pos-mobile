@@ -38,7 +38,7 @@ function ProductCardManagement({
 }: ProductCardManagementProps) {
   const photoUrl = getImageUrl(product.photo.url);
   const { showDialog } = useDialogStore();
-  const { open, close, createProductVariation } = useBottomSheetStore();
+  const { open } = useBottomSheetStore();
   const { setProduct } = useProductStore();
   const router = useRouter();
 
@@ -72,7 +72,7 @@ function ProductCardManagement({
   const onOpenAddVariation = () => {
     // set product
     setProduct(product);
-    open('createProductVariation');
+    open('createNewProductVariation'); // open sheet
   };
 
   return (
