@@ -3,6 +3,7 @@ import ProductFilter from '@/components/ui/card/product-filter.card';
 import ProductListManagement from '@/components/ui/list/ProductListManagement';
 import SearchBar from '@/components/ui/SearchBar';
 import { fetchProducts } from '@/core/requests/fetch-products';
+import { Product } from '@/lib/types/product';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import debounce from 'debounce';
 import React, { useCallback, useState } from 'react';
@@ -14,6 +15,8 @@ export default function ManageProduct() {
   const [orderBy, setOrderBy] = useState('created_at');
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [targetProduct, setTargetProduct] = useState<Product | null>(null);
+  const [openAddVariantSheet, setOpenAddVariantSheet] = useState(false);
 
   // Debounced function to update the delayed state
   const updateDebouncedSearch = useCallback(
@@ -51,6 +54,12 @@ export default function ManageProduct() {
         return lastPage.pagination.page + 1;
       },
     });
+
+  // handler for editing adding product variant
+  const onSelectProductForVariantAddition = (product: Product) => {
+    setTargetProduct(product);
+    setOpenAddVariantSheet(true);
+  };
 
   const products = data?.pages?.map((page) => page.products).flat() || [];
   const emptyProducts = products.length <= 0;

@@ -19,7 +19,7 @@ import React, { Fragment, useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAvoidingView, View } from 'react-native';
 import { Toast } from 'toastify-react-native';
-import VariantCard from './_component/card/VariantCard';
+import VariantCard from '../_component/card/VariantCard';
 
 export default function CreateProductForm() {
   const { open, category, close, brand, createProductVariation } =

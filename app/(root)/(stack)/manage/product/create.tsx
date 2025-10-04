@@ -1,4 +1,4 @@
-import CreateProductForm from '@/components/form/create-product.form';
+import CreateProductForm from '@/components/form/product/create-product.form';
 import React from 'react';
 import { View } from 'react-native';
 

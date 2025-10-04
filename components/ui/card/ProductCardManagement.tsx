@@ -4,6 +4,7 @@ import IconButton from '@/components/ui/IconButton';
 import { deleteProduct } from '@/core/requests/delete/delete-product';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import { useDialogStore } from '@/lib/store/dialog-store';
+import { useProductStore } from '@/lib/store/product-store';
 import { Product } from '@/lib/types/product';
 import { getImageUrl } from '@/lib/utils';
 import {
@@ -12,7 +13,8 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import React from 'react';
+import { useRouter } from 'expo-router';
+import React, { Fragment } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { Toast } from 'toastify-react-native';
 type ProductCardManagementProps = {
@@ -36,7 +38,9 @@ function ProductCardManagement({
 }: ProductCardManagementProps) {
   const photoUrl = getImageUrl(product.photo.url);
   const { showDialog } = useDialogStore();
-  const { open } = useBottomSheetStore();
+  const { open, close, createProductVariation } = useBottomSheetStore();
+  const { setProduct } = useProductStore();
+  const router = useRouter();
 
   const handleDelete = () => {
     try {
@@ -66,44 +70,59 @@ function ProductCardManagement({
   };
 
   const onOpenAddVariation = () => {
+    // set product
+    setProduct(product);
     open('createProductVariation');
   };
 
   return (
-    <Card className="p-0 h-fit overflow-hidden" style={style}>
-      <CardContent className="p-0 flex-row">
-        <Image
-          source={photoUrl}
-          style={{ width: 100, aspectRatio: 3 / 4 }}
-          contentFit="cover"
-          contentPosition="center"
-        />
-        <View className="px-2 line-clamp-2 py-4 flex-1">
-          <Text>{product.name}</Text>
-          <Text className="text-muted-foreground line-clamp-2">
-            {product.description}
-          </Text>
-          <View className="flex-row gap-2 mt-2 items-center justify-end">
-            <IconButton
-              icon={(color) => <Feather name="plus" color={color} size={18} />}
-            />
-            <IconButton
-              icon={(color) => (
-                <MaterialCommunityIcons name="pencil" color={color} size={18} />
-              )}
-            />
-            <IconButton
-              iconTheme="destructive"
-              className="active:bg-destructive/10"
-              icon={(color) => (
-                <FontAwesome name="trash-o" color={color} size={18} />
-              )}
-              onPress={handleDelete}
-            />
+    <Fragment>
+      <Card className="p-0 h-fit overflow-hidden" style={style}>
+        <CardContent className="p-0 flex-row">
+          <Image
+            source={photoUrl}
+            style={{ width: 100, aspectRatio: 3 / 4 }}
+            contentFit="cover"
+            contentPosition="center"
+          />
+          <View className="px-2 line-clamp-2 py-4 flex-1">
+            <Text>{product.name}</Text>
+            <Text className="text-muted-foreground line-clamp-2">
+              {product.description}
+            </Text>
+            <View className="flex-row gap-2 mt-2 items-center justify-end">
+              <IconButton
+                icon={(color) => (
+                  <Feather
+                    name="plus"
+                    color={color}
+                    size={18}
+                    onPress={onOpenAddVariation}
+                  />
+                )}
+              />
+              <IconButton
+                icon={(color) => (
+                  <MaterialCommunityIcons
+                    name="pencil"
+                    size={18}
+                    color={color}
+                  />
+                )}
+              />
+              <IconButton
+                iconTheme="destructive"
+                className="active:bg-destructive/10"
+                icon={(color) => (
+                  <FontAwesome name="trash-o" color={color} size={18} />
+                )}
+                onPress={handleDelete}
+              />
+            </View>
           </View>
-        </View>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Fragment>
   );
 }
 
