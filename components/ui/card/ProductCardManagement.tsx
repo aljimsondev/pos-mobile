@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/reusable/card';
 import { Text } from '@/components/reusable/text';
 import IconButton from '@/components/ui/IconButton';
+import { deleteProduct } from '@/core/requests/delete/delete-product';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
 import { useDialogStore } from '@/lib/store/dialog-store';
 import { Product } from '@/lib/types/product';
@@ -25,9 +26,14 @@ type ProductCardManagementProps = {
     };
   };
   style?: StyleProp<ViewStyle>;
+  reload?: () => void;
 };
 
-function ProductCardManagement({ style, product }: ProductCardManagementProps) {
+function ProductCardManagement({
+  style,
+  product,
+  reload = () => {},
+}: ProductCardManagementProps) {
   const photoUrl = getImageUrl(product.photo.url);
   const { showDialog } = useDialogStore();
   const { open } = useBottomSheetStore();
@@ -40,7 +46,17 @@ function ProductCardManagement({ style, product }: ProductCardManagementProps) {
         variant: 'destructive',
         continueText: 'Yes , delete it!',
         onContinue: async () => {
-          // todo manage product deletion
+          try {
+            // todo manage product deletion
+            const result = await deleteProduct(product.id);
+
+            if (result) {
+              reload(); // apply product reload
+              Toast.success('Product deleted successfully!', 'bottom');
+            }
+          } catch (e: any) {
+            Toast.error(e?.message || 'Something went wrong!', 'bottom');
+          }
         },
       });
     } catch (e: any) {

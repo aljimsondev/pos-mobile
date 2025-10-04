@@ -39,7 +39,9 @@ export default function ProductListManagement({
         {...rest}
         data={data as Product[]}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <ProductCardManagement product={item} />}
+        renderItem={({ item }) => (
+          <ProductCardManagement product={item} reload={onRefresh} />
+        )}
         // styling
         contentContainerStyle={{ gap: GAP }}
         // Pull-to-refresh functionality
