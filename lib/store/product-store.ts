@@ -7,6 +7,7 @@ export interface ProductState {
 
 export interface ProductStore extends ProductState {
   setProduct: (product: Product) => void;
+  unsetProduct: () => void;
 }
 
 const initialState: ProductState = {

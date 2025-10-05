@@ -6,6 +6,7 @@ interface BottomSheetState {
   measurement: boolean;
   createProductVariation: boolean; // for creating new product
   createNewProductVariation: boolean; // for creating new variation
+  productDetails: boolean;
   barcodeScanner: boolean;
 }
 
@@ -22,6 +23,7 @@ const initialState: BottomSheetState = {
   measurement: false,
   createProductVariation: false,
   createNewProductVariation: false,
+  productDetails: false,
   barcodeScanner: false,
 };
 

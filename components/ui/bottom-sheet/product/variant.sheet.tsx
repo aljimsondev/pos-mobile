@@ -22,7 +22,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Toast } from 'toastify-react-native';
-import { renderBackdrop } from './renderBackdrop';
+import { renderBackdrop } from '../renderBackdrop';
 
 interface ProductVariantSheetProps {}
 
@@ -35,7 +35,7 @@ export default function ProductVariantSheet({}: ProductVariantSheetProps) {
     createNewProductVariation: openSheet,
   } = useBottomSheetStore();
   const { selectedMeasurement } = useUnitMeasurementStore();
-  useSheetBackHandler('createProductVariation');
+  useSheetBackHandler('createNewProductVariation');
   const { onScanSuccess } = useScannerStore();
   const { setVariant, variations } = useCreateProductStore();
 
@@ -109,7 +109,7 @@ export default function ProductVariantSheet({}: ProductVariantSheetProps) {
       style={{ zIndex: 9999 }}
     >
       <BottomSheetView className="px-4 h-full flex gap-2">
-        <Text className="font-bold text-lg">Add production variation</Text>
+        <Text className="font-bold text-lg">New Product Variation</Text>
         <Separator />
         <ScrollView>
           <View className="flex-row gap-2">

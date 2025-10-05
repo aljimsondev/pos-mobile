@@ -75,6 +75,12 @@ function ProductCardManagement({
     open('createNewProductVariation'); // open sheet
   };
 
+  const onOpenEditProductDetails = () => {
+    // set product
+    setProduct(product);
+    open('productDetails'); // open sheet
+  };
+
   return (
     <Fragment>
       <Card className="p-0 h-fit overflow-hidden" style={style}>
@@ -109,6 +115,7 @@ function ProductCardManagement({
                     color={color}
                   />
                 )}
+                onPress={onOpenEditProductDetails}
               />
               <IconButton
                 iconTheme="destructive"
