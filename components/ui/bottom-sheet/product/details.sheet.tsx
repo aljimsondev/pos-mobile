@@ -4,6 +4,7 @@ import { Label } from '@/components/reusable/label';
 import { Separator } from '@/components/reusable/separator';
 import { Text } from '@/components/reusable/text';
 import SelectionButton from '@/components/ui/button/selection.button';
+import { updateProduct } from '@/core/requests/update/update-product';
 import useSheetBackHandler from '@/hooks/useSheetBackHandler';
 import { createProductFormSchema } from '@/lib/schema/product/create.product';
 import { useBottomSheetStore } from '@/lib/store/bottom-sheet.store';
@@ -44,6 +45,12 @@ function ProductDetailSheet(props: ProductDetailSheetProps) {
     resolver: zodResolver(createProductFormSchema),
     defaultValues: {},
     mode: 'all',
+    values: {
+      name: selectedProduct?.name || '',
+      description: selectedProduct?.description || '',
+      brand_id: selectedProduct?.brand_id || '',
+      category_id: selectedProduct?.category_id || '',
+    },
   });
 
   // control sheet according to state changes
@@ -61,17 +68,6 @@ function ProductDetailSheet(props: ProductDetailSheetProps) {
       unsetProduct(); // reset product on close
     }
   };
-
-  const handleUpdateDetails = form.handleSubmit(async (data) => {
-    try {
-      // todo handle
-      // close the bottom sheet
-      close('productDetails');
-    } catch (e: any) {
-      console.warn(e);
-      Toast.error(e?.message || 'Something went wrong!');
-    }
-  });
 
   const onSelectCategory = useCallback(() => {
     if (category) {
@@ -92,6 +88,26 @@ function ProductDetailSheet(props: ProductDetailSheetProps) {
       setBrandCallback((brand) => form.setValue('brand_id', brand.id));
     }
   }, [brand]);
+
+  const handleUpdateDetails = form.handleSubmit(async (data) => {
+    try {
+      // todo handle
+      // close the bottom sheet
+      if (!selectedProduct?.id) throw new Error('Product id is required!');
+      // updates state
+      const updateField = {};
+
+      const result = await updateProduct(selectedProduct.id, updateField);
+
+      if (result.success) {
+        Toast.success('Product updated successfully!', 'bottom');
+        close('productDetails');
+      }
+    } catch (e: any) {
+      console.warn(e);
+      Toast.error(e?.message || 'Something went wrong!');
+    }
+  });
 
   return (
     <BottomSheet

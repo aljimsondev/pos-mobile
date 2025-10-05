@@ -98,3 +98,5 @@ export const createProductFormSchema = z.object({
   is_featured: z.boolean().default(true).optional(),
   metadata: z.record(z.string(), z.any()).default({}).optional(),
 });
+
+export type CreateProductFormSchema = z.infer<typeof createProductFormSchema>;
